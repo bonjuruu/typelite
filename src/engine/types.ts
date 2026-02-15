@@ -58,6 +58,10 @@ export interface Archetype {
   empoweredState: StatusEffect;
   /** Debuff when character is "stressed" (disintegration line) */
   stressedState: StatusEffect;
+  /** Passive from dominant instinctual variant (sp/so/sx) */
+  instinctPassive?: PassiveTrait;
+  /** Full instinct stacking passives (dominant + 2nd + blind spot) */
+  instinctPassiveList?: PassiveTrait[];
 }
 
 export interface StatusEffect {
@@ -146,6 +150,8 @@ export type MBTIType =
 
 export type EnneagramNumber = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
+export type EnneagramInstinct = 'sp' | 'so' | 'sx';
+
 /** All 24 AP type orderings */
 export type APType =
   | 'VLEF' | 'VLFE' | 'VELF' | 'VEFL' | 'VFEL' | 'VFLE'
@@ -165,16 +171,24 @@ export type SocionicsType =
 
 export interface GeneratorInput {
   mbti: MBTIType | null;
-  enneagram: { type: EnneagramNumber; wing: number } | null;
+  enneagram: { type: EnneagramNumber; wing: EnneagramNumber; instinct: EnneagramInstinct; instinctStack?: [EnneagramInstinct, EnneagramInstinct, EnneagramInstinct]; tritype?: [EnneagramNumber, EnneagramNumber, EnneagramNumber]; tritypeWings?: [EnneagramNumber, EnneagramNumber] } | null;
   attitudinal: APType | null;
   socionics: SocionicsType | null;
-  instincts: { realm: InstinctRealm } | null;
+  instincts: { realm: InstinctRealm; tritype?: [InstinctRealm, InstinctRealm, InstinctRealm] } | null;
   overrides: ManualOverrides;
+}
+
+export interface AbilityOverrides {
+  hero: CognitiveFunction;
+  parent: CognitiveFunction;
+  child: CognitiveFunction;
+  inferior: CognitiveFunction;
 }
 
 export interface ManualOverrides {
   stats: Partial<StatBlock> | null;
   archetype: string | null;
+  abilities: AbilityOverrides | null;
   element: Element | null;
   combatOrientation: string | null;
 }
@@ -188,10 +202,19 @@ export interface SystemConfig {
   enabled: boolean;
 }
 
+export interface StatBreakdown {
+  base: StatBlock;
+  baseSource: string;
+  multipliers: Partial<Record<StatName, number>>;
+  multiplierSource: string;
+  overrides: Partial<StatBlock> | null;
+}
+
 export interface Character {
   name: string;
   title: string;
   stats: StatBlock;
+  statBreakdown: StatBreakdown;
   archetype: Archetype;
   abilities: Ability[];
   element: ElementAffinity;
