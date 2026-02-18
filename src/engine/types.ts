@@ -47,6 +47,12 @@ export type AbilityTag =
 // ARCHETYPE (from Enneagram)
 // ============================================================
 
+export interface StatBlendStep {
+  source: string;
+  influence: number;
+  modifiers: Partial<Record<StatName, number>>;
+}
+
 export interface Archetype {
   className: string;
   description: string;
@@ -62,6 +68,12 @@ export interface Archetype {
   instinctPassive?: PassiveTrait;
   /** Full instinct stacking passives (dominant + 2nd + blind spot) */
   instinctPassiveList?: PassiveTrait[];
+  /** Integration line context, e.g. "1 → 7" */
+  integrationLine?: string;
+  /** Disintegration line context, e.g. "1 → 4" */
+  disintegrationLine?: string;
+  /** Step-by-step breakdown of how stat modifiers were blended */
+  statBlendChain?: StatBlendStep[];
 }
 
 export interface StatusEffect {

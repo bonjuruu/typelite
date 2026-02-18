@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { SystemId, EnneagramNumber, ManualOverrides } from '../../engine/types.ts'
 import type { BuilderSelections } from '../../hooks/useCharacterGenerator.ts'
 import { Toggle } from '../common/Toggle.tsx'
@@ -7,7 +8,7 @@ import { MBTISelector } from './selectors/MBTISelector.tsx'
 import { SocionicsSelector } from './selectors/SocionicsSelector.tsx'
 import { InstinctsSelector } from './selectors/InstinctsSelector.tsx'
 import { OverrideSelector } from './overrides/OverrideSelector.tsx'
-import type { SystemMeta } from './systemMeta.ts'
+import type { SystemMeta, SystemInfo } from './systemMeta.ts'
 
 // ============================================================
 // SYSTEM CARD
@@ -36,6 +37,8 @@ export function SystemCard({
   onSetEnneagramType,
   onRandomize,
 }: SystemCardProps) {
+  const [showInfo, setShowInfo] = useState(false)
+
   return (
     <div className={`rounded-lg border p-4 transition-colors ${
       enabled
@@ -45,9 +48,21 @@ export function SystemCard({
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Toggle checked={enabled} onChange={onToggle} aria-label={`Toggle ${meta.name}`} />
-          <div>
+          <div className="flex items-center gap-1.5">
             <span className="font-semibold text-gray-100">{meta.name}</span>
-            <span className="ml-2 text-xs text-gray-500">&rarr; {meta.domain}</span>
+            <button
+              onClick={() => setShowInfo((prev) => !prev)}
+              aria-label={`Info about ${meta.name}`}
+              aria-expanded={showInfo}
+              className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold transition-colors ${
+                showInfo
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-gray-600 text-gray-400 hover:bg-gray-500 hover:text-gray-200'
+              }`}
+            >
+              ?
+            </button>
+            <span className="text-xs text-gray-500">&rarr; {meta.domain}</span>
           </div>
         </div>
         {enabled && (
@@ -60,6 +75,8 @@ export function SystemCard({
           </button>
         )}
       </div>
+
+      {showInfo && <SystemInfoPanel info={meta.info} />}
 
       <p className="mb-3 text-sm text-gray-400">{meta.description}</p>
 
@@ -77,6 +94,20 @@ export function SystemCard({
           onUpdateOverride={onUpdateOverride}
         />
       )}
+    </div>
+  )
+}
+
+// ============================================================
+// INFO PANEL
+// ============================================================
+
+function SystemInfoPanel({ info }: { info: SystemInfo }) {
+  return (
+    <div className="mb-3 space-y-2 rounded border border-indigo-800/30 bg-indigo-950/10 p-3 text-xs leading-relaxed text-gray-400">
+      <p>{info.what}</p>
+      <p><span className="font-semibold text-indigo-400">Game mapping:</span> {info.mapping}</p>
+      <p>{info.detail}</p>
     </div>
   )
 }

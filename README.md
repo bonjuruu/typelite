@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Typelite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A roguelite-inspired character builder that generates game characters using real personality typology systems. Toggle any combination of 5 systems, select or randomize types, and generate a character sheet with stats, abilities, class, element, and combat behavior.
 
-Currently, two official plugins are available:
+## Typology Systems
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| System | Gameplay Domain | What it determines |
+|---|---|---|
+| **Attitudinal Psyche** | Base stats | V/L/E/F position → Willpower, Intelligence, Spirit, Vitality |
+| **Enneagram** | Class & archetype | Type → class. Wings, instincts, tritype blend stat modifiers |
+| **MBTI (Beebe model)** | Ability kit | 4-function stack → 4 abilities (Hero, Parent, Child, Inferior) |
+| **Socionics** | Element & affinity | Quadra → elemental school. Club → passive trait |
+| **Expanded Instincts** | Combat behavior | Center → orientation. Triads → activation, positioning, regen |
 
-## React Compiler
+Systems can be toggled independently. When a system is off, its domain can be set manually via override controls.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Architecture
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  data/         ← static typology data (pure TS, zero React imports)
+  engine/       ← generation logic (pure TS, zero React imports)
+  components/   ← React UI (Builder panel, Character sheet)
+  hooks/        ← state management
+  utils/        ← URL serialization, export, API client
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+`data/` and `engine/` are intentionally free of React dependencies — they're unit-testable and portable to a future backend.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Modifier chain:** AP base stats → Enneagram class multipliers (wing/instinct/tritype blending) → MBTI abilities (scale off stats) → Socionics element → Instincts combat passives
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+- React 19 + TypeScript (strict mode)
+- Tailwind CSS v4
+- Vite 7
+- Vitest for testing
+- ESLint with type-aware rules (`recommendedTypeChecked`)
+
+## Development
+
+```bash
+yarn install   # install dependencies
+yarn dev       # start dev server
+yarn build     # production build (includes tsc type checking)
+yarn test      # run tests
+yarn lint      # lint with type-aware rules
 ```
+
+## Testing
+
+210+ tests covering:
+- Engine logic (generator, modifiers, insights, summarizer)
+- Data integrity (all typology data validated for completeness and consistency)
+- Quiz scoring (MBTI, Enneagram, Socionics, AP, Instincts — short and long forms)
+- URL serialization round-trips
+- Ability balance (power scaling across all slots and functions)

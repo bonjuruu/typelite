@@ -45,24 +45,40 @@ const SOCIONICS_TYPES: Record<SocionicsType, SocionicsTypeData> = {
 const CLUB_PASSIVES: Record<Club, PassiveTrait> = {
   Researcher: {
     name: 'Analytical Mind',
-    description: 'Abilities that exploit weaknesses deal increased damage.',
+    description: 'Abilities that hit debuffed targets deal 15% increased damage. Stacks with existing vulnerability effects.',
     source: 'Researcher club',
   },
   Social: {
     name: 'Social Grace',
-    description: 'Party-wide buffs and heals gain bonus effectiveness.',
+    description: 'Party-wide buffs and heals are 20% more effective. Aura abilities gain +1 turn duration.',
     source: 'Social club',
   },
   Practical: {
     name: 'Resourceful',
-    description: 'Ability costs are reduced. Efficiency under pressure.',
+    description: 'All ability cooldowns are reduced by 1 turn. Consecutive ability uses cost 10% less.',
     source: 'Practical club',
   },
   Humanitarian: {
     name: 'Compassionate Aura',
-    description: 'Passively regenerates a small amount of health for nearby allies.',
+    description: 'Allies within range passively regenerate 2% max health per turn. Doubles when an ally is below 30% health.',
     source: 'Humanitarian club',
   },
+}
+
+// ============================================================
+// QUADRA RATIONALE
+// ============================================================
+
+const QUADRA_RATIONALE: Record<Quadra, string> = {
+  Alpha: "Values intellectual play and warmth — drawn to Light's clarity and Nature's ease.",
+  Beta: "Craves intensity and transformation — drawn to Fire's passion and Shadow's depth.",
+  Gamma: "Pursues pragmatism and results — drawn to Earth's stability and Metal's sharpness.",
+  Delta: "Seeks harmony and craft — drawn to Wind's flexibility and Water's flow.",
+}
+
+/** Get the rationale for why a quadra maps to its elements. */
+export function getQuadraRationale(quadra: Quadra): string {
+  return QUADRA_RATIONALE[quadra]
 }
 
 // ============================================================

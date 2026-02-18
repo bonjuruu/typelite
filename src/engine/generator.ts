@@ -35,7 +35,7 @@ export function generateCharacter(input: GeneratorInput): Character {
     ? input.enneagram.tritype
       ? buildTritypeArchetype(input.enneagram.type, input.enneagram.wing, input.enneagram.tritype, input.enneagram.tritypeWings, input.enneagram.instinct, input.enneagram.instinctStack)
       : buildArchetype(input.enneagram.type, input.enneagram.wing, input.enneagram.instinct, input.enneagram.instinctStack)
-    : buildDefaultArchetype(input.overrides.archetype)
+    : buildDefaultArchetype(input.overrides.archetype, activeSystems)
 
   const multipliers = input.enneagram ? archetype.statModifiers : {}
   if (input.enneagram) {
@@ -79,7 +79,7 @@ export function generateCharacter(input: GeneratorInput): Character {
     : buildDefaultCombatBehavior(input.overrides.combatOrientation)
 
   // Generate name and title
-  const name = generateName()
+  const name = generateName(archetype.className, element.element)
   const title = generateTitle(archetype, element)
 
   return {
@@ -113,10 +113,27 @@ function getActiveSystems(input: GeneratorInput): SystemId[] {
 // DEFAULTS (for inactive systems)
 // ============================================================
 
-function buildDefaultArchetype(overrideName: string | null): Archetype {
+const CONTEXT_FALLBACK_LIST: { system: SystemId; className: string; description: string }[] = [
+  { system: 'mbti', className: 'Adventurer', description: 'Defined by skill, not calling. Abilities speak louder than titles.' },
+  { system: 'socionics', className: 'Elemental', description: 'Aligned to a primal force, wandering without a sworn oath.' },
+  { system: 'instincts', className: 'Survivalist', description: 'Instinct guides where purpose has not yet spoken.' },
+]
+
+function buildDefaultArchetype(overrideName: string | null, activeSystems: SystemId[]): Archetype {
+  let className = 'Wanderer'
+  let description = 'A traveler with no fixed calling.'
+
+  if (!overrideName) {
+    const match = CONTEXT_FALLBACK_LIST.find((fallback) => activeSystems.includes(fallback.system))
+    if (match) {
+      className = match.className
+      description = match.description
+    }
+  }
+
   return {
-    className: overrideName ?? 'Wanderer',
-    description: 'A traveler with no fixed calling.',
+    className: overrideName ?? className,
+    description,
     enneagramType: 9,
     wing: 1,
     statModifiers: {},
@@ -175,9 +192,47 @@ const NAME_SUFFIXES = [
   'ine', 'ash', 'ek', 'al',
 ]
 
-export function generateName(): string {
-  const prefix = NAME_PREFIXES[Math.floor(Math.random() * NAME_PREFIXES.length)]
-  const suffix = NAME_SUFFIXES[Math.floor(Math.random() * NAME_SUFFIXES.length)]
+const HARSH_PREFIXES = [
+  'Krag', 'Vex', 'Brok', 'Drak', 'Thorn', 'Grim', 'Skar', 'Rok',
+  'Vor', 'Zul', 'Gor', 'Brak', 'Kael', 'Mord', 'Rax', 'Durn',
+]
+
+const HARSH_SUFFIXES = [
+  'ax', 'urn', 'ek', 'ash', 'or', 'uk', 'ath', 'ark',
+  'ex', 'ol', 'ag', 'orn', 'us', 'an', 'ik', 'oz',
+]
+
+const FLOWING_PREFIXES = [
+  'Ael', 'Lumi', 'Syl', 'Eira', 'Thel', 'Ari', 'Cel', 'Ilya',
+  'Mael', 'Nai', 'Sera', 'Vel', 'Wyn', 'Elara', 'Fael', 'Liora',
+]
+
+const FLOWING_SUFFIXES = [
+  'wyn', 'iel', 'ara', 'ine', 'ea', 'iel', 'ana', 'ova',
+  'ith', 'ael', 'wen', 'ira', 'iel', 'ora', 'una', 'is',
+]
+
+const HARSH_CLASS_SET = new Set(['Berserker', 'Warlord', 'Justicar'])
+const HARSH_ELEMENT_SET = new Set<Element>(['Fire', 'Shadow'])
+const FLOWING_CLASS_SET = new Set(['Cleric', 'Druid', 'Sage', 'Bard'])
+const FLOWING_ELEMENT_SET = new Set<Element>(['Light', 'Nature', 'Water'])
+
+function pickNamePool(className: string, element: Element): { prefixList: string[]; suffixList: string[] } {
+  const isHarsh = HARSH_CLASS_SET.has(className) || HARSH_ELEMENT_SET.has(element)
+  const isFlowing = FLOWING_CLASS_SET.has(className) || FLOWING_ELEMENT_SET.has(element)
+
+  if (isHarsh && !isFlowing) return { prefixList: HARSH_PREFIXES, suffixList: HARSH_SUFFIXES }
+  if (isFlowing && !isHarsh) return { prefixList: FLOWING_PREFIXES, suffixList: FLOWING_SUFFIXES }
+  return { prefixList: NAME_PREFIXES, suffixList: NAME_SUFFIXES }
+}
+
+export function generateName(className?: string, element?: Element): string {
+  const { prefixList, suffixList } = className && element
+    ? pickNamePool(className, element)
+    : { prefixList: NAME_PREFIXES, suffixList: NAME_SUFFIXES }
+
+  const prefix = prefixList[Math.floor(Math.random() * prefixList.length)]
+  const suffix = suffixList[Math.floor(Math.random() * suffixList.length)]
   return prefix + suffix
 }
 

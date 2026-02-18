@@ -1,0 +1,10 @@
+name = "typelite-backstory"
+main = "worker.ts"
+compatibility_date = "2024-12-01"
+
+[ai]
+binding = "AI"
+
+[vars]
+ALLOWED_ORIGIN = "*"
+RATE_LIMIT_PER_MINUTE = "10"

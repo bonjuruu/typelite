@@ -1,9 +1,20 @@
-import { useState } from 'react'
-import type { Character, Ability, StatName, StatBreakdown, SystemId } from '../../engine/types.ts'
+import { useState, useEffect, useRef } from 'react'
+import type { Character, Ability, StatName, StatBreakdown, SystemId, APType } from '../../engine/types.ts'
+import { describeStack } from '../../data/attitudinal.ts'
 import { computeAbilityPower } from '../../engine/modifiers.ts'
+import { generateCharacterSummary } from '../../engine/summarizer.ts'
+import { getWingFlavor } from '../../data/enneagram.ts'
+import { getQuadraRationale } from '../../data/socionics.ts'
+import { getTriadDescription } from '../../data/instincts.ts'
+import { getCognitiveFunctionEssence, getTagDescription } from '../../data/mbti.ts'
 import { SectionTitle } from '../common/SectionTitle.tsx'
 import { SYSTEM_META_LIST } from '../Builder/systemMeta.ts'
 import { exportCharacterToText } from '../../utils/characterExporter.ts'
+import { exportCardAsImage, copyCardToClipboard } from '../../utils/cardExporter.ts'
+import { ShareCard } from './ShareCard.tsx'
+import { BackstorySection } from './BackstorySection.tsx'
+import { ReportSection } from './ReportSection.tsx'
+import { InsightsSection } from './InsightsSection.tsx'
 
 const SYSTEM_DISPLAY_NAME: Record<SystemId, string> = Object.fromEntries(
   SYSTEM_META_LIST.map((meta) => [meta.id, meta.name]),
@@ -25,14 +36,34 @@ interface CharacterSheetProps {
 // ============================================================
 
 export function CharacterSheet({ character, characterName, onSetCharacterName, onRegenerateName }: CharacterSheetProps) {
+  const shareCardRef = useRef<HTMLDivElement>(null)
+  const summary = character.activeSystems.length >= 2 ? generateCharacterSummary(character) : null
+
   return (
     <div className="space-y-6">
-      <Header character={character} characterName={characterName} onSetCharacterName={onSetCharacterName} onRegenerateName={onRegenerateName} />
+      <Header
+        character={character}
+        characterName={characterName}
+        onSetCharacterName={onSetCharacterName}
+        onRegenerateName={onRegenerateName}
+        shareCardRef={shareCardRef}
+      />
+      {summary && (
+        <div className="rounded-lg border border-gray-700/50 bg-gray-800/30 p-4">
+          <p className="text-sm leading-relaxed text-gray-300">{summary}</p>
+        </div>
+      )}
+      <InsightsSection character={character} />
       <StatsSection character={character} />
       <ArchetypeSection character={character} />
       {character.abilities.length > 0 && <AbilitiesSection character={character} />}
       <ElementSection character={character} />
       <CombatSection character={character} />
+      <ReportSection character={character} characterName={characterName} />
+      <BackstorySection character={character} characterName={characterName} />
+
+      {/* Hidden share card for image export */}
+      <ShareCard ref={shareCardRef} character={character} characterName={characterName} />
     </div>
   )
 }
@@ -41,11 +72,12 @@ export function CharacterSheet({ character, characterName, onSetCharacterName, o
 // HEADER
 // ============================================================
 
-function Header({ character, characterName, onSetCharacterName, onRegenerateName }: {
+function Header({ character, characterName, onSetCharacterName, onRegenerateName, shareCardRef }: {
   character: Character
   characterName: string
   onSetCharacterName: (name: string) => void
   onRegenerateName: () => void
+  shareCardRef: React.RefObject<HTMLDivElement | null>
 }) {
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState('')
@@ -81,12 +113,12 @@ function Header({ character, characterName, onSetCharacterName, onRegenerateName
               if (e.key === 'Escape') cancelEdit()
             }}
             onBlur={saveEdit}
-            className="rounded border border-indigo-500 bg-gray-800 px-2 py-1 text-3xl font-bold text-gray-100 focus:outline-none"
+            className="rounded border border-indigo-500 bg-gray-800 px-2 py-1 text-2xl font-bold text-gray-100 focus:outline-none sm:text-3xl"
           />
         ) : (
           <h2
             onClick={startEditing}
-            className="cursor-pointer text-3xl font-bold text-gray-100 hover:text-indigo-300"
+            className="cursor-pointer text-2xl font-bold text-gray-100 hover:text-indigo-300 sm:text-3xl"
             title="Click to edit name"
           >
             {characterName}
@@ -104,7 +136,7 @@ function Header({ character, characterName, onSetCharacterName, onRegenerateName
         </button>
       </div>
       <p className="text-lg text-indigo-400">{character.title}</p>
-      <div className="mt-2 flex items-center gap-3">
+      <div className="mt-2 flex flex-wrap items-center gap-3">
         <div className="flex flex-wrap gap-1.5">
           {character.activeSystems.map((systemId) => (
             <span
@@ -117,6 +149,7 @@ function Header({ character, characterName, onSetCharacterName, onRegenerateName
         </div>
         <CopyLinkButton />
         <ExportButton character={character} characterName={characterName} />
+        <ShareCardButton shareCardRef={shareCardRef} characterName={characterName} />
       </div>
     </div>
   )
@@ -134,7 +167,7 @@ function ExportButton({ character, characterName }: { character: Character; char
 
   return (
     <button
-      onClick={handleExport}
+      onClick={() => void handleExport()}
       aria-label="Export character to clipboard"
       className="inline-flex items-center gap-1.5 rounded bg-gray-700 px-2.5 py-1 text-xs font-medium text-gray-400 transition-colors hover:bg-gray-600 hover:text-gray-200"
     >
@@ -161,7 +194,7 @@ function CopyLinkButton() {
 
   return (
     <button
-      onClick={handleCopy}
+      onClick={() => void handleCopy()}
       aria-label="Copy character link to clipboard"
       className="inline-flex items-center gap-1.5 whitespace-nowrap rounded bg-gray-700 px-2.5 py-1 text-xs font-medium text-gray-400 transition-colors hover:bg-gray-600 hover:text-gray-200"
     >
@@ -174,6 +207,75 @@ function CopyLinkButton() {
         </>
       )}
     </button>
+  )
+}
+
+function ShareCardButton({ shareCardRef, characterName }: {
+  shareCardRef: React.RefObject<HTMLDivElement | null>
+  characterName: string
+}) {
+  const [status, setStatus] = useState<'idle' | 'exporting' | 'copied' | 'downloaded'>('idle')
+
+  const handleDownload = async () => {
+    if (!shareCardRef.current) return
+    setStatus('exporting')
+    try {
+      await exportCardAsImage(shareCardRef.current, characterName.toLowerCase().replace(/\s+/g, '-'))
+      setStatus('downloaded')
+      setTimeout(() => setStatus('idle'), 2000)
+    } catch {
+      setStatus('idle')
+    }
+  }
+
+  const handleCopy = async () => {
+    if (!shareCardRef.current) return
+    setStatus('exporting')
+    try {
+      const copiedToClipboard = await copyCardToClipboard(shareCardRef.current, characterName.toLowerCase().replace(/\s+/g, '-'))
+      setStatus(copiedToClipboard ? 'copied' : 'downloaded')
+      setTimeout(() => setStatus('idle'), 2000)
+    } catch {
+      setStatus('idle')
+    }
+  }
+
+  const label = status === 'exporting' ? 'Rendering...'
+    : status === 'copied' ? 'Copied!'
+    : status === 'downloaded' ? 'Saved!'
+    : null
+
+  if (label) {
+    return (
+      <span className="inline-flex items-center rounded bg-gray-700 px-2.5 py-1 text-xs font-medium text-gray-400">
+        {label}
+      </span>
+    )
+  }
+
+  return (
+    <span className="inline-flex">
+      <button
+        onClick={() => void handleDownload()}
+        aria-label="Download character card as image"
+        className="inline-flex items-center gap-1.5 rounded-l bg-gray-700 px-2.5 py-1 text-xs font-medium text-gray-400 transition-colors hover:bg-gray-600 hover:text-gray-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+          <path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h2.879a1.5 1.5 0 0 1 1.06.44l1.122 1.12A1.5 1.5 0 0 0 9.62 4H12.5A1.5 1.5 0 0 1 14 5.5v1.401a2.986 2.986 0 0 0-1.5-.401h-9A2.986 2.986 0 0 0 2 6.901V3.5Z" />
+          <path d="M2 9.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-3Zm6.5.75a.75.75 0 0 0-1.5 0v1.69l-.72-.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l2-2a.75.75 0 1 0-1.06-1.06l-.72.72v-1.69Z" />
+        </svg>
+        Card
+      </button>
+      <button
+        onClick={() => void handleCopy()}
+        aria-label="Copy character card image to clipboard"
+        className="rounded-r border-l border-gray-600 bg-gray-700 px-1.5 py-1 text-xs text-gray-400 transition-colors hover:bg-gray-600 hover:text-gray-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+          <path fillRule="evenodd" d="M10.986 3H12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h1.014A2.25 2.25 0 0 1 7.25 1h1.5a2.25 2.25 0 0 1 2.236 2ZM9.5 4v-.75a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75V4h3Z" clipRule="evenodd" />
+        </svg>
+      </button>
+    </span>
   )
 }
 
@@ -198,6 +300,9 @@ const STAT_TO_ASPECT: Record<StatName, string> = {
 }
 
 function StatsSection({ character }: { character: Character }) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { requestAnimationFrame(() => setMounted(true)) }, [])
+
   return (
     <div>
       <SectionTitle>Stats</SectionTitle>
@@ -207,11 +312,11 @@ function StatsSection({ character }: { character: Character }) {
           const percentage = Math.min((value / MAX_STAT_DISPLAY) * 100, 100)
           return (
             <div key={key} className="flex items-center gap-3">
-              <span className="w-24 text-sm font-medium text-gray-300">{label}</span>
+              <span className="w-20 text-sm font-medium text-gray-300 sm:w-24">{label}</span>
               <div className="h-4 flex-1 overflow-hidden rounded-full bg-gray-700">
                 <div
                   className={`h-full rounded-full ${color} transition-[width] duration-600 ease-out`}
-                  style={{ width: `${percentage}%` }}
+                  style={{ width: mounted ? `${percentage}%` : '0%' }}
                 />
               </div>
               <StatValueWithBreakdown statName={key} value={value} breakdown={character.statBreakdown} />
@@ -221,6 +326,14 @@ function StatsSection({ character }: { character: Character }) {
       </div>
     </div>
   )
+}
+
+function getAspectFlavorSummary(baseSource: string, statName: StatName): string | null {
+  // Only works for AP types (4-letter strings like 'ELFV')
+  if (baseSource === 'Default' || baseSource.length !== 4) return null
+  const stackDetailList = describeStack(baseSource as APType)
+  const detail = stackDetailList.find((d) => d.stat === statName)
+  return detail?.flavor.summary ?? null
 }
 
 function StatValueWithBreakdown({ statName, value, breakdown }: { statName: StatName; value: number; breakdown: StatBreakdown }) {
@@ -236,11 +349,12 @@ function StatValueWithBreakdown({ statName, value, breakdown }: { statName: Stat
   const position = isAP ? breakdown.baseSource.indexOf(aspectLetter) + 1 : null
 
   const positionLabel = position ? `${aspectLetter} in ${position}${ordinalSuffix(position)}` : null
+  const flavorSummary = isAP ? getAspectFlavorSummary(breakdown.baseSource, statName) : null
 
   return (
-    <span className="group relative cursor-help">
+    <span className="group relative cursor-help" tabIndex={0} role="button" aria-label={`${statName} breakdown`}>
       <span className="w-8 text-right text-sm font-bold text-gray-100 inline-block">{value}</span>
-      <span className="pointer-events-none absolute right-0 top-full z-10 mt-1.5 w-56 rounded bg-gray-950 px-2.5 py-2 text-[11px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover:opacity-100">
+      <span className="pointer-events-none absolute right-0 top-full z-10 mt-1.5 w-56 rounded bg-gray-950 px-2.5 py-2 text-[11px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
         <span className="block text-gray-300">
           Base: {baseValue}
           {isAP && positionLabel ? (
@@ -249,10 +363,16 @@ function StatValueWithBreakdown({ statName, value, breakdown }: { statName: Stat
             <span className="text-gray-500"> (default)</span>
           )}
         </span>
+        {flavorSummary && (
+          <span className="block text-gray-500 italic">{flavorSummary}</span>
+        )}
         {multiplier != null && !hasOverride && (
-          <span className="block text-gray-300">
-            Scaling: &times;{multiplier} <span className="text-gray-500">({breakdown.multiplierSource})</span>
-          </span>
+          <>
+            <span className="block text-gray-300">
+              Scaling: &times;{multiplier} <span className="text-gray-500">({breakdown.multiplierSource})</span>
+            </span>
+            <span className="block text-gray-500 italic">Scaled by your {breakdown.multiplierSource} archetype</span>
+          </>
         )}
         {hasOverride && (
           <span className="block text-gray-300">
@@ -278,11 +398,19 @@ function ordinalSuffix(n: number): string {
 
 function ArchetypeSection({ character }: { character: Character }) {
   const { archetype } = character
+  const hasEnneagram = character.activeSystems.includes('enneagram')
+  const wingFlavor = hasEnneagram ? getWingFlavor(archetype.wing as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9) : null
+
   return (
     <div>
       <SectionTitle>Archetype</SectionTitle>
       <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
         <h4 className="text-lg font-bold text-gray-100">{archetype.className}</h4>
+        {wingFlavor && (
+          <p className="mt-1 text-xs text-indigo-400/80">
+            Wing {archetype.wing} ({wingFlavor.label}): {wingFlavor.description}
+          </p>
+        )}
         <p className="mt-1 text-sm text-gray-400">{archetype.description}</p>
         {(archetype.instinctPassiveList ?? (archetype.instinctPassive ? [archetype.instinctPassive] : [])).length > 0 && (
           <div className="mt-2 space-y-1">
@@ -290,12 +418,27 @@ function ArchetypeSection({ character }: { character: Character }) {
               const isSecondary = passive.source.startsWith('2nd instinct')
               const isTertiary = passive.source.startsWith('3rd instinct')
               const isStackedPassive = isSecondary || isTertiary
+
+              if (isTertiary) {
+                return (
+                  <div key={passive.name + passive.source} className="rounded border border-red-800/30 bg-red-950/10 p-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-red-400">{passive.name}</span>
+                      <span className="text-[10px] font-semibold text-red-600">BLIND SPOT</span>
+                    </div>
+                    <p className="text-xs text-gray-600">
+                      {passive.description} — This instinct is your weakest area, providing minimal benefit.
+                    </p>
+                  </div>
+                )
+              }
+
               return (
                 <div key={passive.name + passive.source} className={`rounded border p-2 ${isStackedPassive ? 'border-indigo-800/30 bg-indigo-950/10' : 'border-indigo-800/50 bg-indigo-950/20'}`}>
                   <div className="flex items-center gap-2">
                     <span className={`text-xs font-semibold ${isStackedPassive ? 'text-indigo-500' : 'text-indigo-400'}`}>{passive.name}</span>
-                    {isStackedPassive && (
-                      <span className="text-[10px] text-gray-600">{isSecondary ? '2nd' : 'blind spot'}</span>
+                    {isSecondary && (
+                      <span className="text-[10px] text-gray-600">2nd</span>
                     )}
                   </div>
                   <p className={`text-xs ${isStackedPassive ? 'text-gray-600' : 'text-gray-500'}`}>{passive.description}</p>
@@ -304,18 +447,44 @@ function ArchetypeSection({ character }: { character: Character }) {
             })}
           </div>
         )}
+        {archetype.statBlendChain && archetype.statBlendChain.length > 1 && (
+          <details className="mt-3">
+            <summary className="cursor-pointer text-xs font-semibold uppercase text-gray-500">
+              Stat Modifier Breakdown
+            </summary>
+            <div className="mt-2 space-y-1.5 text-xs">
+              {archetype.statBlendChain.map((step, index) => {
+                const modifierEntryList = Object.entries(step.modifiers) as [StatName, number][]
+                const nonTrivialModifierList = modifierEntryList.filter(([, v]) => v !== 1)
+                return (
+                  <div key={index} className="flex items-baseline gap-2 text-gray-400">
+                    <span className="font-medium text-gray-300">{step.source}</span>
+                    <span className="text-gray-600">({Math.round(step.influence * 100)}%)</span>
+                    {nonTrivialModifierList.length > 0 && (
+                      <span className="text-gray-500">
+                        {nonTrivialModifierList.map(([stat, val]) => `${stat}: x${val}`).join(', ')}
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          </details>
+        )}
         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <StatusEffectCard
             label="Empowered"
             name={archetype.empoweredState.name}
             description={archetype.empoweredState.description}
             variant="positive"
+            lineContext={archetype.integrationLine}
           />
           <StatusEffectCard
             label="Stressed"
             name={archetype.stressedState.name}
             description={archetype.stressedState.description}
             variant="negative"
+            lineContext={archetype.disintegrationLine}
           />
         </div>
       </div>
@@ -328,18 +497,23 @@ function StatusEffectCard({
   name,
   description,
   variant,
+  lineContext,
 }: {
   label: string
   name: string
   description: string
   variant: 'positive' | 'negative'
+  lineContext?: string
 }) {
   const borderColor = variant === 'positive' ? 'border-green-800' : 'border-red-800'
   const labelColor = variant === 'positive' ? 'text-green-400' : 'text-red-400'
 
   return (
     <div className={`rounded border ${borderColor} bg-gray-900 p-3`}>
-      <span className={`text-xs font-semibold uppercase ${labelColor}`}>{label}</span>
+      <span className={`text-xs font-semibold uppercase ${labelColor}`}>
+        {label}
+        {lineContext && <span className="ml-1 text-gray-600">(line {lineContext})</span>}
+      </span>
       <p className="mt-1 text-sm font-medium text-gray-200">{name}</p>
       <p className="mt-0.5 text-xs text-gray-500">{description}</p>
     </div>
@@ -364,6 +538,13 @@ const SLOT_LABELS: Record<string, string> = {
   inferior: 'Inferior',
 }
 
+const SLOT_DESCRIPTIONS: Record<string, string> = {
+  hero: 'Your dominant function — most natural, most powerful.',
+  parent: 'Your supporting function — responsible and reliable.',
+  child: 'Your playful function — creative but unpredictable.',
+  inferior: 'Your aspirational function — weak, but clutch under pressure.',
+}
+
 function AbilitiesSection({ character }: { character: Character }) {
   return (
     <div>
@@ -383,6 +564,7 @@ function AbilityCard({ ability, stats }: { ability: Ability; stats: Character['s
   const scalingFactor = (1 + statValue / 20).toFixed(2)
   const statLabel = ability.scalingStat.charAt(0).toUpperCase() + ability.scalingStat.slice(1)
   const cardStyle = SLOT_COLORS[ability.slot] ?? 'border-gray-600 bg-gray-900'
+  const essence = getCognitiveFunctionEssence(ability.cognitiveFunction)
 
   return (
     <div className={`rounded-lg border p-3 ${cardStyle}`}>
@@ -391,13 +573,15 @@ function AbilityCard({ ability, stats }: { ability: Ability; stats: Character['s
           <span className="text-xs font-semibold uppercase text-gray-400">
             {SLOT_LABELS[ability.slot]} &mdash; {ability.cognitiveFunction}
           </span>
+          <p className="text-[11px] text-gray-500">{SLOT_DESCRIPTIONS[ability.slot]}</p>
+          <p className="mt-0.5 text-[10px] italic text-indigo-400/70">{essence}</p>
           <h5 className="text-sm font-bold text-gray-100">{ability.name}</h5>
         </div>
-        <span className="group relative cursor-help">
+        <span className="group relative cursor-help" tabIndex={0} role="button" aria-label={`${ability.name} power breakdown`}>
           <span className="rounded bg-gray-700 px-2 py-0.5 text-xs font-bold text-gray-200">
             {power}
           </span>
-          <span className="pointer-events-none absolute right-0 top-full z-10 mt-1.5 w-52 rounded bg-gray-950 px-2.5 py-2 text-[11px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover:opacity-100">
+          <span className="pointer-events-none absolute right-0 top-full z-10 mt-1.5 w-52 rounded bg-gray-950 px-2.5 py-2 text-[11px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
             <span className="block text-gray-300">Base: {ability.basePower} <span className="text-gray-500">(innate to {ability.cognitiveFunction} {SLOT_LABELS[ability.slot]})</span></span>
             <span className="block text-gray-300">Scaling: 1 + {statValue}/20 = {scalingFactor} <span className="text-gray-500">(from {statLabel})</span></span>
             <span className="mt-1 block border-t border-gray-800 pt-1 text-gray-500">{ability.basePower} &times; {scalingFactor} = <span className="font-bold text-gray-200">{power}</span></span>
@@ -409,9 +593,15 @@ function AbilityCard({ ability, stats }: { ability: Ability; stats: Character['s
         {ability.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-gray-700/60 px-2 py-0.5 text-[10px] text-gray-400"
+            className="group/tag relative cursor-help rounded-full bg-gray-700/60 px-2 py-0.5 text-[10px] text-gray-400"
+            tabIndex={0}
+            role="button"
+            aria-label={`${tag} tag description`}
           >
             {tag}
+            <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 w-44 -translate-x-1/2 rounded bg-gray-950 px-2 py-1.5 text-[10px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover/tag:opacity-100 group-focus-within/tag:opacity-100">
+              {getTagDescription(tag)}
+            </span>
           </span>
         ))}
       </div>
@@ -425,6 +615,9 @@ function AbilityCard({ ability, stats }: { ability: Ability; stats: Character['s
 
 function ElementSection({ character }: { character: Character }) {
   const { element } = character
+  const hasSocionics = character.activeSystems.includes('socionics')
+  const rationale = hasSocionics ? getQuadraRationale(element.quadra) : null
+
   return (
     <div>
       <SectionTitle>Element</SectionTitle>
@@ -433,7 +626,12 @@ function ElementSection({ character }: { character: Character }) {
           <span className="text-2xl">{ELEMENT_EMOJI[element.element]}</span>
           <div>
             <h4 className="font-bold text-gray-100">{element.element}</h4>
-            <p className="text-sm text-gray-400">{element.quadra} quadra</p>
+            <p className="text-sm text-gray-400">
+              {element.quadra} quadra
+            </p>
+            {rationale && (
+              <span className="block mt-0.5 text-xs italic text-gray-500">{rationale}</span>
+            )}
           </div>
         </div>
         <div className="mt-3 rounded border border-gray-700 bg-gray-900 p-3">
@@ -466,11 +664,11 @@ function CombatSection({ character }: { character: Character }) {
     <div>
       <SectionTitle>Combat Behavior</SectionTitle>
       <div className="rounded-lg border border-gray-700 bg-gray-800 p-4">
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+        <div className="grid grid-cols-1 gap-x-4 gap-y-2 text-sm sm:grid-cols-2">
           <CombatField label="Orientation" value={combatBehavior.combatOrientation} />
-          <CombatField label="Activation" value={combatBehavior.activationStyle} />
-          <CombatField label="Positioning" value={combatBehavior.positioning} />
-          <CombatField label="Regen Source" value={combatBehavior.regenSource} />
+          <CombatField label="Activation" value={combatBehavior.activationStyle} hint={getTriadDescription('experiential', combatBehavior.activationStyle)} />
+          <CombatField label="Positioning" value={combatBehavior.positioning} hint={getTriadDescription('movement', combatBehavior.positioning)} />
+          <CombatField label="Regen Source" value={combatBehavior.regenSource} hint={getTriadDescription('source', combatBehavior.regenSource)} />
         </div>
         {combatBehavior.passives.length > 0 && (
           <div className="mt-3 space-y-2">
@@ -498,11 +696,16 @@ function CombatSection({ character }: { character: Character }) {
   )
 }
 
-function CombatField({ label, value }: { label: string; value: string }) {
+function CombatField({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
-    <div>
+    <div className={hint ? 'group/combat relative' : ''} tabIndex={hint ? 0 : undefined} role={hint ? 'button' : undefined} aria-label={hint ? `${label} details` : undefined}>
       <span className="text-xs text-gray-500">{label}</span>
       <p className="font-medium text-gray-200">{value}</p>
+      {hint && (
+        <span className="pointer-events-none absolute left-0 top-full z-10 mt-1 w-64 rounded bg-gray-950 px-2.5 py-2 text-[11px] leading-relaxed text-gray-400 opacity-0 shadow-lg ring-1 ring-gray-700 transition-opacity group-hover/combat:opacity-100 group-focus-within/combat:opacity-100">
+          {hint}
+        </span>
+      )}
     </div>
   )
 }

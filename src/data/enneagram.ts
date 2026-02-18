@@ -1,4 +1,4 @@
-import type { EnneagramNumber, EnneagramInstinct, StatName, Archetype, StatusEffect, PassiveTrait } from '../engine/types.ts'
+import type { EnneagramNumber, EnneagramInstinct, StatName, Archetype, StatusEffect, PassiveTrait, StatBlendStep } from '../engine/types.ts'
 
 // ============================================================
 // CORE TYPE DATA
@@ -243,6 +243,32 @@ const WING_LABELS: Record<EnneagramNumber, string> = {
 }
 
 // ============================================================
+// WING FLAVOR
+// ============================================================
+
+interface WingFlavor {
+  label: string
+  description: string
+}
+
+const WING_FLAVOR: Record<EnneagramNumber, WingFlavor> = {
+  1: { label: 'Principled', description: 'Adds rigorous structure and moral clarity — every action is measured against an internal code.' },
+  2: { label: 'Compassionate', description: 'Softens edges with warmth and generosity — power is wielded in service of connection.' },
+  3: { label: 'Ambitious', description: 'Injects competitive drive and image-consciousness — success becomes both goal and armor.' },
+  4: { label: 'Expressive', description: 'Deepens emotional intensity and aesthetic vision — combat becomes an art form.' },
+  5: { label: 'Cerebral', description: 'Withdraws into analysis and resource hoarding — knowledge is weaponized with precision.' },
+  6: { label: 'Vigilant', description: 'Heightens threat detection and preparedness — every scenario has been war-gamed.' },
+  7: { label: 'Chaotic', description: 'Embraces spontaneity and possibility — constraint is the only true enemy.' },
+  8: { label: 'Fierce', description: 'Amplifies raw intensity and dominance — power flows without hesitation or apology.' },
+  9: { label: 'Serene', description: 'Mellows conflict with acceptance and calm — battles are won through endurance, not force.' },
+}
+
+/** Get the flavor text for a wing type. */
+export function getWingFlavor(wing: EnneagramNumber): WingFlavor {
+  return WING_FLAVOR[wing]
+}
+
+// ============================================================
 // INSTINCTUAL VARIANTS (sp/so/sx)
 // ============================================================
 
@@ -338,12 +364,19 @@ export function buildArchetype(
   const wingData = ENNEAGRAM_TYPES[wing]
   const wingLabel = WING_LABELS[wing]
 
+  // Track stat blend chain
+  const statBlendChainList: StatBlendStep[] = [
+    { source: `Type ${type} (${typeData.className})`, influence: 1.0, modifiers: typeData.statModifiers },
+    { source: `Wing ${wing} (${WING_LABELS[wing]})`, influence: WING_INFLUENCE, modifiers: wingData.statModifiers },
+  ]
+
   let mergedModifiers = blendStatModifiers(typeData.statModifiers, wingData.statModifiers, WING_INFLUENCE)
 
   // Blend instinct stat modifiers
   const instinctData = instinct ? ENNEAGRAM_INSTINCTS[instinct] : null
   if (instinctData) {
     mergedModifiers = blendStatModifiers(mergedModifiers, instinctData.statModifiers, INSTINCT_INFLUENCE)
+    statBlendChainList.push({ source: `Instinct (${instinct})`, influence: INSTINCT_INFLUENCE, modifiers: instinctData.statModifiers })
   }
 
   // Build passives list from instinct stacking
@@ -356,6 +389,7 @@ export function buildArchetype(
     // 2nd instinct
     const secondInstinct = ENNEAGRAM_INSTINCTS[instinctStack[1]]
     mergedModifiers = blendStatModifiers(mergedModifiers, secondInstinct.statModifiers, INSTINCT_SECOND_INFLUENCE)
+    statBlendChainList.push({ source: `2nd instinct (${instinctStack[1]})`, influence: INSTINCT_SECOND_INFLUENCE, modifiers: secondInstinct.statModifiers })
     instinctPassiveList.push({
       ...secondInstinct.passive,
       source: `2nd instinct (${instinctStack[1]}) — ${secondInstinct.passive.source}`,
@@ -363,6 +397,7 @@ export function buildArchetype(
     // 3rd instinct (blind spot)
     const thirdInstinct = ENNEAGRAM_INSTINCTS[instinctStack[2]]
     mergedModifiers = blendStatModifiers(mergedModifiers, thirdInstinct.statModifiers, INSTINCT_THIRD_INFLUENCE)
+    statBlendChainList.push({ source: `3rd instinct (${instinctStack[2]})`, influence: INSTINCT_THIRD_INFLUENCE, modifiers: thirdInstinct.statModifiers })
     instinctPassiveList.push({
       ...thirdInstinct.passive,
       source: `3rd instinct (${instinctStack[2]}) — ${thirdInstinct.passive.source}`,
@@ -385,6 +420,9 @@ export function buildArchetype(
     stressedState: typeData.stressedState,
     instinctPassive: instinctPassiveList[0],
     instinctPassiveList: instinctPassiveList.length > 0 ? instinctPassiveList : undefined,
+    integrationLine: `${type} → ${typeData.integrationTarget}`,
+    disintegrationLine: `${type} → ${typeData.disintegrationTarget}`,
+    statBlendChain: statBlendChainList,
   }
 }
 
@@ -424,10 +462,18 @@ export function buildTritypeArchetype(
 
   const tritypeLabel = tritype.join('-')
 
+  // Extend blend chain with tritype fix steps
+  const tritypeBlendChainList: StatBlendStep[] = [
+    ...(baseArchetype.statBlendChain ?? []),
+    { source: `2nd fix (Type ${secondFix})`, influence: TRITYPE_SECOND_INFLUENCE, modifiers: secondFixModifiers },
+    { source: `3rd fix (Type ${thirdFix})`, influence: TRITYPE_THIRD_INFLUENCE, modifiers: thirdFixModifiers },
+  ]
+
   return {
     ...baseArchetype,
     className: `${baseArchetype.className} [${tritypeLabel}]`,
     statModifiers: modifiers,
+    statBlendChain: tritypeBlendChainList,
   }
 }
 

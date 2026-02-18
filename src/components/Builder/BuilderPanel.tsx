@@ -40,7 +40,7 @@ export function BuilderPanel({
 }: BuilderPanelProps) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <h2 className="text-2xl font-bold text-gray-100">Character Builder</h2>
         <button
           onClick={onRandomizeAll}

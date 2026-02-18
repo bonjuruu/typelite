@@ -107,6 +107,36 @@ const SOURCE_PASSIVES: Record<SourceTriad, PassiveTrait> = {
 }
 
 // ============================================================
+// TRIAD GAMEPLAY DESCRIPTIONS
+// ============================================================
+
+const TRIAD_DESCRIPTIONS = {
+  experiential: {
+    Memorializing: 'Abilities leave echoes — effects linger past their base duration, stacking pressure over time.',
+    Immersing: 'Consecutive casts build flow state — each use ramps power for the next.',
+    Distinguishing: 'Perfect timing windows — hit the critical moment for burst damage, miss it for weak output.',
+  } as Record<ExperientialTriad, string>,
+  movement: {
+    Escaping: 'Evasive and reactive — dodge chance increases, repositions after taking damage.',
+    Aligning: 'Adaptive flow — positioning auto-adjusts to match the flow of combat.',
+    Directing: 'Relentless aggression — closes distance after attacks, applies constant pressure.',
+  } as Record<MovementTriad, string>,
+  source: {
+    Internalizing: 'Passive regen — resources restore slowly over time, independent of combat.',
+    Externalizing: 'Damage-fueled — siphon energy from hitting enemies, rewarding aggression.',
+    Exchanging: 'Bidirectional flow — gain resources from both dealing and receiving damage.',
+  } as Record<SourceTriad, string>,
+} as const
+
+type TriadCategory = keyof typeof TRIAD_DESCRIPTIONS
+
+/** Get the gameplay description for a specific triad value. */
+export function getTriadDescription(category: TriadCategory, triadValue: string): string {
+  const descriptions = TRIAD_DESCRIPTIONS[category]
+  return (descriptions as Record<string, string>)[triadValue] ?? ''
+}
+
+// ============================================================
 // PUBLIC API
 // ============================================================
 

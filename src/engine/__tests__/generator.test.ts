@@ -204,6 +204,81 @@ describe('generateCharacter with enneagram tritype', () => {
 
     expect(character.archetype.className).toContain('[5-2-9]')
   })
+
+  it('blends stat modifiers from 2nd fix at 40% and 3rd fix at 20%', () => {
+    const inputWithTritype = makeFullInput()
+    inputWithTritype.enneagram = {
+      type: 5,
+      wing: 4,
+      instinct: 'sp',
+      tritype: [5, 2, 9],
+    }
+
+    const inputWithoutTritype = makeFullInput()
+    inputWithoutTritype.enneagram = {
+      type: 5,
+      wing: 4,
+      instinct: 'sp',
+    }
+
+    const characterWithTritype = generateCharacter(inputWithTritype)
+    const characterWithoutTritype = generateCharacter(inputWithoutTritype)
+
+    // Tritype blending adds 2nd/3rd fix modifiers on top of the base archetype modifiers.
+    // Type 2 adds spirit/vitality multipliers, Type 9 adds vitality/spirit — these should
+    // produce different archetype.statModifiers than base 5w4 alone.
+    const modifiersWithTritype = characterWithTritype.archetype.statModifiers
+    const modifiersWithoutTritype = characterWithoutTritype.archetype.statModifiers
+
+    expect(modifiersWithTritype).not.toEqual(modifiersWithoutTritype)
+  })
+
+  it('applies wing blending to 2nd and 3rd tritype fixes', () => {
+    const inputWithWings = makeFullInput()
+    inputWithWings.enneagram = {
+      type: 5,
+      wing: 4,
+      instinct: 'sp',
+      tritype: [5, 2, 9],
+      tritypeWings: [1, 8],
+    }
+
+    const inputWithoutWings = makeFullInput()
+    inputWithoutWings.enneagram = {
+      type: 5,
+      wing: 4,
+      instinct: 'sp',
+      tritype: [5, 2, 9],
+    }
+
+    const characterWithWings = generateCharacter(inputWithWings)
+    const characterWithoutWings = generateCharacter(inputWithoutWings)
+
+    // Tritype wings blend into each fix's modifiers at 30%, producing different
+    // final archetype.statModifiers than tritype without wings.
+    const modifiersWithWings = characterWithWings.archetype.statModifiers
+    const modifiersWithoutWings = characterWithoutWings.archetype.statModifiers
+
+    expect(modifiersWithWings).not.toEqual(modifiersWithoutWings)
+  })
+
+  it('tracks all three fixes in statBlendChain', () => {
+    const input = makeFullInput()
+    input.enneagram = {
+      type: 5,
+      wing: 4,
+      instinct: 'sp',
+      tritype: [5, 2, 9],
+      tritypeWings: [1, 8],
+    }
+
+    const character = generateCharacter(input)
+
+    expect(character.archetype.statBlendChain).toBeDefined()
+    const sourceList = character.archetype.statBlendChain!.map((step) => step.source)
+    expect(sourceList).toContain('2nd fix (Type 2)')
+    expect(sourceList).toContain('3rd fix (Type 9)')
+  })
 })
 
 // ============================================================
@@ -211,7 +286,7 @@ describe('generateCharacter with enneagram tritype', () => {
 // ============================================================
 
 describe('generateCharacter with instinct tritype', () => {
-  it('adds passives from all three centers', () => {
+  it('adds passives from all three realms', () => {
     const input = makeFullInput()
     input.instincts = {
       realm: 'FD',
@@ -220,8 +295,53 @@ describe('generateCharacter with instinct tritype', () => {
 
     const character = generateCharacter(input)
 
-    // Core FD has 3 passives, tritype adds passives from AY and SS (deduplicated)
-    expect(character.combatBehavior.passives.length).toBeGreaterThanOrEqual(3)
+    // Core FD: Flow State, Aggressive Advance, Siphon (3)
+    // AY adds: Evasive, Equilibrium (Flow State deduped) (2)
+    // SS adds: Adaptive Stance, Inner Reserve (Flow State deduped) (2)
+    // Total: 7 unique passives
+    expect(character.combatBehavior.passives.length).toBe(7)
+  })
+
+  it('deduplicates passives shared across tritype realms', () => {
+    const input = makeFullInput()
+    // FD, AY, SS all share Immersing experiential triad → "Flow State" passive
+    input.instincts = {
+      realm: 'FD',
+      tritype: ['FD', 'AY', 'SS'],
+    }
+
+    const character = generateCharacter(input)
+
+    const passiveNameList = character.combatBehavior.passives.map((p) => p.name)
+    const uniqueNameSet = new Set(passiveNameList)
+    expect(passiveNameList.length).toBe(uniqueNameSet.size)
+  })
+
+  it('appends 2nd/3rd fix passives without replacing core passives', () => {
+    const inputWithTritype = makeFullInput()
+    inputWithTritype.instincts = {
+      realm: 'FD',
+      tritype: ['FD', 'AY', 'SS'],
+    }
+
+    const inputWithoutTritype = makeFullInput()
+    inputWithoutTritype.instincts = { realm: 'FD' }
+
+    const characterWithTritype = generateCharacter(inputWithTritype)
+    const characterWithoutTritype = generateCharacter(inputWithoutTritype)
+
+    // Core passives (FD) should be preserved as the first 3
+    const corePassiveNameList = characterWithoutTritype.combatBehavior.passives.map((p) => p.name)
+    const tritypePassiveNameList = characterWithTritype.combatBehavior.passives.map((p) => p.name)
+
+    for (const coreName of corePassiveNameList) {
+      expect(tritypePassiveNameList).toContain(coreName)
+    }
+
+    // Tritype version should have strictly more passives
+    expect(characterWithTritype.combatBehavior.passives.length).toBeGreaterThan(
+      characterWithoutTritype.combatBehavior.passives.length,
+    )
   })
 })
 

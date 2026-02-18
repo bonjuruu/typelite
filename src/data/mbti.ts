@@ -50,6 +50,7 @@ interface AbilityTemplate {
 
 interface CognitiveFunctionData {
   name: string
+  essence: string
   scalingStat: StatName
   abilities: Record<AbilitySlot, AbilityTemplate>
 }
@@ -57,6 +58,7 @@ interface CognitiveFunctionData {
 const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   Ti: {
     name: 'Introverted Thinking',
+    essence: 'Dissects systems into logical frameworks — finds the axiom, collapses the structure.',
     scalingStat: 'intelligence',
     abilities: {
       hero: {
@@ -83,6 +85,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Te: {
     name: 'Extraverted Thinking',
+    essence: 'Organizes the external world toward measurable goals — efficiency is law.',
     scalingStat: 'intelligence',
     abilities: {
       hero: {
@@ -109,6 +112,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Fi: {
     name: 'Introverted Feeling',
+    essence: 'Guards a deeply personal value system — authenticity is non-negotiable.',
     scalingStat: 'spirit',
     abilities: {
       hero: {
@@ -135,6 +139,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Fe: {
     name: 'Extraverted Feeling',
+    essence: 'Attunes to collective emotional climate — harmony is both weapon and shield.',
     scalingStat: 'spirit',
     abilities: {
       hero: {
@@ -161,6 +166,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Si: {
     name: 'Introverted Sensing',
+    essence: 'Stores somatic and sensory memory — the body remembers everything.',
     scalingStat: 'vitality',
     abilities: {
       hero: {
@@ -187,6 +193,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Se: {
     name: 'Extraverted Sensing',
+    essence: 'Lives in the immediate physical moment — sensation is reality.',
     scalingStat: 'vitality',
     abilities: {
       hero: {
@@ -213,6 +220,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Ni: {
     name: 'Introverted Intuition',
+    essence: 'Converges on singular visions of the future — sees the thread, follows it inevitably.',
     scalingStat: 'willpower',
     abilities: {
       hero: {
@@ -239,6 +247,7 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
   },
   Ne: {
     name: 'Extraverted Intuition',
+    essence: 'Explodes outward into divergent possibilities — every thread branches infinitely.',
     scalingStat: 'willpower',
     abilities: {
       hero: {
@@ -263,6 +272,34 @@ const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionData> = {
       },
     },
   },
+}
+
+// ============================================================
+// TAG GLOSSARY
+// ============================================================
+
+const TAG_GLOSSARY: Record<AbilityTag, string> = {
+  damage: 'Deals direct damage to enemies.',
+  heal: 'Restores health to allies or self.',
+  buff: 'Grants positive status effects.',
+  debuff: 'Applies negative effects to enemies.',
+  utility: 'Provides tactical advantages or environmental manipulation.',
+  aoe: 'Affects multiple targets in an area.',
+  'single-target': 'Focuses all power on one target.',
+  self: 'Only affects the caster.',
+  chaotic: 'High variance — can backfire or spike unpredictably.',
+  defensive: 'Reduces incoming damage or provides protection.',
+  reactive: 'Triggers automatically in response to conditions (low HP, ally in danger).',
+}
+
+/** Get the description for an ability tag. */
+export function getTagDescription(tag: AbilityTag): string {
+  return TAG_GLOSSARY[tag]
+}
+
+/** Get the essence text for a cognitive function. */
+export function getCognitiveFunctionEssence(fn: CognitiveFunction): string {
+  return COGNITIVE_FUNCTIONS[fn].essence
 }
 
 // ============================================================

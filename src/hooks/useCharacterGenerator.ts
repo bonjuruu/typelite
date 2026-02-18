@@ -12,6 +12,7 @@ import type {
   InstinctRealm,
   Element,
 } from '../engine/types.ts'
+import type { QuizResult } from '../data/quiz/types.ts'
 import { generateCharacter, generateName } from '../engine/generator.ts'
 import { serializeToUrl, deserializeFromUrl } from '../utils/urlSerializer.ts'
 import { AP_TYPE_LIST } from '../data/attitudinal.ts'
@@ -95,9 +96,9 @@ export function useCharacterGenerator() {
   const [generateCount, setGenerateCount] = useState(0)
 
   const regenerateName = useCallback(() => {
-    const newName = generateName()
+    const newName = generateName(character?.archetype.className, character?.element.element)
     setCharacterName(newName)
-  }, [])
+  }, [character])
 
   const toggleSystem = useCallback((systemId: SystemId) => {
     setEnabledSystems((prev) => ({ ...prev, [systemId]: !prev[systemId] }))
@@ -270,20 +271,67 @@ export function useCharacterGenerator() {
     if (!params.has('s')) return false
 
     const state = deserializeFromUrl(params)
-    if (!state) return false
+    if (!state) {
+      // Malformed 's' param — strip it so the bad URL doesn't persist
+      window.history.replaceState(null, '', window.location.pathname)
+      return false
+    }
 
-    setEnabledSystems(state.enabledSystems)
+    // Disable systems whose required selections are missing (malformed params)
+    const sanitizedSystems = sanitizeEnabledSystems(state.enabledSystems, state.selections)
+
+    setEnabledSystems(sanitizedSystems)
     setSelections(state.selections)
     setOverrides(state.overrides)
 
-    // Generate the character from the deserialized state
-    const input = buildGeneratorInput(state.enabledSystems, state.selections, state.overrides)
-    const generatedCharacter = generateCharacter(input)
-    setCharacter(generatedCharacter)
-    setCharacterName(state.characterName ?? generatedCharacter.name)
-    setGenerateCount((prev) => prev + 1)
+    // Only generate if at least one system has valid selections
+    const hasAnySelection = checkSelections(sanitizedSystems, state.selections)
+    if (!hasAnySelection) {
+      window.history.replaceState(null, '', window.location.pathname)
+      return false
+    }
+
+    try {
+      const input = buildGeneratorInput(sanitizedSystems, state.selections, state.overrides)
+      const generatedCharacter = generateCharacter(input)
+      setCharacter(generatedCharacter)
+      setCharacterName(state.characterName ?? generatedCharacter.name)
+      setGenerateCount((prev) => prev + 1)
+    } catch (error) {
+      console.error('Failed to generate character from URL:', error)
+      // Reset to clean state — don't leave a broken URL in the bar
+      window.history.replaceState(null, '', window.location.pathname)
+      return false
+    }
+
     return true
   }, [])
+
+  const applyQuizResults = useCallback((quizResult: QuizResult) => {
+    const newSelections: BuilderSelections = { ...INITIAL_SELECTIONS }
+
+    if (quizResult.attitudinal) newSelections.attitudinal = quizResult.attitudinal
+    if (quizResult.enneagramType) {
+      newSelections.enneagramType = quizResult.enneagramType
+      newSelections.enneagramWing = quizResult.enneagramWing
+      newSelections.enneagramInstinct = quizResult.enneagramInstinct
+    }
+    if (quizResult.mbti) newSelections.mbti = quizResult.mbti
+    if (quizResult.socionics) newSelections.socionics = quizResult.socionics
+    if (quizResult.instinctRealm) newSelections.instinctRealm = quizResult.instinctRealm
+
+    setSelections(newSelections)
+
+    // Auto-generate (same pattern as randomizeAll)
+    const input = buildGeneratorInput(enabledSystems, newSelections, overrides)
+    const generatedCharacter = generateCharacter(input)
+    setCharacter(generatedCharacter)
+    setCharacterName(generatedCharacter.name)
+    setGenerateCount((prev) => prev + 1)
+
+    const params = serializeToUrl(enabledSystems, newSelections, overrides, generatedCharacter.name)
+    window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`)
+  }, [enabledSystems, overrides])
 
   const hasAllSelections = checkSelections(enabledSystems, selections)
 
@@ -305,6 +353,7 @@ export function useCharacterGenerator() {
     setCharacterName,
     regenerateName,
     loadFromUrl,
+    applyQuizResults,
   }
 }
 
@@ -358,6 +407,17 @@ function buildGeneratorInput(
 
 function pickRandom<T>(list: readonly T[]): T {
   return list[Math.floor(Math.random() * list.length)]
+}
+
+/** Disable any system whose required URL params were missing or invalid. */
+function sanitizeEnabledSystems(enabled: EnabledSystems, selections: BuilderSelections): EnabledSystems {
+  return {
+    attitudinal: enabled.attitudinal && selections.attitudinal !== null,
+    enneagram: enabled.enneagram && selections.enneagramType !== null && selections.enneagramWing !== null && selections.enneagramInstinct !== null,
+    mbti: enabled.mbti && selections.mbti !== null,
+    socionics: enabled.socionics && selections.socionics !== null,
+    instincts: enabled.instincts && selections.instinctRealm !== null,
+  }
 }
 
 function checkSelections(enabled: EnabledSystems, selections: BuilderSelections): boolean {
