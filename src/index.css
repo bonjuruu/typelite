@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+html, body {
+  background-color: #030712;
+}
+
 @keyframes fade-in-up {
   from {
     opacity: 0;
