@@ -1,15 +1,15 @@
-import type { Character } from '../../engine/types.ts'
-import { generateSystemInsights } from '../../engine/insights.ts'
-import { SectionTitle } from '../common/SectionTitle.tsx'
+import type { Character } from "../../engine/types/index.ts";
+import { generateSystemInsights } from "../../engine/insights.ts";
+import { SectionTitle } from "../common/SectionTitle.tsx";
 
 interface InsightsSectionProps {
-  character: Character
+  character: Character;
 }
 
 export function InsightsSection({ character }: InsightsSectionProps) {
-  const insightList = generateSystemInsights(character)
+  const insightList = generateSystemInsights(character);
 
-  if (insightList.length === 0) return null
+  if (insightList.length === 0) return null;
 
   return (
     <div>
@@ -25,5 +25,5 @@ export function InsightsSection({ character }: InsightsSectionProps) {
         </ul>
       </div>
     </div>
-  )
+  );
 }

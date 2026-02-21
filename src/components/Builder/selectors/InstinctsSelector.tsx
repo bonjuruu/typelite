@@ -1,25 +1,31 @@
-import type { InstinctRealm } from '../../../engine/types.ts'
-import type { BuilderSelections } from '../../../hooks/useCharacterGenerator.ts'
-import { INSTINCT_REALM_LIST, getRealmName } from '../../../hooks/useCharacterGenerator.ts'
-import { Select } from '../../common/Select.tsx'
-import { Toggle } from '../../common/Toggle.tsx'
-import { InstinctTritypePicker } from '../pickers/InstinctTritypePicker.tsx'
+import type { InstinctRealm } from "../../../engine/types/index.ts";
+import type { BuilderSelections } from "../../../types/builder.ts";
+import { INSTINCT_REALM_LIST, getRealmName } from "../../../data/index.ts";
+import { Select } from "../../common/Select.tsx";
+import { Toggle } from "../../common/Toggle.tsx";
+import { InstinctTritypePicker } from "../pickers/InstinctTritypePicker.tsx";
 
 interface InstinctsSelectorProps {
-  selections: BuilderSelections
-  onUpdateSelection: <K extends keyof BuilderSelections>(key: K, value: BuilderSelections[K]) => void
+  selections: BuilderSelections;
+  onUpdateSelection: <K extends keyof BuilderSelections>(
+    key: K,
+    value: BuilderSelections[K],
+  ) => void;
 }
 
-export function InstinctsSelector({ selections, onUpdateSelection }: InstinctsSelectorProps) {
+export function InstinctsSelector({
+  selections,
+  onUpdateSelection,
+}: InstinctsSelectorProps) {
   return (
     <div className="space-y-3">
       <Select
-        value={selections.instinctRealm ?? ''}
+        value={selections.instinctRealm ?? ""}
         onChange={(value) => {
-          onUpdateSelection('instinctRealm', (value as InstinctRealm) || null)
+          onUpdateSelection("instinctRealm", (value as InstinctRealm) || null);
           if (!value) {
-            onUpdateSelection('instinctSecondRealm', null)
-            onUpdateSelection('instinctThirdRealm', null)
+            onUpdateSelection("instinctSecondRealm", null);
+            onUpdateSelection("instinctThirdRealm", null);
           }
         }}
         placeholder="Select realm..."
@@ -33,7 +39,12 @@ export function InstinctsSelector({ selections, onUpdateSelection }: InstinctsSe
       <div className="flex items-center gap-2">
         <Toggle
           checked={selections.instinctTritypeEnabled}
-          onChange={() => onUpdateSelection('instinctTritypeEnabled', !selections.instinctTritypeEnabled)}
+          onChange={() =>
+            onUpdateSelection(
+              "instinctTritypeEnabled",
+              !selections.instinctTritypeEnabled,
+            )
+          }
           aria-label="Toggle instinct tritype"
           size="sm"
         />
@@ -49,5 +60,5 @@ export function InstinctsSelector({ selections, onUpdateSelection }: InstinctsSe
         />
       )}
     </div>
-  )
+  );
 }

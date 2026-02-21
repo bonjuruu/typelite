@@ -1,33 +1,37 @@
-import type { QuizSystemId } from '../../data/quiz/types.ts'
+import type { QuizSystemId } from "../../data/quiz/types.ts";
 
 // ============================================================
 // SYSTEM LABELS
 // ============================================================
 
 const SYSTEM_SHORT_LABEL: Record<QuizSystemId, string> = {
-  attitudinal: 'AP',
-  enneagram: 'Enneagram',
-  mbti: 'MBTI',
-  socionics: 'Socionics',
-  instincts: 'Instincts',
-}
+  attitudinal: "AP",
+  enneagram: "Enneagram",
+  mbti: "MBTI",
+  socionics: "Socionics",
+  instincts: "Instincts",
+};
 
 // ============================================================
 // PROPS
 // ============================================================
 
 interface QuizProgressProps {
-  currentIndex: number
-  totalCount: number
-  currentSystem: QuizSystemId | null
+  currentIndex: number;
+  totalCount: number;
+  currentSystem: QuizSystemId | null;
 }
 
 // ============================================================
 // COMPONENT
 // ============================================================
 
-export function QuizProgress({ currentIndex, totalCount, currentSystem }: QuizProgressProps) {
-  const fraction = totalCount > 0 ? Math.min(currentIndex / totalCount, 1) : 0
+export function QuizProgress({
+  currentIndex,
+  totalCount,
+  currentSystem,
+}: QuizProgressProps) {
+  const fraction = totalCount > 0 ? Math.min(currentIndex / totalCount, 1) : 0;
 
   return (
     <div className="mb-8">
@@ -49,5 +53,5 @@ export function QuizProgress({ currentIndex, totalCount, currentSystem }: QuizPr
         />
       </div>
     </div>
-  )
+  );
 }

@@ -1,79 +1,90 @@
-import type { Character, StatName } from '../engine/types.ts'
-import { computeAbilityPower } from '../engine/modifiers.ts'
+import type { Character, StatName } from "../engine/types/index.ts";
+import { getArchetypePassiveList } from "../engine/types/index.ts";
+import { computeAbilityPower } from "../engine/modifiers.ts";
+import { SLOT_LABELS } from "../data/index.ts";
 
-const DIVIDER = '══════════════════════════════════'
+const DIVIDER = "══════════════════════════════════";
 
-const SLOT_LABELS: Record<string, string> = {
-  hero: 'Hero',
-  parent: 'Parent',
-  child: 'Child',
-  inferior: 'Inferior',
-}
-
-export function exportCharacterToText(character: Character, characterName: string): string {
-  const lineList: string[] = []
+export function exportCharacterToText(
+  character: Character,
+  characterName: string,
+): string {
+  const lineList: string[] = [];
 
   // Header
-  lineList.push(DIVIDER)
-  lineList.push(`  ${characterName} — ${character.title}`)
-  lineList.push(DIVIDER)
-  lineList.push('')
+  lineList.push(DIVIDER);
+  lineList.push(`  ${characterName} — ${character.title}`);
+  lineList.push(DIVIDER);
+  lineList.push("");
 
   // Stats
-  lineList.push('STATS')
+  lineList.push("STATS");
   const statEntryList: { key: StatName; label: string }[] = [
-    { key: 'willpower', label: 'Willpower' },
-    { key: 'intelligence', label: 'Intelligence' },
-    { key: 'spirit', label: 'Spirit' },
-    { key: 'vitality', label: 'Vitality' },
-  ]
+    { key: "willpower", label: "Willpower" },
+    { key: "intelligence", label: "Intelligence" },
+    { key: "spirit", label: "Spirit" },
+    { key: "vitality", label: "Vitality" },
+  ];
   for (const { key, label } of statEntryList) {
-    lineList.push(`  ${label}:${' '.repeat(15 - label.length)}${character.stats[key]}`)
+    lineList.push(
+      `  ${label}:${" ".repeat(15 - label.length)}${character.stats[key]}`,
+    );
   }
-  lineList.push('')
+  lineList.push("");
 
   // Archetype
-  lineList.push(`ARCHETYPE: ${character.archetype.className}`)
-  lineList.push(`  ${character.archetype.description}`)
+  lineList.push(`ARCHETYPE: ${character.archetype.className}`);
+  lineList.push(`  ${character.archetype.description}`);
 
-  const passiveList = character.archetype.instinctPassiveList
-    ?? (character.archetype.instinctPassive ? [character.archetype.instinctPassive] : [])
+  const passiveList = getArchetypePassiveList(character.archetype);
   for (const passive of passiveList) {
-    lineList.push(`  Passive — ${passive.name}: ${passive.description}`)
+    lineList.push(`  Passive — ${passive.name}: ${passive.description}`);
   }
 
-  lineList.push(`  Empowered: ${character.archetype.empoweredState.name} — ${character.archetype.empoweredState.description}`)
-  lineList.push(`  Stressed: ${character.archetype.stressedState.name} — ${character.archetype.stressedState.description}`)
-  lineList.push('')
+  lineList.push(
+    `  Empowered: ${character.archetype.empoweredState.name} — ${character.archetype.empoweredState.description}`,
+  );
+  lineList.push(
+    `  Stressed: ${character.archetype.stressedState.name} — ${character.archetype.stressedState.description}`,
+  );
+  lineList.push("");
 
   // Abilities
   if (character.abilities.length > 0) {
-    lineList.push('ABILITIES')
+    lineList.push("ABILITIES");
     for (const ability of character.abilities) {
-      const power = computeAbilityPower(ability, character.stats)
-      const slotLabel = SLOT_LABELS[ability.slot] ?? ability.slot
-      lineList.push(`  [${slotLabel} — ${ability.cognitiveFunction}] ${ability.name} (${power})`)
-      lineList.push(`    Tags: ${ability.tags.join(', ')}`)
-      lineList.push(`    ${ability.description}`)
+      const power = computeAbilityPower(ability, character.stats);
+      const slotLabel = SLOT_LABELS[ability.slot] ?? ability.slot;
+      lineList.push(
+        `  [${slotLabel} — ${ability.cognitiveFunction}] ${ability.name} (${power})`,
+      );
+      lineList.push(`    Tags: ${ability.tags.join(", ")}`);
+      lineList.push(`    ${ability.description}`);
     }
-    lineList.push('')
+    lineList.push("");
   }
 
   // Element
-  lineList.push(`ELEMENT: ${character.element.element} (${character.element.quadra} quadra)`)
-  lineList.push(`  Passive — ${character.element.passiveTrait.name}: ${character.element.passiveTrait.description}`)
-  lineList.push('')
+  lineList.push(
+    `ELEMENT: ${character.element.element} (${character.element.quadra} quadra)`,
+  );
+  lineList.push(
+    `  Passive — ${character.element.passiveTrait.name}: ${character.element.passiveTrait.description}`,
+  );
+  lineList.push("");
 
   // Combat
-  lineList.push(`COMBAT: ${character.combatBehavior.combatOrientation}`)
-  lineList.push(`  Activation: ${character.combatBehavior.activationStyle} | Positioning: ${character.combatBehavior.positioning} | Regen: ${character.combatBehavior.regenSource}`)
+  lineList.push(`COMBAT: ${character.combatBehavior.combatOrientation}`);
+  lineList.push(
+    `  Activation: ${character.combatBehavior.activationStyle} | Positioning: ${character.combatBehavior.positioning} | Regen: ${character.combatBehavior.regenSource}`,
+  );
   for (const passive of character.combatBehavior.passives) {
-    lineList.push(`  Passive — ${passive.name}: ${passive.description}`)
+    lineList.push(`  Passive — ${passive.name}: ${passive.description}`);
   }
-  lineList.push('')
+  lineList.push("");
 
   // Footer
-  lineList.push('Generated by Typelite')
+  lineList.push("Generated by Typelite");
 
-  return lineList.join('\n')
+  return lineList.join("\n");
 }

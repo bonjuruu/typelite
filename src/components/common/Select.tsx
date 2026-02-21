@@ -1,16 +1,21 @@
 export interface SelectOption {
-  value: string
-  label: string
+  value: string;
+  label: string;
 }
 
 interface SelectProps {
-  value: string
-  onChange: (value: string) => void
-  placeholder: string
-  optionList: SelectOption[]
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  optionList: SelectOption[];
 }
 
-export function Select({ value, onChange, placeholder, optionList }: SelectProps) {
+export function Select({
+  value,
+  onChange,
+  placeholder,
+  optionList,
+}: SelectProps) {
   return (
     <select
       value={value}
@@ -24,5 +29,5 @@ export function Select({ value, onChange, placeholder, optionList }: SelectProps
         </option>
       ))}
     </select>
-  )
+  );
 }

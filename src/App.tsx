@@ -1,17 +1,22 @@
-import { useState, useEffect } from 'react'
-import { useCharacterGenerator } from './hooks/useCharacterGenerator.ts'
-import { BuilderPanel } from './components/Builder/BuilderPanel.tsx'
-import { CharacterSheet } from './components/CharacterSheet/CharacterSheet.tsx'
-import { QuizFlow } from './components/Quiz/QuizFlow.tsx'
-import { AboutModal } from './components/common/AboutModal.tsx'
-import { AboutPage } from './components/About/AboutPage.tsx'
-import type { QuizResult } from './data/quiz/types.ts'
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useCharacterGenerator } from "./hooks/useCharacterGenerator.ts";
+import { useComparison } from "./hooks/useComparison.ts";
+import { BuilderPanel } from "./components/Builder/BuilderPanel.tsx";
+import { CharacterSheet } from "./components/CharacterSheet/CharacterSheet.tsx";
+import { ComparisonView } from "./components/Comparison/ComparisonView.tsx";
+import { QuizFlow } from "./components/Quiz/QuizFlow.tsx";
+import { AboutModal } from "./components/common/AboutModal.tsx";
+import { AboutPage } from "./components/About/AboutPage.tsx";
+import type { QuizResult } from "./data/quiz/types.ts";
 
-type AppMode = 'builder' | 'quiz' | 'about'
+type AppMode = "builder" | "quiz" | "about";
 
 function App() {
-  const [mode, setMode] = useState<AppMode>('builder')
-  const [showAbout, setShowAbout] = useState(false)
+  const [mode, setMode] = useState<AppMode>("builder");
+  const [showAbout, setShowAbout] = useState(false);
+  const [builderExpanded, setBuilderExpanded] = useState(true);
+  const comparison = useComparison();
+  const comparisonRef = useRef<HTMLDivElement>(null);
 
   const {
     enabledSystems,
@@ -32,51 +37,60 @@ function App() {
     regenerateName,
     loadFromUrl,
     applyQuizResults,
-  } = useCharacterGenerator()
+    rawCharacter,
+    characterEdits,
+    updateCharacterEdit,
+    resetCharacterEdits,
+  } = useCharacterGenerator();
 
   useEffect(() => {
-    loadFromUrl()
-  }, [loadFromUrl])
+    loadFromUrl();
+  }, [loadFromUrl]);
+
+  const handleGenerate = useCallback(() => {
+    generate();
+    setBuilderExpanded(false);
+  }, [generate]);
 
   const handleQuizComplete = (result: QuizResult) => {
-    applyQuizResults(result)
-    setMode('builder')
-  }
+    applyQuizResults(result);
+    setMode("builder");
+  };
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <header className="border-b border-gray-800 px-4 py-4 sm:px-6">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
+        <div className="mx-auto flex max-w-5xl items-center justify-between">
           <h1 className="text-2xl font-bold tracking-tight">
             <span className="text-indigo-400">Type</span>lite
           </h1>
           <div className="flex gap-2">
             <button
-              onClick={() => setMode('about')}
+              onClick={() => setMode("about")}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                mode === 'about'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                mode === "about"
+                  ? "bg-indigo-600 text-white"
+                  : "text-gray-400 hover:bg-gray-700 hover:text-gray-200"
               }`}
             >
               About
             </button>
             <button
-              onClick={() => setMode('quiz')}
+              onClick={() => setMode("quiz")}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                mode === 'quiz'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                mode === "quiz"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
               }`}
             >
               Quiz
             </button>
             <button
-              onClick={() => setMode('builder')}
+              onClick={() => setMode("builder")}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                mode === 'builder'
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                mode === "builder"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200"
               }`}
             >
               Builder
@@ -85,54 +99,97 @@ function App() {
         </div>
       </header>
 
-      {mode === 'about' ? (
+      {mode === "about" ? (
         <main className="mx-auto max-w-3xl p-4 sm:p-6">
           <AboutPage onOpenSystemDetails={() => setShowAbout(true)} />
         </main>
-      ) : mode === 'quiz' ? (
+      ) : mode === "quiz" ? (
         <main className="mx-auto max-w-3xl p-4 sm:p-6">
           <QuizFlow
             enabledSystems={enabledSystems}
             onComplete={handleQuizComplete}
-            onCancel={() => setMode('builder')}
+            onCancel={() => setMode("builder")}
           />
         </main>
       ) : (
-        <main className="mx-auto grid max-w-6xl gap-6 p-4 sm:gap-8 sm:p-6 lg:grid-cols-2">
+        <main className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
+          {!character && (
+            <WelcomePanel
+              onStartQuiz={() => setMode("quiz")}
+              onOpenAbout={() => setShowAbout(true)}
+            />
+          )}
+
           <BuilderPanel
             enabledSystems={enabledSystems}
             selections={selections}
             overrides={overrides}
             hasAllSelections={hasAllSelections}
+            isExpanded={builderExpanded}
+            compact={generateCount > 0}
+            onSetExpanded={setBuilderExpanded}
             onToggleSystem={toggleSystem}
             onUpdateSelection={updateSelection}
             onUpdateOverride={updateOverride}
             onSetEnneagramType={setEnneagramType}
             onRandomizeSystem={randomizeSystem}
             onRandomizeAll={randomizeAll}
-            onGenerate={generate}
+            onGenerate={handleGenerate}
           />
 
-          <div>
-            {character ? (
-              <div key={generateCount} className="animate-[fade-in-up_0.4s_ease-out]">
-                <CharacterSheet
-                  character={character}
-                  characterName={characterName}
-                  onSetCharacterName={setCharacterName}
-                  onRegenerateName={regenerateName}
-                />
-              </div>
-            ) : (
-              <WelcomePanel onStartQuiz={() => setMode('quiz')} onOpenAbout={() => setShowAbout(true)} />
-            )}
-          </div>
+          {(comparison.slotA || comparison.slotB) && (
+            <div ref={comparisonRef}>
+              <ComparisonView
+                slotA={comparison.slotA}
+                slotB={comparison.slotB}
+                diff={comparison.diff}
+                onClearSlot={comparison.clearSlot}
+                onClearAll={comparison.clearAll}
+              />
+            </div>
+          )}
+
+          {character && (
+            <div
+              key={generateCount}
+              className="animate-[fade-in-up_0.4s_ease-out]"
+            >
+              <CharacterSheet
+                character={character}
+                rawCharacter={rawCharacter}
+                characterEdits={characterEdits}
+                characterName={characterName}
+                onSetCharacterName={setCharacterName}
+                onRegenerateName={regenerateName}
+                onUpdateEdit={updateCharacterEdit}
+                onResetEdits={resetCharacterEdits}
+                onCompare={() => {
+                  comparison.saveToNextSlot(character, characterName);
+                  setTimeout(
+                    () =>
+                      comparisonRef.current?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                      }),
+                    50,
+                  );
+                }}
+                comparisonSlotState={
+                  comparison.slotA && comparison.slotB
+                    ? "both-filled"
+                    : comparison.slotA
+                      ? "a-filled"
+                      : "empty"
+                }
+              />
+            </div>
+          )}
         </main>
       )}
 
       <AboutModal open={showAbout} onClose={() => setShowAbout(false)} />
     </div>
-  )
+  );
 }
 
 // ============================================================
@@ -140,38 +197,84 @@ function App() {
 // ============================================================
 
 const SYSTEM_PREVIEW_LIST = [
-  { name: 'Attitudinal Psyche', domain: 'Stats', desc: 'Ranks 4 cognitive aspects to set your base stat spread' },
-  { name: 'Enneagram', domain: 'Class', desc: '9 core motivations become class archetypes with wings and growth lines' },
-  { name: 'MBTI (Beebe)', domain: 'Abilities', desc: '4-function cognitive stack produces 4 unique abilities' },
-  { name: 'Socionics', domain: 'Element', desc: 'Quadra determines elemental school, club grants a passive trait' },
-  { name: 'Expanded Instincts', domain: 'Combat', desc: '9 realms with 3 triad systems shape combat behavior' },
-] as const
+  {
+    name: "Attitudinal Psyche",
+    domain: "Stats",
+    desc: "Ranks 4 cognitive aspects to set your base stat spread",
+  },
+  {
+    name: "Enneagram",
+    domain: "Class",
+    desc: "9 core motivations become class archetypes with wings and growth lines",
+  },
+  {
+    name: "MBTI (Beebe)",
+    domain: "Abilities",
+    desc: "4-function cognitive stack produces 4 unique abilities",
+  },
+  {
+    name: "Socionics",
+    domain: "Element",
+    desc: "Quadra determines elemental school, club grants a passive trait",
+  },
+  {
+    name: "Expanded Instincts",
+    domain: "Combat",
+    desc: "9 realms with 3 triad systems shape combat behavior",
+  },
+] as const;
 
-function WelcomePanel({ onStartQuiz, onOpenAbout }: { onStartQuiz: () => void; onOpenAbout: () => void }) {
+function WelcomePanel({
+  onStartQuiz,
+  onOpenAbout,
+}: {
+  onStartQuiz: () => void;
+  onOpenAbout: () => void;
+}) {
   return (
     <div className="space-y-5">
       <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-5 sm:p-6">
         <h2 className="text-lg font-bold text-gray-100">What is this?</h2>
         <p className="mt-2 text-sm leading-relaxed text-gray-400">
-          Typelite generates roguelite-style game characters from <em className="text-gray-300">real personality typology</em>.
-          Five systems — each measuring something genuinely different about how people think and
-          act — layer together to produce stats, a class, abilities, an element, and combat behavior.
-          Your real personality creates a character that actually plays differently.
+          Typelite generates roguelite-style game characters from{" "}
+          <em className="text-gray-300">real personality typology</em>. Five
+          systems — each measuring something genuinely different about how
+          people think and act — layer together to produce stats, a class,
+          abilities, an element, and combat behavior. Your real personality
+          creates a character that actually plays differently.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-gray-400">
-          Don't know your types? The <button onClick={onStartQuiz} className="font-medium text-indigo-400 hover:text-indigo-300">Quiz</button> will
-          determine them. Already know them? Pick from the selectors on the left and hit Generate.
+          Don't know your types? The{" "}
+          <button
+            onClick={onStartQuiz}
+            className="font-medium text-indigo-400 hover:text-indigo-300"
+          >
+            Quiz
+          </button>{" "}
+          will determine them. Already know them? Pick from the selectors below
+          and hit Generate.
         </p>
       </div>
 
       <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-5 sm:p-6">
-        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">5 systems, 5 domains</h3>
+        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
+          5 systems, 5 domains
+        </h3>
         <div className="space-y-2.5">
           {SYSTEM_PREVIEW_LIST.map((system) => (
-            <div key={system.name} className="flex items-baseline gap-2 text-sm">
-              <span className="shrink-0 font-medium text-gray-200">{system.name}</span>
-              <span className="shrink-0 text-xs text-indigo-400">&rarr; {system.domain}</span>
-              <span className="text-xs text-gray-600">&mdash; {system.desc}</span>
+            <div
+              key={system.name}
+              className="flex items-baseline gap-2 text-sm"
+            >
+              <span className="shrink-0 font-medium text-gray-200">
+                {system.name}
+              </span>
+              <span className="shrink-0 text-xs text-indigo-400">
+                &rarr; {system.domain}
+              </span>
+              <span className="text-xs text-gray-600">
+                &mdash; {system.desc}
+              </span>
             </div>
           ))}
         </div>
@@ -190,10 +293,12 @@ function WelcomePanel({ onStartQuiz, onOpenAbout }: { onStartQuiz: () => void; o
         >
           Take the Quiz
         </button>
-        <span className="flex items-center text-xs text-gray-600">or pick types on the left</span>
+        <span className="flex items-center text-xs text-gray-600">
+          or pick types below
+        </span>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

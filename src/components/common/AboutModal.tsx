@@ -1,41 +1,42 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react";
+import { SystemEntry } from "./SystemEntry.tsx";
 
 interface AboutModalProps {
-  open: boolean
-  onClose: () => void
+  open: boolean;
+  onClose: () => void;
 }
 
 export function AboutModal({ open, onClose }: AboutModalProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
     if (open && !dialog.open) {
-      dialog.showModal()
+      dialog.showModal();
     } else if (!open && dialog.open) {
-      dialog.close()
+      dialog.close();
     }
-  }, [open])
+  }, [open]);
 
   useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-    const handleClose = () => onClose()
-    dialog.addEventListener('close', handleClose)
-    return () => dialog.removeEventListener('close', handleClose)
-  }, [onClose])
+    const handleClose = () => onClose();
+    dialog.addEventListener("close", handleClose);
+    return () => dialog.removeEventListener("close", handleClose);
+  }, [onClose]);
 
   // Close on backdrop click
   const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
     if (e.target === dialogRef.current) {
-      onClose()
+      onClose();
     }
-  }
+  };
 
-  if (!open) return null
+  if (!open) return null;
 
   return (
     <dialog
@@ -47,14 +48,21 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
         <div className="mb-6 flex items-start justify-between">
           <div>
             <h2 className="text-xl font-bold text-gray-100">About Typelite</h2>
-            <p className="mt-1 text-sm text-gray-500">Why these systems, and why these mappings</p>
+            <p className="mt-1 text-sm text-gray-500">
+              Why these systems, and why these mappings
+            </p>
           </div>
           <button
             onClick={onClose}
             aria-label="Close"
             className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-800 hover:text-gray-300"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-5 w-5"
+            >
               <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z" />
             </svg>
           </button>
@@ -62,10 +70,12 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
 
         <div className="mb-8 text-sm leading-relaxed text-gray-400">
           <p>
-            Typelite turns real personality typology into a roguelite character builder. Five systems,
-            each measuring something genuinely different about how people think and act, map onto five
-            distinct game domains. The goal isn't just a character generator — it's a framework where
-            your real personality produces a character that <em className="text-gray-300">actually plays differently</em>.
+            Typelite turns real personality typology into a roguelite character
+            builder. Five systems, each measuring something genuinely different
+            about how people think and act, map onto five distinct game domains.
+            The goal isn't just a character generator — it's a framework where
+            your real personality produces a character that{" "}
+            <em className="text-gray-300">actually plays differently</em>.
           </p>
         </div>
 
@@ -102,53 +112,36 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             name="Expanded Instincts"
             arrow="Combat Behavior"
             what="Rob Collopy's system from the Attitudinal Psyche community. 9 instinctual realms across 3 centers (Self-Survival, Interpersonal, Purpose), with 3 orthogonal triad systems that classify each realm's activation style, movement pattern, and energy source."
-            why={<>
-              This was a deliberate choice over classic enneagram sp/so/sx instincts. Classic instincts
-              give you 3 options with limited mechanical depth. Expanded Instincts gives you 9 realms,
-              each with a unique <em className="text-gray-300">combination</em> of triads — that means
-              distinct activation styles, positioning behaviors, and regen sources that create genuinely
-              different combat patterns. The tritype system (one realm per center) adds further
-              differentiation. It's also a philosophically different model: types run <em className="text-gray-300">toward</em> aliveness
-              rather than <em className="text-gray-300">away</em> from fear, which makes for more interesting character motivation.
-            </>}
+            why={
+              <>
+                This was a deliberate choice over classic enneagram sp/so/sx
+                instincts. Classic instincts give you 3 options with limited
+                mechanical depth. Expanded Instincts gives you 9 realms, each
+                with a unique <em className="text-gray-300">combination</em> of
+                triads — that means distinct activation styles, positioning
+                behaviors, and regen sources that create genuinely different
+                combat patterns. The tritype system (one realm per center) adds
+                further differentiation. It's also a philosophically different
+                model: types run <em className="text-gray-300">toward</em>{" "}
+                aliveness rather than <em className="text-gray-300">away</em>{" "}
+                from fear, which makes for more interesting character
+                motivation.
+              </>
+            }
           />
         </div>
 
         <div className="mt-8 border-t border-gray-800 pt-6">
           <p className="text-xs leading-relaxed text-gray-600">
-            These systems were chosen because they measure genuinely orthogonal dimensions of personality.
-            AP measures cognitive priorities, Enneagram measures core motivation, MBTI measures information
-            processing, Socionics measures social-cognitive orientation, and Expanded Instincts measures
-            instinctual drives. Layering them creates characters with depth that no single system could produce.
+            These systems were chosen because they measure genuinely orthogonal
+            dimensions of personality. AP measures cognitive priorities,
+            Enneagram measures core motivation, MBTI measures information
+            processing, Socionics measures social-cognitive orientation, and
+            Expanded Instincts measures instinctual drives. Layering them
+            creates characters with depth that no single system could produce.
           </p>
         </div>
       </div>
     </dialog>
-  )
-}
-
-function SystemEntry({ name, arrow, what, why }: {
-  name: string
-  arrow: string
-  what: string
-  why: string | React.ReactNode
-}) {
-  return (
-    <div className="rounded-lg border border-gray-800 bg-gray-800/50 p-4">
-      <div className="mb-2 flex items-center gap-2">
-        <h3 className="text-sm font-bold text-gray-100">{name}</h3>
-        <span className="rounded-full bg-indigo-600/20 px-2 py-0.5 text-[10px] font-semibold text-indigo-400">
-          &rarr; {arrow}
-        </span>
-      </div>
-      <p className="text-xs leading-relaxed text-gray-400">
-        <span className="font-semibold text-gray-300">What it measures: </span>
-        {what}
-      </p>
-      <p className="mt-2 text-xs leading-relaxed text-gray-400">
-        <span className="font-semibold text-gray-300">Why this mapping: </span>
-        {why}
-      </p>
-    </div>
-  )
+  );
 }
