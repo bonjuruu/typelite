@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// ENNEAGRAM — 15 Weighted Accumulator Questions
+// ENNEAGRAM - 15 Weighted Accumulator Questions
 // ============================================================
 // 12 questions score across types (keys '1'-'9').
 // 3 questions score instincts (keys 'sp', 'so', 'sx').

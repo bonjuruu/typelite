@@ -13,7 +13,7 @@ export function exportCharacterToText(
 
   // Header
   lineList.push(DIVIDER);
-  lineList.push(`  ${characterName} — ${character.title}`);
+  lineList.push(`  ${characterName} - ${character.title}`);
   lineList.push(DIVIDER);
   lineList.push("");
 
@@ -38,14 +38,14 @@ export function exportCharacterToText(
 
   const passiveList = getArchetypePassiveList(character.archetype);
   for (const passive of passiveList) {
-    lineList.push(`  Passive — ${passive.name}: ${passive.description}`);
+    lineList.push(`  Passive - ${passive.name}: ${passive.description}`);
   }
 
   lineList.push(
-    `  Empowered: ${character.archetype.empoweredState.name} — ${character.archetype.empoweredState.description}`,
+    `  Empowered: ${character.archetype.empoweredState.name} - ${character.archetype.empoweredState.description}`,
   );
   lineList.push(
-    `  Stressed: ${character.archetype.stressedState.name} — ${character.archetype.stressedState.description}`,
+    `  Stressed: ${character.archetype.stressedState.name} - ${character.archetype.stressedState.description}`,
   );
   lineList.push("");
 
@@ -56,7 +56,7 @@ export function exportCharacterToText(
       const power = computeAbilityPower(ability, character.stats);
       const slotLabel = SLOT_LABELS[ability.slot] ?? ability.slot;
       lineList.push(
-        `  [${slotLabel} — ${ability.cognitiveFunction}] ${ability.name} (${power})`,
+        `  [${slotLabel} - ${ability.cognitiveFunction}] ${ability.name} (${power})`,
       );
       lineList.push(`    Tags: ${ability.tags.join(", ")}`);
       lineList.push(`    ${ability.description}`);
@@ -69,7 +69,7 @@ export function exportCharacterToText(
     `ELEMENT: ${character.element.element} (${character.element.quadra} quadra)`,
   );
   lineList.push(
-    `  Passive — ${character.element.passiveTrait.name}: ${character.element.passiveTrait.description}`,
+    `  Passive - ${character.element.passiveTrait.name}: ${character.element.passiveTrait.description}`,
   );
   lineList.push("");
 
@@ -79,7 +79,7 @@ export function exportCharacterToText(
     `  Activation: ${character.combatBehavior.activationStyle} | Positioning: ${character.combatBehavior.positioning} | Regen: ${character.combatBehavior.regenSource}`,
   );
   for (const passive of character.combatBehavior.passives) {
-    lineList.push(`  Passive — ${passive.name}: ${passive.description}`);
+    lineList.push(`  Passive - ${passive.name}: ${passive.description}`);
   }
   lineList.push("");
 

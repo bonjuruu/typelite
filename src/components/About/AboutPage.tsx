@@ -19,7 +19,7 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
 
       <div className="mt-8 space-y-6 text-sm leading-relaxed text-gray-400">
         <p>
-          I love typology. I think the systems are genuinely fascinating — the
+          I love typology. I think the systems are genuinely fascinating - the
           way cognitive functions stack in MBTI, how enneagram wings and growth
           lines create these layered portraits of motivation, how something like
           Attitudinal Psyche can describe why two people with the same "type"
@@ -37,14 +37,14 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
 
         <p>
           So I wanted to build something fun. Something where you could show
-          someone your types and they'd actually get it — not because they
+          someone your types and they'd actually get it - not because they
           studied the theory, but because it turns into a character they can
           look at and go "oh, that's you."
         </p>
 
         <p>
           Typelite takes five typology systems and turns them into a roguelite
-          character builder — your types become stats, a class, abilities, an
+          character builder - your types become stats, a class, abilities, an
           element, and combat behavior. It's not meant to be a serious
           assessment tool. It's meant to be a fun way to see your types come to
           life as something visual and shareable.
@@ -84,7 +84,7 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
         </div>
 
         <p>
-          You can toggle any combination of systems on or off — use just the
+          You can toggle any combination of systems on or off - use just the
           ones you know, or turn them all on and see what comes out. The whole
           point is to make typology something you can play with and share, not
           just read about.

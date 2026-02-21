@@ -21,7 +21,7 @@ export const SYSTEM_META_LIST: SystemMeta[] = [
     description: "4 aspects ordered by priority",
     domain: "Base Stats",
     info: {
-      what: "Attitudinal Psyche (AP) ranks four aspects — Volition, Logic, Emotion, Physics — from strongest (1st) to weakest (4th). Your ordering reveals how you assert yourself, process information, connect emotionally, and relate to the physical world.",
+      what: "Attitudinal Psyche (AP) ranks four aspects - Volition, Logic, Emotion, Physics - from strongest (1st) to weakest (4th). Your ordering reveals how you assert yourself, process information, connect emotionally, and relate to the physical world.",
       mapping:
         "Each aspect maps to a stat: V\u2192Willpower, L\u2192Intelligence, E\u2192Spirit, F\u2192Vitality. Your 1st aspect gets the highest base (14), down to your 4th (4).",
       detail:
@@ -47,11 +47,11 @@ export const SYSTEM_META_LIST: SystemMeta[] = [
     description: "16 types via Beebe 4-function stack",
     domain: "Abilities",
     info: {
-      what: "MBTI types are built from 8 cognitive functions (Ti, Te, Fi, Fe, Si, Se, Ni, Ne) arranged in a 4-function stack using Beebe\u2019s model. Each slot — Hero, Parent, Child, Inferior — has a distinct role.",
+      what: "MBTI types are built from 8 cognitive functions (Ti, Te, Fi, Fe, Si, Se, Ni, Ne) arranged in a 4-function stack using Beebe\u2019s model. Each slot - Hero, Parent, Child, Inferior - has a distinct role.",
       mapping:
         "Each function\u2013slot combo produces a unique ability. Hero is your primary power, Parent is support/utility, Child is chaotic and high-variance, and Inferior is weak but has a comeback mechanic.",
       detail:
-        "The same function plays differently in each slot — Ne as Hero is expansive and creative, but Ne as Inferior is a sudden burst of insight under pressure. Ability power scales off your stats.",
+        "The same function plays differently in each slot - Ne as Hero is expansive and creative, but Ne as Inferior is a sudden burst of insight under pressure. Ability power scales off your stats.",
     },
   },
   {
@@ -77,7 +77,7 @@ export const SYSTEM_META_LIST: SystemMeta[] = [
       mapping:
         "Your center sets combat orientation (SUR\u2192Frontline, INT\u2192Support, PUR\u2192Strategist). Three triad systems add activation style, positioning behavior, and resource regeneration source.",
       detail:
-        "Optional tritype picks one realm from each center, adding 3\u20139 unique passives depending on triad overlap. This is the most granular system — it shapes how your character fights moment to moment.",
+        "Optional tritype picks one realm from each center, adding 3\u20139 unique passives depending on triad overlap. This is the most granular system - it shapes how your character fights moment to moment.",
     },
   },
 ];

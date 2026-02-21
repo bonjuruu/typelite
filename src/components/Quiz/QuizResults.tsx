@@ -101,7 +101,7 @@ export function QuizResults({
           <ResultCard
             label="Expanded Instincts"
             domain="Combat"
-            value={`${result.instinctRealm} — ${getRealmName(result.instinctRealm)}`}
+            value={`${result.instinctRealm} - ${getRealmName(result.instinctRealm)}`}
             description={describeInstincts(result.instinctRealm)}
             explanation={result.explanationMap?.instincts}
           />
@@ -144,7 +144,7 @@ function formatEnneagram(result: QuizResult): string {
     ? ` (${result.enneagramInstinct})`
     : "";
 
-  return `${result.enneagramType}${wingStr}${instinctStr} — ${typeData.className}`;
+  return `${result.enneagramType}${wingStr}${instinctStr} - ${typeData.className}`;
 }
 
 // ============================================================
@@ -157,7 +157,7 @@ function describeAP(apType: string): string {
   );
   const first = stack[0];
   const fourth = stack[3];
-  return `Your ${first.aspect} leads — ${first.flavor.summary} Your weakest aspect is ${fourth.aspect}, sitting in 4th where you defer to others. This sets your base stats: ${first.stat} highest (${first.statValue}), ${fourth.stat} lowest (${fourth.statValue}).`;
+  return `Your ${first.aspect} leads - ${first.flavor.summary} Your weakest aspect is ${fourth.aspect}, sitting in 4th where you defer to others. This sets your base stats: ${first.stat} highest (${first.statValue}), ${fourth.stat} lowest (${fourth.statValue}).`;
 }
 
 function describeEnneagram(result: QuizResult): string {
@@ -178,14 +178,14 @@ function describeMBTI(
   const stack = getFunctionStack(mbtiType);
   const heroName = getCognitiveFunctionName(stack[0]);
   const inferiorName = getCognitiveFunctionName(stack[3]);
-  return `Your Hero function is ${heroName} (${stack[0]}) — your primary ability and strongest expression in combat. Your Inferior, ${inferiorName} (${stack[3]}), is normally weak but has a clutch comeback mechanic when you're under pressure. The full stack ${stack.join("-")} gives you four distinct abilities.`;
+  return `Your Hero function is ${heroName} (${stack[0]}) - your primary ability and strongest expression in combat. Your Inferior, ${inferiorName} (${stack[3]}), is normally weak but has a clutch comeback mechanic when you're under pressure. The full stack ${stack.join("-")} gives you four distinct abilities.`;
 }
 
 function describeSocionics(
   socionicsType: import("../../engine/types/index.ts").SocionicsType,
 ): string {
   const typeData = getSocionicsType(socionicsType);
-  return `${typeData.name} places you in the ${typeData.quadra} quadra, granting the ${typeData.element} element. Your ${typeData.club} club gives a passive trait that reflects your cognitive style. Note: Socionics types don't map 1-to-1 with MBTI — they're a separate system with different notation.`;
+  return `${typeData.name} places you in the ${typeData.quadra} quadra, granting the ${typeData.element} element. Your ${typeData.club} club gives a passive trait that reflects your cognitive style. Note: Socionics types don't map 1-to-1 with MBTI - they're a separate system with different notation.`;
 }
 
 function describeInstincts(
@@ -198,5 +198,5 @@ function describeInstincts(
       : realmData.center === "INT"
         ? "Interpersonal (Support)"
         : "Purpose (Strategist)";
-  return `${realmData.name} sits in the ${centerLabel} center, setting your combat orientation. Your triads — ${realmData.experiential} activation, ${realmData.movement} positioning, ${realmData.source} regen — shape how you fight moment to moment. This is separate from classic enneagram sp/so/sx instincts.`;
+  return `${realmData.name} sits in the ${centerLabel} center, setting your combat orientation. Your triads - ${realmData.experiential} activation, ${realmData.movement} positioning, ${realmData.source} regen - shape how you fight moment to moment. This is separate from classic enneagram sp/so/sx instincts.`;
 }

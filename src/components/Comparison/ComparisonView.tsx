@@ -33,7 +33,7 @@ export function ComparisonView({
 }: ComparisonViewProps) {
   if (!slotA && !slotB) return null;
 
-  // Partial state — only one slot filled
+  // Partial state - only one slot filled
   if (!slotA || !slotB || !diff) {
     const filled = slotA ?? slotB;
     const filledLabel = slotA ? "A" : "B";

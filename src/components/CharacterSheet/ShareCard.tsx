@@ -26,7 +26,7 @@ const SHORT_SLOT_LABELS: Record<string, string> = {
 };
 
 // ============================================================
-// COMPONENT — fixed-size card for image export
+// COMPONENT - fixed-size card for image export
 // ============================================================
 
 export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
@@ -207,7 +207,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
           </div>
         </div>
 
-        {/* Abilities — compact grid */}
+        {/* Abilities - compact grid */}
         {character.abilities.length > 0 && (
           <div style={{ marginBottom: 12 }}>
             <div
@@ -255,7 +255,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
                           textTransform: "uppercase",
                         }}
                       >
-                        {SHORT_SLOT_LABELS[ability.slot]} —{" "}
+                        {SHORT_SLOT_LABELS[ability.slot]} -{" "}
                         {ability.cognitiveFunction}
                       </div>
                       <div
@@ -288,7 +288,7 @@ export const ShareCard = forwardRef<HTMLDivElement, ShareCardProps>(
           </div>
         )}
 
-        {/* Element + Combat — side by side */}
+        {/* Element + Combat - side by side */}
         <div
           style={{
             display: "grid",

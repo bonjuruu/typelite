@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// MBTI — 12 Binary Axis Questions (3 per axis)
+// MBTI - 12 Binary Axis Questions (3 per axis)
 // ============================================================
 // Weight keys: 'EI', 'SN', 'TF', 'JP'.
 // Positive = first letter (E, S, T, J), negative = second letter (I, N, F, P).

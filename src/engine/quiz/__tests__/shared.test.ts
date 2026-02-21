@@ -49,7 +49,7 @@ describe("accumulateScoreMap", () => {
       [Q1, Q2],
       new Set(["A", "B", "C"]),
     );
-    // Q1 option 0: A:3, B:1 — Q2 option 0: B:2, C:1
+    // Q1 option 0: A:3, B:1 - Q2 option 0: B:2, C:1
     expect(result).toEqual({ A: 3, B: 3, C: 1 });
   });
 

@@ -53,7 +53,7 @@ function singleSystemEnabled(system: SystemId): Record<SystemId, boolean> {
 // Quick kit
 // ============================================================
 
-describe("computeQuizResults — quick kit", () => {
+describe("computeQuizResults - quick kit", () => {
   it("returns non-null results for all 5 systems when all enabled", () => {
     const realmQuestionList = getInstinctRealmQuestionList("SUR");
     const baseQuestionList = [
@@ -139,7 +139,7 @@ describe("computeQuizResults — quick kit", () => {
 // Deep kit
 // ============================================================
 
-describe("computeQuizResults — deep kit", () => {
+describe("computeQuizResults - deep kit", () => {
   it("returns non-null results for all 5 systems when all enabled", () => {
     const realmQuestionList = getLongInstinctRealmQuestionList("SUR");
     const baseQuestionList = [
@@ -217,7 +217,7 @@ describe("computeQuizResults — deep kit", () => {
 // Single system enabled
 // ============================================================
 
-describe("computeQuizResults — single system", () => {
+describe("computeQuizResults - single system", () => {
   it("only attitudinal is non-null when only attitudinal enabled", () => {
     const baseQuestionList = [...AP_QUESTION_LIST];
     const answerMap = answerAll(baseQuestionList, 0);
@@ -261,7 +261,7 @@ describe("computeQuizResults — single system", () => {
 // Empty answerMap
 // ============================================================
 
-describe("computeQuizResults — empty answerMap", () => {
+describe("computeQuizResults - empty answerMap", () => {
   it("does not crash with empty answerMap", () => {
     const realmQuestionList = getInstinctRealmQuestionList("SUR");
     const baseQuestionList = [

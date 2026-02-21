@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// ENNEAGRAM — 30 Questions (24 type + 6 instinct)
+// ENNEAGRAM - 30 Questions (24 type + 6 instinct)
 // ============================================================
 
 export const DEEP_ENNEAGRAM_QUESTION_LIST: readonly QuizQuestion[] = [
@@ -186,7 +186,7 @@ export const DEEP_ENNEAGRAM_QUESTION_LIST: readonly QuizQuestion[] = [
       },
       {
         label:
-          "I focus on what we do now. The damage is done — brooding over it wastes time we do not have",
+          "I focus on what we do now. The damage is done - brooding over it wastes time we do not have",
         weights: { "7": 3, "3": 1 },
       },
     ],
@@ -209,7 +209,7 @@ export const DEEP_ENNEAGRAM_QUESTION_LIST: readonly QuizQuestion[] = [
       },
       {
         label:
-          "Use them. A scout who knows the enemy layout is valuable — turn them to our side",
+          "Use them. A scout who knows the enemy layout is valuable - turn them to our side",
         weights: { "3": 3, "7": 1 },
       },
       {
@@ -226,7 +226,7 @@ export const DEEP_ENNEAGRAM_QUESTION_LIST: readonly QuizQuestion[] = [
     optionList: [
       {
         label:
-          "I am creating something — art, music, writing. The things I lived through demand expression",
+          "I am creating something - art, music, writing. The things I lived through demand expression",
         weights: { "4": 3, "7": 1 },
       },
       {
@@ -250,7 +250,7 @@ export const DEEP_ENNEAGRAM_QUESTION_LIST: readonly QuizQuestion[] = [
     id: "deep-enn-10",
     system: "enneagram",
     prompt:
-      "You wake up one morning with a power you did not ask for — you can read the thoughts of anyone nearby. What is your first reaction?",
+      "You wake up one morning with a power you did not ask for - you can read the thoughts of anyone nearby. What is your first reaction?",
     optionList: [
       {
         label:

@@ -73,7 +73,7 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             Typelite turns real personality typology into a roguelite character
             builder. Five systems, each measuring something genuinely different
             about how people think and act, map onto five distinct game domains.
-            The goal isn't just a character generator — it's a framework where
+            The goal isn't just a character generator - it's a framework where
             your real personality produces a character that{" "}
             <em className="text-gray-300">actually plays differently</em>.
           </p>
@@ -83,29 +83,29 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           <SystemEntry
             name="Attitudinal Psyche"
             arrow="Base Stats"
-            what="Ranks four cognitive aspects — Volition, Logic, Emotion, Physics — from strongest to weakest. Each position has distinct attitudes: your 1st is confident and imposing, your 2nd is collaborative, your 3rd is insecure, and your 4th is accepting."
-            why="The four aspects map naturally to four stat axes: V→Willpower, L→Intelligence, E→Spirit, F→Vitality. Position values (14/10/7/4) create real asymmetry — your character is shaped by where you're strong and where you defer, not just which box you checked."
+            what="Ranks four cognitive aspects - Volition, Logic, Emotion, Physics - from strongest to weakest. Your 1st is where you're confident, 2nd is flexible, 3rd is a sore spot, 4th you don't really care about."
+            why="The four aspects map straight to four stat axes: V→Willpower, L→Intelligence, E→Spirit, F→Vitality. Position values (14/10/7/4) create real asymmetry - your character is shaped by where you're strong and where you defer, not just which box you checked."
           />
 
           <SystemEntry
             name="Enneagram"
             arrow="Class & Archetype"
-            what="Describes 9 core motivations with adjacent wings that shade the type, instinctual variants (sp/so/sx) that add behavioral flavor, and lines of integration and disintegration that show how you shift under growth and stress."
-            why="Enneagram types have rich identities that translate directly to class archetypes — the knowledge-hoarding Type 5 becomes the Sage, the power-seeking Type 8 becomes the Berserker. Wings as subclass modifiers and growth/stress lines as empowered/stressed states mean the system's internal structure maps to game mechanics without forcing it."
+            what="9 core motivations. Wings shade your type toward a neighbor, instinctual variants (sp/so/sx) change how the type shows up in practice, and growth/stress lines show where you go when things are good or bad."
+            why="Enneagram types already have strong identities - the knowledge-hoarding 5 becomes the Sage, the power-hungry 8 becomes the Berserker. Wings work as subclass modifiers, growth/stress lines become empowered/stressed states. The structure just maps to game mechanics on its own."
           />
 
           <SystemEntry
             name="MBTI (Beebe Model)"
             arrow="Abilities"
-            what="Uses the Beebe 4-function stack model, not just the four-letter code. Each type has a Hero, Parent, Child, and Inferior function — four cognitive functions in four roles with distinct strengths and failure modes."
-            why="Beebe's slot model is what makes this work. The same function plays completely differently depending on position: Ni as Hero (INFJ) is visionary pattern recognition, but Ni as Inferior (ESTP) fires as a sudden premonition under pressure. Four slots = four abilities, each with a role that matches the Beebe archetype — Hero is your main power, Inferior is your clutch comeback."
+            what="Uses the Beebe 4-function stack model, not just the four-letter code. Each type has a Hero, Parent, Child, and Inferior function - same 8 functions, but the slot changes how they work."
+            why="Beebe's slot model is what makes this work. The same function plays completely differently depending on position: Ni as Hero (INFJ) is visionary pattern recognition, but Ni as Inferior (ESTP) fires as a sudden premonition under pressure. Four slots = four abilities, each matching the Beebe archetype - Hero is your main power, Inferior is your clutch comeback."
           />
 
           <SystemEntry
             name="Socionics"
             arrow="Element & Affinity"
-            what="Groups 16 types into 4 quadras (Alpha, Beta, Gamma, Delta), each sharing valued information elements. Also classifies types into clubs (Researcher, Social, Practical, Humanitarian) based on cognitive orientation."
-            why="Quadras have a natural elemental aesthetic: Alpha's cooperative Ne/Si + Fe/Ti maps to Light and Nature, Beta's power-oriented Se/Ni + Fe/Ti maps to Fire and Shadow. The club system adds a passive trait. Socionics is included separately from MBTI because the types don't map 1-to-1 — different notation, different functional analysis, and the quadra/club layer adds something MBTI doesn't have."
+            what="Groups 16 types into 4 quadras (Alpha, Beta, Gamma, Delta), each sharing valued information elements. Also sorts types into clubs (Researcher, Social, Practical, Humanitarian) based on cognitive orientation."
+            why="Quadras have a natural elemental feel: Alpha's cooperative Ne/Si + Fe/Ti maps to Light and Nature, Beta's power-oriented Se/Ni + Fe/Ti maps to Fire and Shadow. Clubs add a passive trait. Socionics is separate from MBTI because the types don't map 1-to-1 - different notation, different function analysis, and the quadra/club layer covers ground MBTI doesn't."
           />
 
           <SystemEntry
@@ -114,18 +114,16 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
             what="Rob Collopy's system from the Attitudinal Psyche community. 9 instinctual realms across 3 centers (Self-Survival, Interpersonal, Purpose), with 3 orthogonal triad systems that classify each realm's activation style, movement pattern, and energy source."
             why={
               <>
-                This was a deliberate choice over classic enneagram sp/so/sx
-                instincts. Classic instincts give you 3 options with limited
-                mechanical depth. Expanded Instincts gives you 9 realms, each
-                with a unique <em className="text-gray-300">combination</em> of
-                triads — that means distinct activation styles, positioning
-                behaviors, and regen sources that create genuinely different
-                combat patterns. The tritype system (one realm per center) adds
-                further differentiation. It's also a philosophically different
-                model: types run <em className="text-gray-300">toward</em>{" "}
-                aliveness rather than <em className="text-gray-300">away</em>{" "}
-                from fear, which makes for more interesting character
-                motivation.
+                Picked this over classic enneagram sp/so/sx instincts.
+                Classic instincts give you 3 options and not much to work with
+                mechanically. Expanded Instincts gives you 9 realms, each with
+                a unique <em className="text-gray-300">combination</em> of
+                triads - different activation styles, positioning, and regen
+                sources, so combat actually varies between realms. Tritype (one
+                realm per center) adds another layer. It's also just a different
+                philosophy: types run <em className="text-gray-300">toward</em>{" "}
+                aliveness instead of <em className="text-gray-300">away</em>{" "}
+                from fear, which is more fun for character building.
               </>
             }
           />
@@ -133,12 +131,12 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
 
         <div className="mt-8 border-t border-gray-800 pt-6">
           <p className="text-xs leading-relaxed text-gray-600">
-            These systems were chosen because they measure genuinely orthogonal
-            dimensions of personality. AP measures cognitive priorities,
-            Enneagram measures core motivation, MBTI measures information
-            processing, Socionics measures social-cognitive orientation, and
-            Expanded Instincts measures instinctual drives. Layering them
-            creates characters with depth that no single system could produce.
+            These five systems each measure something different - AP covers
+            cognitive priorities, Enneagram covers motivation, MBTI covers
+            information processing, Socionics covers social-cognitive
+            orientation, and Expanded Instincts covers instinctual drives.
+            Stacking them gives characters more depth than any one system
+            could on its own.
           </p>
         </div>
       </div>

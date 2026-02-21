@@ -31,7 +31,7 @@ export function InstinctsSelector({
         placeholder="Select realm..."
         optionList={INSTINCT_REALM_LIST.map((realm) => ({
           value: realm,
-          label: `${realm} — ${getRealmName(realm)}`,
+          label: `${realm} - ${getRealmName(realm)}`,
         }))}
       />
 

@@ -2,7 +2,7 @@ import type { InstinctCenter } from "../../../engine/types/index.ts";
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// EXPANDED INSTINCTS — 18 Questions (6 center + 12 realm)
+// EXPANDED INSTINCTS - 18 Questions (6 center + 12 realm)
 // ============================================================
 
 export const DEEP_INSTINCT_CENTER_QUESTION_LIST: readonly QuizQuestion[] = [

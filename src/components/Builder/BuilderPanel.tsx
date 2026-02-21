@@ -165,7 +165,7 @@ export function BuilderPanel({
     );
   }
 
-  // Expanded view — full layout (all open) on first load, accordion after first generate
+  // Expanded view - full layout (all open) on first load, accordion after first generate
   return (
     <div className={compact ? "space-y-2" : "space-y-4"}>
       <div className="flex items-center justify-between gap-2">

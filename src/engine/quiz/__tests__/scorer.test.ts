@@ -365,7 +365,7 @@ describe("scoreInstincts (full 2-stage)", () => {
 });
 
 // ============================================================
-// explainAttitudinal — structured data
+// explainAttitudinal - structured data
 // ============================================================
 
 describe("explainAttitudinal structured data", () => {
@@ -398,7 +398,7 @@ describe("explainAttitudinal structured data", () => {
 });
 
 // ============================================================
-// explainEnneagram — structured data
+// explainEnneagram - structured data
 // ============================================================
 
 describe("explainEnneagram structured data", () => {
@@ -424,7 +424,7 @@ describe("explainEnneagram structured data", () => {
 });
 
 // ============================================================
-// explainMBTI — structured data
+// explainMBTI - structured data
 // ============================================================
 
 describe("explainMBTI structured data", () => {
@@ -455,7 +455,7 @@ describe("explainMBTI structured data", () => {
 });
 
 // ============================================================
-// explainSocionics — structured data
+// explainSocionics - structured data
 // ============================================================
 
 describe("explainSocionics structured data", () => {
@@ -486,7 +486,7 @@ describe("explainSocionics structured data", () => {
 });
 
 // ============================================================
-// explainInstincts — structured data
+// explainInstincts - structured data
 // ============================================================
 
 describe("explainInstincts structured data", () => {

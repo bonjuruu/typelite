@@ -95,30 +95,30 @@ export function buildTritypeCombatBehavior(
   const secondFixPassiveList: PassiveTrait[] = [
     {
       ...EXPERIENTIAL_PASSIVES[secondFixRealm.experiential],
-      source: `2nd fix — ${EXPERIENTIAL_PASSIVES[secondFixRealm.experiential].source}`,
+      source: `2nd fix - ${EXPERIENTIAL_PASSIVES[secondFixRealm.experiential].source}`,
     },
     {
       ...MOVEMENT_PASSIVES[secondFixRealm.movement],
-      source: `2nd fix — ${MOVEMENT_PASSIVES[secondFixRealm.movement].source}`,
+      source: `2nd fix - ${MOVEMENT_PASSIVES[secondFixRealm.movement].source}`,
     },
     {
       ...SOURCE_PASSIVES[secondFixRealm.source],
-      source: `2nd fix — ${SOURCE_PASSIVES[secondFixRealm.source].source}`,
+      source: `2nd fix - ${SOURCE_PASSIVES[secondFixRealm.source].source}`,
     },
   ];
 
   const thirdFixPassiveList: PassiveTrait[] = [
     {
       ...EXPERIENTIAL_PASSIVES[thirdFixRealm.experiential],
-      source: `3rd fix — ${EXPERIENTIAL_PASSIVES[thirdFixRealm.experiential].source}`,
+      source: `3rd fix - ${EXPERIENTIAL_PASSIVES[thirdFixRealm.experiential].source}`,
     },
     {
       ...MOVEMENT_PASSIVES[thirdFixRealm.movement],
-      source: `3rd fix — ${MOVEMENT_PASSIVES[thirdFixRealm.movement].source}`,
+      source: `3rd fix - ${MOVEMENT_PASSIVES[thirdFixRealm.movement].source}`,
     },
     {
       ...SOURCE_PASSIVES[thirdFixRealm.source],
-      source: `3rd fix — ${SOURCE_PASSIVES[thirdFixRealm.source].source}`,
+      source: `3rd fix - ${SOURCE_PASSIVES[thirdFixRealm.source].source}`,
     },
   ];
 

@@ -41,7 +41,7 @@ function makeNullInput(): GeneratorInput {
 }
 
 // ============================================================
-// generateCharacter — all systems active
+// generateCharacter - all systems active
 // ============================================================
 
 describe("generateCharacter with all systems active", () => {
@@ -116,7 +116,7 @@ describe("generateCharacter with all systems active", () => {
 });
 
 // ============================================================
-// generateCharacter — all systems null (defaults)
+// generateCharacter - all systems null (defaults)
 // ============================================================
 
 describe("generateCharacter with all systems null", () => {
@@ -140,7 +140,7 @@ describe("generateCharacter with all systems null", () => {
 });
 
 // ============================================================
-// generateCharacter — partial systems
+// generateCharacter - partial systems
 // ============================================================
 
 describe("generateCharacter with partial systems", () => {
@@ -248,7 +248,7 @@ describe("generateCharacter with enneagram tritype", () => {
     const characterWithoutTritype = generateCharacter(inputWithoutTritype);
 
     // Tritype blending adds 2nd/3rd fix modifiers on top of the base archetype modifiers.
-    // Type 2 adds spirit/vitality multipliers, Type 9 adds vitality/spirit — these should
+    // Type 2 adds spirit/vitality multipliers, Type 9 adds vitality/spirit - these should
     // produce different archetype.statModifiers than base 5w4 alone.
     const modifiersWithTritype = characterWithTritype.archetype.statModifiers;
     const modifiersWithoutTritype =

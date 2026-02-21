@@ -35,7 +35,7 @@ describe("useComparison behavioral contracts", () => {
     const snapshot = { character: charA, name: "TestA" };
     const originalWillpower = snapshot.character.stats.willpower;
 
-    // Mutating the original object after "saving" — in the hook, React state
+    // Mutating the original object after "saving" - in the hook, React state
     // holds the reference at save time. This test verifies the contract that
     // the character object passed to saveToSlot is the value stored, not a
     // later-mutated version.

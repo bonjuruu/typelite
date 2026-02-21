@@ -63,7 +63,7 @@ function AbilityRowDesktop({
         {comparison.slotA ? (
           SLOT_LABELS[comparison.slotA]
         ) : (
-          <span className="text-gray-700">&mdash;</span>
+          <span className="text-gray-700">-</span>
         )}
       </div>
 
@@ -77,7 +77,7 @@ function AbilityRowDesktop({
         {comparison.slotB ? (
           SLOT_LABELS[comparison.slotB]
         ) : (
-          <span className="text-gray-700">&mdash;</span>
+          <span className="text-gray-700">-</span>
         )}
       </div>
 

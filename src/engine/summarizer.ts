@@ -7,7 +7,7 @@ import { STAT_LABELS } from "../data/stats.ts";
 
 /**
  * Generate a 2-5 sentence prose summary of what the character's active systems mean together.
- * Pure function — no React imports.
+ * Pure function - no React imports.
  */
 export function generateCharacterSummary(character: Character): string {
   const { activeSystems } = character;

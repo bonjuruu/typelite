@@ -78,7 +78,7 @@ export function computeCharacterDiff(
     };
   }
 
-  // Passive comparison — collect all passive names from element + combat
+  // Passive comparison - collect all passive names from element + combat
   const passiveNameListA = [
     a.element.passiveTrait.name,
     ...a.combatBehavior.passives.map((p) => p.name),

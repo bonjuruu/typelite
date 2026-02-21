@@ -75,7 +75,7 @@ export function ElementSection({
         </div>
         <div className="mt-3 rounded border border-gray-700 bg-gray-900 p-3">
           <span className="text-xs font-semibold uppercase text-gray-500">
-            Passive &mdash; {element.passiveTrait.name}
+            Passive - {element.passiveTrait.name}
           </span>
           <p className="mt-1 text-sm text-gray-300">
             {element.passiveTrait.description}

@@ -30,7 +30,7 @@ export async function exportCharacterAsPdf(
   const imgHeightMm = (canvas.height * imgWidthMm) / canvas.width;
 
   if (imgHeightMm <= pageHeightMm) {
-    // Single page — fits entirely
+    // Single page - fits entirely
     pdf.addImage(
       canvas.toDataURL("image/png"),
       "PNG",
@@ -40,7 +40,7 @@ export async function exportCharacterAsPdf(
       imgHeightMm,
     );
   } else {
-    // Multi-page — slice canvas into page-height chunks
+    // Multi-page - slice canvas into page-height chunks
     const pageHeightPx = (pageHeightMm / imgHeightMm) * canvas.height;
     let remainingHeight = canvas.height;
     let pageIndex = 0;

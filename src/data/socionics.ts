@@ -20,7 +20,7 @@ interface SocionicsTypeData {
 }
 
 const SOCIONICS_TYPES: Record<SocionicsType, SocionicsTypeData> = {
-  // Alpha — Light / Nature
+  // Alpha - Light / Nature
   ILE: {
     type: "ILE",
     name: "The Inventor",
@@ -50,7 +50,7 @@ const SOCIONICS_TYPES: Record<SocionicsType, SocionicsTypeData> = {
     element: "Nature",
   },
 
-  // Beta — Fire / Shadow
+  // Beta - Fire / Shadow
   SLE: {
     type: "SLE",
     name: "The Commander",
@@ -80,7 +80,7 @@ const SOCIONICS_TYPES: Record<SocionicsType, SocionicsTypeData> = {
     element: "Shadow",
   },
 
-  // Gamma — Earth / Metal
+  // Gamma - Earth / Metal
   SEE: {
     type: "SEE",
     name: "The Politician",
@@ -110,7 +110,7 @@ const SOCIONICS_TYPES: Record<SocionicsType, SocionicsTypeData> = {
     element: "Metal",
   },
 
-  // Delta — Wind / Water
+  // Delta - Wind / Water
   IEE: {
     type: "IEE",
     name: "The Advisor",
@@ -178,12 +178,12 @@ export const CLUB_PASSIVES: Record<Club, PassiveTrait> = {
 
 const QUADRA_RATIONALE: Record<Quadra, string> = {
   Alpha:
-    "Values intellectual play and warmth — drawn to Light's clarity and Nature's ease.",
-  Beta: "Craves intensity and transformation — drawn to Fire's passion and Shadow's depth.",
+    "Cooperative and curious (Ne/Si + Fe/Ti) - Light and Nature fit the warm, exploratory vibe.",
+  Beta: "Intense and hierarchical (Se/Ni + Fe/Ti) - Fire and Shadow match the power dynamics.",
   Gamma:
-    "Pursues pragmatism and results — drawn to Earth's stability and Metal's sharpness.",
+    "Pragmatic and competitive (Se/Ni + Te/Fi) - Earth and Metal for the results-oriented approach.",
   Delta:
-    "Seeks harmony and craft — drawn to Wind's flexibility and Water's flow.",
+    "Steady and craft-oriented (Ne/Si + Te/Fi) - Wind and Water for the quieter, hands-on style.",
 };
 
 /** Get the rationale for why a quadra maps to its elements. */

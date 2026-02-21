@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// MBTI — 32 Cognitive Function Questions (4 per function)
+// MBTI - 32 Cognitive Function Questions (4 per function)
 // ============================================================
 // Weight keys: Ti, Te, Fi, Fe, Si, Se, Ni, Ne.
 // Each question targets one function with primary weight, plus secondary cross-weights.

@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// SOCIONICS — 4 Quadra Preference Questions
+// SOCIONICS - 4 Quadra Preference Questions
 // ============================================================
 // Weight keys: 'Alpha', 'Beta', 'Gamma', 'Delta'.
 

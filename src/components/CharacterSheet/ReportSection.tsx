@@ -85,7 +85,7 @@ export function ReportSection({
               </h4>
               <p className="mt-1 text-xs leading-relaxed text-gray-400">
                 {systemCount >= 3
-                  ? `With ${systemCount} active systems, there are real interactions worth exploring — how the AP stack shapes ability scaling, why the enneagram class plays differently with this element, and what combat patterns emerge from the full build.`
+                  ? `With ${systemCount} active systems, there are real interactions worth exploring - how the AP stack shapes ability scaling, why the enneagram class plays differently with this element, and what combat patterns emerge from the full build.`
                   : `Generate a deep-dive into how ${characterName}'s typology shapes their stats, abilities, and combat identity.`}
               </p>
               {error && <p className="mt-2 text-xs text-red-400">{error}</p>}

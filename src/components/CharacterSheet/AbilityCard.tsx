@@ -18,10 +18,10 @@ const SLOT_COLORS: Record<string, string> = {
 };
 
 const SLOT_DESCRIPTIONS: Record<string, string> = {
-  hero: "Your dominant function — most natural, most powerful.",
-  parent: "Your supporting function — responsible and reliable.",
-  child: "Your playful function — creative but unpredictable.",
-  inferior: "Your aspirational function — weak, but clutch under pressure.",
+  hero: "Your dominant function - most natural, most powerful.",
+  parent: "Your supporting function - responsible and reliable.",
+  child: "Your playful function - creative but unpredictable.",
+  inferior: "Your aspirational function - weak, but clutch under pressure.",
 };
 
 // ============================================================
@@ -60,7 +60,7 @@ export function AbilityCard({
       <div className="flex items-start justify-between">
         <div>
           <span className="text-xs font-semibold uppercase text-gray-400">
-            {SLOT_LABELS[ability.slot]} &mdash; {ability.cognitiveFunction}
+            {SLOT_LABELS[ability.slot]} - {ability.cognitiveFunction}
           </span>
           <p className="text-[11px] text-gray-500">
             {SLOT_DESCRIPTIONS[ability.slot]}

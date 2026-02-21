@@ -96,7 +96,7 @@ export function SystemCard({
         </span>
       )}
       {collapsible && !isExpanded && !summary && (
-        <span className="text-xs text-gray-600">&mdash;</span>
+        <span className="text-xs text-gray-600">-</span>
       )}
     </div>
   );

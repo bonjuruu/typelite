@@ -37,7 +37,7 @@ export function InstinctTritypePicker({
   const secondRealmOptionList = otherCenterList.flatMap((center) =>
     REALMS_BY_CENTER[center].map((realm) => ({
       value: realm,
-      label: `${realm} — ${getRealmName(realm)} (${center})`,
+      label: `${realm} - ${getRealmName(realm)} (${center})`,
     })),
   );
 
@@ -45,21 +45,21 @@ export function InstinctTritypePicker({
   const thirdRealmOptionList = thirdRealmCenterOptions.flatMap((center) =>
     REALMS_BY_CENTER[center].map((realm) => ({
       value: realm,
-      label: `${realm} — ${getRealmName(realm)} (${center})`,
+      label: `${realm} - ${getRealmName(realm)} (${center})`,
     })),
   );
 
   return (
     <div className="space-y-1.5">
       <span className="block text-[10px] font-semibold uppercase text-gray-500">
-        Tritype &mdash; adds passives from other centers
+        Tritype - adds passives from other centers
       </span>
 
       {/* Core (locked) */}
       <div className="flex items-center gap-2">
         <span className="w-14 text-xs font-medium text-indigo-400">Core</span>
         <span className="flex-1 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 text-sm text-gray-400">
-          {coreRealm} &mdash; {getRealmName(coreRealm)} ({coreCenter})
+          {coreRealm} - {getRealmName(coreRealm)} ({coreCenter})
         </span>
       </div>
 

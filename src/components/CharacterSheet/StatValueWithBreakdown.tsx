@@ -126,7 +126,7 @@ export function StatValueWithBreakdown({
           {isAP && positionLabel ? (
             <span className="text-gray-500">
               {" "}
-              ({positionLabel} — {breakdown.baseSource})
+              ({positionLabel} - {breakdown.baseSource})
             </span>
           ) : (
             <span className="text-gray-500"> (default)</span>

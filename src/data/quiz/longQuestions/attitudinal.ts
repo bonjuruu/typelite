@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// ATTITUDINAL PSYCHE — 12 Questions (6 pairwise + 6 position-attitude)
+// ATTITUDINAL PSYCHE - 12 Questions (6 pairwise + 6 position-attitude)
 // ============================================================
 // Pairwise: same 6 pairs as quick, different scenarios.
 // Position-attitude: each tests a specific position's orientation.
@@ -12,7 +12,7 @@ export const DEEP_AP_QUESTION_LIST: readonly QuizQuestion[] = [
     id: "deep-ap-1",
     system: "attitudinal",
     prompt:
-      "Two factions in the war-band argue about what the group needs most in a leader. One side says you need someone who decides and commits — someone whose certainty pulls everyone forward. The other says you need someone who sees clearly — someone who never gets fooled and always finds the truth. Which side do you agree with?",
+      "Two factions in the war-band argue about what the group needs most in a leader. One side says you need someone who decides and commits - someone whose certainty pulls everyone forward. The other says you need someone who sees clearly - someone who never gets fooled and always finds the truth. Which side do you agree with?",
     optionList: [
       {
         label:
@@ -30,7 +30,7 @@ export const DEEP_AP_QUESTION_LIST: readonly QuizQuestion[] = [
     id: "deep-ap-2",
     system: "attitudinal",
     prompt:
-      "A shape-shifting curse will permanently take one thing from you. You must choose which you keep: your force of will — your ability to push through resistance, hold your ground, and impose your vision — or your emotional depth — your ability to feel intensely, connect with others, and be moved by beauty.",
+      "A shape-shifting curse will permanently take one thing from you. You must choose which you keep: your force of will - your ability to push through resistance, hold your ground, and impose your vision - or your emotional depth - your ability to feel intensely, connect with others, and be moved by beauty.",
     optionList: [
       {
         label:
@@ -61,7 +61,7 @@ export const DEEP_AP_QUESTION_LIST: readonly QuizQuestion[] = [
     id: "deep-ap-4",
     system: "attitudinal",
     prompt:
-      "You are mediating a dispute between two companions. One insists the answer lies in careful reasoning — lay out the facts, follow the logic, and the right path reveals itself. The other insists the answer lies in listening to what people actually feel — the real problem is emotional, not intellectual. Who do you side with?",
+      "You are mediating a dispute between two companions. One insists the answer lies in careful reasoning - lay out the facts, follow the logic, and the right path reveals itself. The other insists the answer lies in listening to what people actually feel - the real problem is emotional, not intellectual. Who do you side with?",
     optionList: [
       {
         label:
@@ -97,7 +97,7 @@ export const DEEP_AP_QUESTION_LIST: readonly QuizQuestion[] = [
     id: "deep-ap-6",
     system: "attitudinal",
     prompt:
-      "After a brutal campaign, the party has a week of rest. You notice you are drawn toward one of two things: long conversations with companions where you process everything you have been through — the grief, the bonds, the meaning of it all — or tending to your body — sleeping deeply, eating well, stretching sore muscles, letting your physical self fully recover.",
+      "After a brutal campaign, the party has a week of rest. You notice you are drawn toward one of two things: long conversations with companions where you process everything you have been through - the grief, the bonds, the meaning of it all - or tending to your body - sleeping deeply, eating well, stretching sore muscles, letting your physical self fully recover.",
     optionList: [
       {
         label:

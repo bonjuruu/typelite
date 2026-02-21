@@ -45,7 +45,7 @@ const MBTI_TYPE_LIST: readonly MBTIType[] = [
 const POSITION_WEIGHT_LIST = [4, 3, 2, 1] as const;
 
 // ============================================================
-// DEEP MBTI — Cognitive Function Stack-Fit Scoring
+// DEEP MBTI - Cognitive Function Stack-Fit Scoring
 // ============================================================
 
 /**
@@ -109,7 +109,7 @@ export function scoreMBTIDeep(
 }
 
 // ============================================================
-// DEEP EXPLAIN — MBTI (unique: function-based, not axis-based)
+// DEEP EXPLAIN - MBTI (unique: function-based, not axis-based)
 // ============================================================
 
 export function explainMBTIDeep(

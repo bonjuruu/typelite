@@ -9,7 +9,7 @@ import {
 export { scoreAttitudinal as scoreAttitudinalDeep } from "../scorers/attitudinal.ts";
 
 // ============================================================
-// DEEP EXPLAIN — AP (unique: different threshold + label format)
+// DEEP EXPLAIN - AP (unique: different threshold + label format)
 // ============================================================
 
 export function explainAttitudinalDeep(

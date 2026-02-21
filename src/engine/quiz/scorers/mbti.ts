@@ -7,7 +7,7 @@ import {
 } from "../shared.ts";
 
 // ============================================================
-// MBTI — 4-Axis Binary Scoring
+// MBTI - 4-Axis Binary Scoring
 // ============================================================
 
 type MBTIAxis = "EI" | "SN" | "TF" | "JP";

@@ -33,7 +33,7 @@ export function CenterAxisStatBar({
         {valueA}
       </span>
 
-      {/* A bar — grows right-to-left from center */}
+      {/* A bar - grows right-to-left from center */}
       <div
         className="relative h-2.5 flex-1 overflow-hidden rounded-l-sm bg-gray-800/50"
         aria-label={`A: ${valueA}`}
@@ -69,7 +69,7 @@ export function CenterAxisStatBar({
         )}
       </div>
 
-      {/* B bar — grows left-to-right from center */}
+      {/* B bar - grows left-to-right from center */}
       <div
         className="relative h-2.5 flex-1 overflow-hidden rounded-r-sm bg-gray-800/50"
         aria-label={`B: ${valueB}`}

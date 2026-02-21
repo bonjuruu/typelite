@@ -47,7 +47,7 @@ export function EnneagramSelector({
             placeholder="Type..."
             optionList={ENNEAGRAM_TYPE_LIST.map((type) => ({
               value: type.toString(),
-              label: `${type} — ${getEnneagramType(type).className}`,
+              label: `${type} - ${getEnneagramType(type).className}`,
             }))}
           />
         </div>
@@ -84,7 +84,7 @@ export function EnneagramSelector({
           placeholder="Instinct..."
           optionList={ENNEAGRAM_INSTINCT_LIST.map((instinct) => ({
             value: instinct,
-            label: `${instinct} — ${getInstinctLabel(instinct)} (${getInstinctFullName(instinct)})`,
+            label: `${instinct} - ${getInstinctLabel(instinct)} (${getInstinctFullName(instinct)})`,
           }))}
         />
       )}
@@ -125,7 +125,7 @@ export function EnneagramSelector({
                   (i) => i !== selections.enneagramInstinct,
                 ).map((instinct) => ({
                   value: instinct,
-                  label: `${instinct} — ${getInstinctLabel(instinct)} (${getInstinctFullName(instinct)})`,
+                  label: `${instinct} - ${getInstinctLabel(instinct)} (${getInstinctFullName(instinct)})`,
                 }))}
               />
               {selections.instinctSecond &&
@@ -138,7 +138,7 @@ export function EnneagramSelector({
                   if (!third) return null;
                   return (
                     <span className="block text-[10px] text-gray-600">
-                      3rd (blind spot): {third} — {getInstinctLabel(third)}
+                      3rd (blind spot): {third} - {getInstinctLabel(third)}
                     </span>
                   );
                 })()}

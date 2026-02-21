@@ -38,7 +38,7 @@ export function TritypePicker({
   const secondFixOptionList = otherCenterList.flatMap((center) =>
     CENTER_TYPES[center].map((type) => ({
       value: type.toString(),
-      label: `${type} — ${getEnneagramType(type).className} (${center})`,
+      label: `${type} - ${getEnneagramType(type).className} (${center})`,
     })),
   );
 
@@ -46,21 +46,21 @@ export function TritypePicker({
   const thirdFixOptionList = thirdFixCenterOptions.flatMap((center) =>
     CENTER_TYPES[center].map((type) => ({
       value: type.toString(),
-      label: `${type} — ${getEnneagramType(type).className} (${center})`,
+      label: `${type} - ${getEnneagramType(type).className} (${center})`,
     })),
   );
 
   return (
     <div className="space-y-1.5">
       <span className="block text-[10px] font-semibold uppercase text-gray-500">
-        Tritype &mdash; order affects stat influence
+        Tritype - order affects stat influence
       </span>
 
       {/* Core (locked) */}
       <div className="flex items-center gap-2">
         <span className="w-14 text-xs font-medium text-indigo-400">Core</span>
         <span className="flex-1 rounded border border-gray-700 bg-gray-800 px-3 py-1.5 text-sm text-gray-400">
-          {coreType} &mdash; {getEnneagramType(coreType).className} (
+          {coreType} - {getEnneagramType(coreType).className} (
           {coreCenter})
         </span>
       </div>

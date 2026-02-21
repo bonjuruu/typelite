@@ -358,7 +358,7 @@ describe("scoreInstinctRealmDeep", () => {
 });
 
 // ============================================================
-// Deep explain functions — structured data
+// Deep explain functions - structured data
 // ============================================================
 
 describe("explainAttitudinalDeep structured data", () => {

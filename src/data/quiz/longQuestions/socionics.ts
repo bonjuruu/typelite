@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// SOCIONICS — 22 Questions (8 quadra + 4 club + 10 Augusta ie)
+// SOCIONICS - 22 Questions (8 quadra + 4 club + 10 Augusta ie)
 // ============================================================
 // Quadra values (8), Club (4), Socionics-specific information elements (10).
 // ie_Ti, ie_Te, ie_Ne are cross-scored from MBTI cognitive function answers
@@ -75,22 +75,22 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
     optionList: [
       {
         label:
-          "The Explorers' Lodge — walls covered in maps and curiosities, members debating wild theories over wine",
+          "The Explorers' Lodge - walls covered in maps and curiosities, members debating wild theories over wine",
         weights: { Alpha: 3 },
       },
       {
         label:
-          "The Iron Order — a disciplined brotherhood bound by oaths, purpose, and shared sacrifice",
+          "The Iron Order - a disciplined brotherhood bound by oaths, purpose, and shared sacrifice",
         weights: { Beta: 3 },
       },
       {
         label:
-          "The Merchant Princes — independent operators who respect skill, reward ambition, and waste no time on sentiment",
+          "The Merchant Princes - independent operators who respect skill, reward ambition, and waste no time on sentiment",
         weights: { Gamma: 3 },
       },
       {
         label:
-          "The Hearthkeepers — craftspeople and healers who build things that last and take care of their own",
+          "The Hearthkeepers - craftspeople and healers who build things that last and take care of their own",
         weights: { Delta: 3 },
       },
     ],
@@ -214,22 +214,22 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
     optionList: [
       {
         label:
-          'The Philosopher-Mage — brilliant and playful, always asking "what if?" and delighting in the impossible',
+          'The Philosopher-Mage - brilliant and playful, always asking "what if?" and delighting in the impossible',
         weights: { Alpha: 3 },
       },
       {
         label:
-          "The War-Marshal — commanding and visionary, who turned a ragged rebellion into an empire through sheer force of will",
+          "The War-Marshal - commanding and visionary, who turned a ragged rebellion into an empire through sheer force of will",
         weights: { Beta: 3 },
       },
       {
         label:
-          "The Self-Made King — who started with nothing, built a fortune through cunning and skill, and answers to no one",
+          "The Self-Made King - who started with nothing, built a fortune through cunning and skill, and answers to no one",
         weights: { Gamma: 3 },
       },
       {
         label:
-          "The Village Elder — gentle and wise, who healed a broken community and taught people to sustain themselves",
+          "The Village Elder - gentle and wise, who healed a broken community and taught people to sustain themselves",
         weights: { Delta: 3 },
       },
     ],
@@ -341,7 +341,7 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
       },
     ],
   },
-  // --- Information Elements: Se (2) — Augusta's VOLITIONAL sensing ---
+  // --- Information Elements: Se (2) - Augusta's VOLITIONAL sensing ---
   // Power dynamics, force, "who will overcome whom", claiming/defending territory.
   // Diverges from MBTI Se (concrete sensory immersion).
   {
@@ -400,7 +400,7 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
       },
     ],
   },
-  // --- Information Elements: Si (2) — Augusta's EXPERIENTIAL sensing ---
+  // --- Information Elements: Si (2) - Augusta's EXPERIENTIAL sensing ---
   // Comfort, bodily wellbeing, aesthetic harmony, quality of physical exchange with environment.
   // Diverges from MBTI Si (subjective psychic impression of sensation).
   {
@@ -459,7 +459,7 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
       },
     ],
   },
-  // --- Information Elements: Ni (2) — Augusta's TEMPORAL intuition ---
+  // --- Information Elements: Ni (2) - Augusta's TEMPORAL intuition ---
   // Causal sequencing, timing, felt sense of whether the moment is right.
   // Diverges from MBTI Ni (archetypal vision, perceiving the unconscious).
   {
@@ -518,7 +518,7 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
       },
     ],
   },
-  // --- Information Elements: Fe (2) — Augusta's ETHICS OF EMOTIONS ---
+  // --- Information Elements: Fe (2) - Augusta's ETHICS OF EMOTIONS ---
   // Emotional energy dynamics, actively inducing moods, changing emotional temperature.
   // Diverges from MBTI Fe (adjusting feeling-judgment to social values).
   {
@@ -577,7 +577,7 @@ export const DEEP_SOCIONICS_QUESTION_LIST: readonly QuizQuestion[] = [
       },
     ],
   },
-  // --- Information Elements: Fi (2) — Augusta's ETHICS OF RELATIONS ---
+  // --- Information Elements: Fi (2) - Augusta's ETHICS OF RELATIONS ---
   // Relational distances, attraction/repulsion, discrete categories of connection (friend/enemy/ally).
   // Diverges from MBTI Fi (deep invisible inner valuation, archetypal depth).
   {

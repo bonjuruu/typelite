@@ -32,7 +32,7 @@ export function buildTypologySection(source: TypologySource): string {
           `${s.label}: ${s.aspect} (${s.aspectCode}) → ${s.stat} = ${s.statValue}`,
       )
       .join(", ");
-    lineList.push(`AP Type: ${source.attitudinal} — ${positions}`);
+    lineList.push(`AP Type: ${source.attitudinal} - ${positions}`);
   }
 
   if (source.enneagram) {
@@ -90,9 +90,9 @@ export function buildCharacterSummary(
     `Class Description: ${character.archetype.description}`,
     `Stats: Willpower ${character.stats.willpower}, Intelligence ${character.stats.intelligence}, Spirit ${character.stats.spirit}, Vitality ${character.stats.vitality}`,
     `Element: ${character.element.element} (${character.element.quadra} quadra)`,
-    `Combat: ${character.combatBehavior.combatOrientation} — ${character.combatBehavior.activationStyle} activation, ${character.combatBehavior.positioning} positioning, ${character.combatBehavior.regenSource} regen`,
-    `Empowered State: ${character.archetype.empoweredState.name} — ${character.archetype.empoweredState.description}`,
-    `Stressed State: ${character.archetype.stressedState.name} — ${character.archetype.stressedState.description}`,
+    `Combat: ${character.combatBehavior.combatOrientation} - ${character.combatBehavior.activationStyle} activation, ${character.combatBehavior.positioning} positioning, ${character.combatBehavior.regenSource} regen`,
+    `Empowered State: ${character.archetype.empoweredState.name} - ${character.archetype.empoweredState.description}`,
+    `Stressed State: ${character.archetype.stressedState.name} - ${character.archetype.stressedState.description}`,
     archetypePassiveList.length > 0
       ? `Archetype Passives: ${archetypePassiveList.join("; ")}`
       : "",

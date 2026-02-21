@@ -94,7 +94,7 @@ export function ArchetypeSection({
                       </span>
                     </div>
                     <p className="text-xs text-gray-600">
-                      {passive.description} — This instinct is your weakest
+                      {passive.description} - This instinct is your weakest
                       area, providing minimal benefit.
                     </p>
                   </div>

@@ -181,27 +181,27 @@ export const SOURCE_PASSIVES: Record<SourceTriad, PassiveTrait> = {
 const TRIAD_DESCRIPTIONS = {
   experiential: {
     Memorializing:
-      "Abilities leave echoes — effects linger past their base duration, stacking pressure over time.",
+      "Abilities leave echoes - effects linger past their base duration, stacking pressure over time.",
     Immersing:
-      "Consecutive casts build flow state — each use ramps power for the next.",
+      "Consecutive casts build flow state - each use ramps power for the next.",
     Distinguishing:
-      "Perfect timing windows — hit the critical moment for burst damage, miss it for weak output.",
+      "Perfect timing windows - hit the critical moment for burst damage, miss it for weak output.",
   } as Record<ExperientialTriad, string>,
   movement: {
     Escaping:
-      "Evasive and reactive — dodge chance increases, repositions after taking damage.",
+      "Evasive and reactive - dodge chance increases, repositions after taking damage.",
     Aligning:
-      "Adaptive flow — positioning auto-adjusts to match the flow of combat.",
+      "Adaptive flow - positioning auto-adjusts to match the flow of combat.",
     Directing:
-      "Relentless aggression — closes distance after attacks, applies constant pressure.",
+      "Relentless aggression - closes distance after attacks, applies constant pressure.",
   } as Record<MovementTriad, string>,
   source: {
     Internalizing:
-      "Passive regen — resources restore slowly over time, independent of combat.",
+      "Passive regen - resources restore slowly over time, independent of combat.",
     Externalizing:
-      "Damage-fueled — siphon energy from hitting enemies, rewarding aggression.",
+      "Damage-fueled - siphon energy from hitting enemies, rewarding aggression.",
     Exchanging:
-      "Bidirectional flow — gain resources from both dealing and receiving damage.",
+      "Bidirectional flow - gain resources from both dealing and receiving damage.",
   } as Record<SourceTriad, string>,
 } as const;
 

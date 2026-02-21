@@ -8,7 +8,7 @@ import {
 } from "../shared.ts";
 
 // ============================================================
-// SOCIONICS — MBTI Derivation + Quadra Adjustment
+// SOCIONICS - MBTI Derivation + Quadra Adjustment
 // ============================================================
 
 type SocionicsQuadra = "Alpha" | "Beta" | "Gamma" | "Delta";

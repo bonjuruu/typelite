@@ -58,7 +58,7 @@ export class ErrorBoundary extends Component<
           </h1>
           <p className="mb-6 text-sm leading-relaxed text-gray-400">
             The character engine hit an unexpected error. Your selections
-            haven't been lost — try resetting, or reload the page if the issue
+            haven't been lost - try resetting, or reload the page if the issue
             persists.
           </p>
           {this.state.error && (

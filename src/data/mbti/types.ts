@@ -75,7 +75,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ti: {
     name: "Introverted Thinking",
     essence:
-      "Dissects systems into logical frameworks — finds the axiom, collapses the structure.",
+      "Dissects systems into logical frameworks - finds the axiom, collapses the structure.",
     scalingStat: "intelligence",
     abilities: {
       hero: {
@@ -107,7 +107,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Te: {
     name: "Extraverted Thinking",
     essence:
-      "Organizes the external world toward measurable goals — efficiency is law.",
+      "Organizes the external world toward measurable goals - efficiency is law.",
     scalingStat: "intelligence",
     abilities: {
       hero: {
@@ -139,7 +139,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Fi: {
     name: "Introverted Feeling",
     essence:
-      "Guards a deeply personal value system — authenticity is non-negotiable.",
+      "Guards a deeply personal value system - authenticity is non-negotiable.",
     scalingStat: "spirit",
     abilities: {
       hero: {
@@ -171,7 +171,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Fe: {
     name: "Extraverted Feeling",
     essence:
-      "Attunes to collective emotional climate — harmony is both weapon and shield.",
+      "Attunes to collective emotional climate - harmony is both weapon and shield.",
     scalingStat: "spirit",
     abilities: {
       hero: {
@@ -203,7 +203,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Si: {
     name: "Introverted Sensing",
     essence:
-      "Stores somatic and sensory memory — the body remembers everything.",
+      "Stores somatic and sensory memory - the body remembers everything.",
     scalingStat: "vitality",
     abilities: {
       hero: {
@@ -234,7 +234,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   },
   Se: {
     name: "Extraverted Sensing",
-    essence: "Lives in the immediate physical moment — sensation is reality.",
+    essence: "Lives in the immediate physical moment - sensation is reality.",
     scalingStat: "vitality",
     abilities: {
       hero: {
@@ -266,7 +266,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ni: {
     name: "Introverted Intuition",
     essence:
-      "Converges on singular visions of the future — sees the thread, follows it inevitably.",
+      "Converges on singular visions of the future - sees the thread, follows it inevitably.",
     scalingStat: "willpower",
     abilities: {
       hero: {
@@ -290,7 +290,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
       inferior: {
         name: "Moment of Clarity",
         description:
-          "At the brink of defeat, a single crystalline vision pierces the fog — granting perfect evasion and guaranteed crit on the next action.",
+          "At the brink of defeat, a single crystalline vision pierces the fog - granting perfect evasion and guaranteed crit on the next action.",
         tags: ["buff", "reactive", "self"],
       },
     },
@@ -298,7 +298,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ne: {
     name: "Extraverted Intuition",
     essence:
-      "Explodes outward into divergent possibilities — every thread branches infinitely.",
+      "Explodes outward into divergent possibilities - every thread branches infinitely.",
     scalingStat: "willpower",
     abilities: {
       hero: {
@@ -316,7 +316,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
       child: {
         name: "Chaos Theory",
         description:
-          "Rips open a rift of pure entropy that hits all enemies for random damage between 1% and 300% of base power — wildly unreliable, occasionally devastating.",
+          "Rips open a rift of pure entropy that hits all enemies for random damage between 1% and 300% of base power - wildly unreliable, occasionally devastating.",
         tags: ["damage", "chaotic", "aoe"],
       },
       inferior: {
@@ -342,7 +342,7 @@ export const TAG_GLOSSARY: Record<AbilityTag, string> = {
   aoe: "Affects multiple targets in an area.",
   "single-target": "Focuses all power on one target.",
   self: "Only affects the caster.",
-  chaotic: "High variance — can backfire or spike unpredictably.",
+  chaotic: "High variance - can backfire or spike unpredictably.",
   defensive: "Reduces incoming damage or provides protection.",
   reactive:
     "Triggers automatically in response to conditions (low HP, ally in danger).",

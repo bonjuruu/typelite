@@ -10,7 +10,7 @@ import {
 import type { Aspect } from "../shared.ts";
 
 // ============================================================
-// ATTITUDINAL PSYCHE — Pairwise Comparison
+// ATTITUDINAL PSYCHE - Pairwise Comparison
 // ============================================================
 
 /**

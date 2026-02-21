@@ -11,7 +11,7 @@ import {
 } from "../shared.ts";
 
 // ============================================================
-// DEEP SOCIONICS — Model A Stack-Fit + Quadra/Club
+// DEEP SOCIONICS - Model A Stack-Fit + Quadra/Club
 // ============================================================
 
 type SocionicsQuadra = "Alpha" | "Beta" | "Gamma" | "Delta";
@@ -258,7 +258,7 @@ export function scoreSocionicsDeep(
 }
 
 // ============================================================
-// DEEP EXPLAIN — Socionics (unique: quadra/club + ie ranking)
+// DEEP EXPLAIN - Socionics (unique: quadra/club + ie ranking)
 // ============================================================
 
 export function explainSocionicsDeep(
@@ -298,7 +298,7 @@ export function explainSocionicsDeep(
   const hasCrossScoring = mbtiQuestionList.length > 0;
   const crossScoreNote = hasCrossScoring
     ? "Ti/Te/Ne cross-scored from MBTI."
-    : "No MBTI data — Ti/Te/Ne from Socionics questions only.";
+    : "No MBTI data - Ti/Te/Ne from Socionics questions only.";
 
   const winnerMargin = sortedQuadraList[0].score - sortedQuadraList[1].score;
   const answeredCount = questionList.filter(

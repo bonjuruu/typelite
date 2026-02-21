@@ -312,7 +312,7 @@ export const PdfExportCard = forwardRef<HTMLDivElement, PdfExportCardProps>(
                             fontWeight: 600,
                           }}
                         >
-                          {SLOT_LABELS[ability.slot]} —{" "}
+                          {SLOT_LABELS[ability.slot]} -{" "}
                           {ability.cognitiveFunction}
                         </div>
                         <div
@@ -424,7 +424,7 @@ export const PdfExportCard = forwardRef<HTMLDivElement, PdfExportCardProps>(
                     color: COLORS.textLabel,
                   }}
                 >
-                  Passive — {character.element.passiveTrait.name}
+                  Passive - {character.element.passiveTrait.name}
                 </div>
                 <div
                   style={{

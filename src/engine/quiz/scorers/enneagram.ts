@@ -11,7 +11,7 @@ import {
 } from "../shared.ts";
 
 // ============================================================
-// ENNEAGRAM — Weighted Accumulator
+// ENNEAGRAM - Weighted Accumulator
 // ============================================================
 
 /**

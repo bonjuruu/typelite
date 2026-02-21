@@ -238,8 +238,8 @@ function WelcomePanel({
         <p className="mt-2 text-sm leading-relaxed text-gray-400">
           Typelite generates roguelite-style game characters from{" "}
           <em className="text-gray-300">real personality typology</em>. Five
-          systems — each measuring something genuinely different about how
-          people think and act — layer together to produce stats, a class,
+          systems - each measuring something genuinely different about how
+          people think and act - layer together to produce stats, a class,
           abilities, an element, and combat behavior. Your real personality
           creates a character that actually plays differently.
         </p>
@@ -273,7 +273,7 @@ function WelcomePanel({
                 &rarr; {system.domain}
               </span>
               <span className="text-xs text-gray-600">
-                &mdash; {system.desc}
+                - {system.desc}
               </span>
             </div>
           ))}

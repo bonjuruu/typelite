@@ -17,11 +17,11 @@ import { ENNEAGRAM_INSTINCTS, INSTINCT_INFLUENCE } from "./instincts.ts";
 /** Wing influence bleeds this fraction of the wing type's stat modifiers into the archetype. */
 const WING_INFLUENCE = 0.3;
 
-/** Instinct stacking influence — 2nd instinct is moderate, 3rd (blind spot) is weak. */
+/** Instinct stacking influence - 2nd instinct is moderate, 3rd (blind spot) is weak. */
 const INSTINCT_SECOND_INFLUENCE = 0.15;
 const INSTINCT_THIRD_INFLUENCE = 0.05;
 
-/** Tritype influence per position — 2nd fix is stronger than 3rd. Order matters. */
+/** Tritype influence per position - 2nd fix is stronger than 3rd. Order matters. */
 const TRITYPE_SECOND_INFLUENCE = 0.4;
 const TRITYPE_THIRD_INFLUENCE = 0.2;
 
@@ -126,7 +126,7 @@ export function buildArchetype(
     });
     instinctPassiveList.push({
       ...secondInstinct.passive,
-      source: `2nd instinct (${instinctStack[1]}) — ${secondInstinct.passive.source}`,
+      source: `2nd instinct (${instinctStack[1]}) - ${secondInstinct.passive.source}`,
     });
     // 3rd instinct (blind spot)
     const thirdInstinct = ENNEAGRAM_INSTINCTS[instinctStack[2]];
@@ -142,7 +142,7 @@ export function buildArchetype(
     });
     instinctPassiveList.push({
       ...thirdInstinct.passive,
-      source: `3rd instinct (${instinctStack[2]}) — ${thirdInstinct.passive.source}`,
+      source: `3rd instinct (${instinctStack[2]}) - ${thirdInstinct.passive.source}`,
     });
   } else if (instinctData) {
     instinctPassiveList.push(instinctData.passive);

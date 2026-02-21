@@ -89,7 +89,7 @@ describe("computeCharacterDiff", () => {
     const diff = computeCharacterDiff(a, b);
 
     // INTJ and ESFJ share all 8 cognitive functions across them but in different slots
-    // Actually INTJ has Ni,Te,Fi,Se and ESFJ has Fe,Si,Ne,Ti — no overlap
+    // Actually INTJ has Ni,Te,Fi,Se and ESFJ has Fe,Si,Ne,Ti - no overlap
     const totalFunctions =
       diff.sharedFunctionList.length +
       diff.uniqueToA.length +
@@ -104,7 +104,7 @@ describe("computeCharacterDiff", () => {
 
     for (const ac of diff.abilityComparisonList) {
       if (ac.slotA && ac.slotB) {
-        // Shared function — both names should be present
+        // Shared function - both names should be present
         expect(ac.nameA).toBeTruthy();
         expect(ac.nameB).toBeTruthy();
       }

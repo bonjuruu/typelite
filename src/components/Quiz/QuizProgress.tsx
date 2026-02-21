@@ -40,7 +40,7 @@ export function QuizProgress({
           {currentIndex + 1} / {totalCount}
           {currentSystem && (
             <span className="ml-2 text-gray-500">
-              — {SYSTEM_SHORT_LABEL[currentSystem]}
+              - {SYSTEM_SHORT_LABEL[currentSystem]}
             </span>
           )}
         </span>

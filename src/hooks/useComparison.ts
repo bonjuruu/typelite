@@ -29,7 +29,7 @@ export function useComparison() {
     } else if (!slotB) {
       saveToSlot("B", character, name);
     } else {
-      // Both full — replace B
+      // Both full - replace B
       saveToSlot("B", character, name);
     }
   };

@@ -46,10 +46,10 @@ const CLASS_OVERRIDE_LIST: SelectOption[] = [
 ];
 
 const ORIENTATION_OVERRIDE_LIST: SelectOption[] = [
-  { value: "Frontline", label: "Frontline — physical, self-sustain" },
-  { value: "Support", label: "Support — party synergy, relational" },
-  { value: "Strategist", label: "Strategist — abstract, meta" },
-  { value: "Balanced", label: "Balanced — no specialization" },
+  { value: "Frontline", label: "Frontline - physical, self-sustain" },
+  { value: "Support", label: "Support - party synergy, relational" },
+  { value: "Strategist", label: "Strategist - abstract, meta" },
+  { value: "Balanced", label: "Balanced - no specialization" },
 ];
 
 const STAT_FIELD_LIST: { key: StatName; label: string }[] = [
@@ -161,7 +161,7 @@ export function OverrideSelector({
                     placeholder="Select function..."
                     optionList={COGNITIVE_FUNCTION_LIST.map((fn) => ({
                       value: fn,
-                      label: `${fn} — ${getAbilityName(fn, slot)}`,
+                      label: `${fn} - ${getAbilityName(fn, slot)}`,
                     }))}
                   />
                 </div>

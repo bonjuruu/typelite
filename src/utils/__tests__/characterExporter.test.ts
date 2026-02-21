@@ -100,7 +100,7 @@ function makeCharacter(overrides?: Partial<Character>): Character {
 describe("exportCharacterToText", () => {
   it("includes header with character name and title", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
-    expect(result).toContain("Aldric — Shadow Analyst");
+    expect(result).toContain("Aldric - Shadow Analyst");
   });
 
   it("includes all four stats", () => {
@@ -121,7 +121,7 @@ describe("exportCharacterToText", () => {
 
   it("includes instinct passive from single legacy field", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
-    expect(result).toContain("Passive — Self-Preservation Focus: Conserves energy in combat.");
+    expect(result).toContain("Passive - Self-Preservation Focus: Conserves energy in combat.");
   });
 
   it("includes instinct passives from stacked list when present", () => {
@@ -136,20 +136,20 @@ describe("exportCharacterToText", () => {
       },
     });
     const result = exportCharacterToText(character, "Aldric");
-    expect(result).toContain("Passive — Primary: First passive.");
-    expect(result).toContain("Passive — Secondary: Second passive.");
+    expect(result).toContain("Passive - Primary: First passive.");
+    expect(result).toContain("Passive - Secondary: Second passive.");
   });
 
   it("includes empowered and stressed states", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
-    expect(result).toContain("Empowered: Clarity — Gains focus under pressure.");
-    expect(result).toContain("Stressed: Withdrawal — Retreats into isolation.");
+    expect(result).toContain("Empowered: Clarity - Gains focus under pressure.");
+    expect(result).toContain("Stressed: Withdrawal - Retreats into isolation.");
   });
 
   it("includes abilities section with slot labels and power", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
     expect(result).toContain("ABILITIES");
-    expect(result).toContain("[Hero — Ti] Analyze");
+    expect(result).toContain("[Hero - Ti] Analyze");
     expect(result).toContain("Tags: debuff, single-target");
     expect(result).toContain("Breaks down enemy defenses.");
   });
@@ -163,14 +163,14 @@ describe("exportCharacterToText", () => {
   it("includes element and its passive", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
     expect(result).toContain("ELEMENT: Shadow (Alpha quadra)");
-    expect(result).toContain("Passive — Umbral Veil: Reduces incoming damage in darkness.");
+    expect(result).toContain("Passive - Umbral Veil: Reduces incoming damage in darkness.");
   });
 
   it("includes combat behavior", () => {
     const result = exportCharacterToText(makeCharacter(), "Aldric");
     expect(result).toContain("COMBAT: Tactical");
     expect(result).toContain("Activation: Memorializing | Positioning: Escaping | Regen: Internalizing");
-    expect(result).toContain("Passive — Fortress: Reduces damage taken when stationary.");
+    expect(result).toContain("Passive - Fortress: Reduces damage taken when stationary.");
   });
 
   it("ends with footer", () => {

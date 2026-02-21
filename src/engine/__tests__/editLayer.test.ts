@@ -31,7 +31,7 @@ function makeCharacter(): Character {
 }
 
 // ============================================================
-// applyEdits — stat clamping
+// applyEdits - stat clamping
 // ============================================================
 
 describe("applyEdits stat clamping", () => {
@@ -58,7 +58,7 @@ describe("applyEdits stat clamping", () => {
       stats: { willpower: 25, intelligence: newIntelligence },
     };
     const result = applyEdits(character, edits);
-    // The clamped total may or may not pass budget — check that willpower was clamped to 20 if budget allows
+    // The clamped total may or may not pass budget - check that willpower was clamped to 20 if budget allows
     if (result.stats.willpower !== character.stats.willpower) {
       expect(result.stats.willpower).toBe(20);
     }
@@ -78,7 +78,7 @@ describe("applyEdits stat clamping", () => {
 });
 
 // ============================================================
-// applyEdits — stat budget validation
+// applyEdits - stat budget validation
 // ============================================================
 
 describe("applyEdits stat budget", () => {
@@ -96,7 +96,7 @@ describe("applyEdits stat budget", () => {
 
   it("rejects stat edits exceeding budget tolerance", () => {
     const character = makeCharacter();
-    // Try to max out all stats — far exceeds budget
+    // Try to max out all stats - far exceeds budget
     const edits: CharacterEdits = {
       ...EMPTY_CHARACTER_EDITS,
       stats: { willpower: 20, intelligence: 20, spirit: 20, vitality: 20 },
@@ -141,7 +141,7 @@ describe("isStatBudgetValid", () => {
 });
 
 // ============================================================
-// applyEdits — class name
+// applyEdits - class name
 // ============================================================
 
 describe("applyEdits className", () => {
@@ -170,7 +170,7 @@ describe("applyEdits className", () => {
 });
 
 // ============================================================
-// applyEdits — ability names
+// applyEdits - ability names
 // ============================================================
 
 describe("applyEdits abilityNameList", () => {
@@ -202,7 +202,7 @@ describe("applyEdits abilityNameList", () => {
 });
 
 // ============================================================
-// applyEdits — element cascade
+// applyEdits - element cascade
 // ============================================================
 
 describe("applyEdits element cascade", () => {
@@ -240,7 +240,7 @@ describe("applyEdits element cascade", () => {
 });
 
 // ============================================================
-// applyEdits — combat orientation
+// applyEdits - combat orientation
 // ============================================================
 
 describe("applyEdits combatOrientation", () => {
@@ -256,7 +256,7 @@ describe("applyEdits combatOrientation", () => {
 });
 
 // ============================================================
-// applyEdits — empty edits (no-op)
+// applyEdits - empty edits (no-op)
 // ============================================================
 
 describe("applyEdits no-op", () => {

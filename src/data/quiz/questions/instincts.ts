@@ -2,7 +2,7 @@ import type { InstinctCenter } from "../../../engine/types/index.ts";
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// EXPANDED INSTINCTS — 8 Questions (3 center + 5 realm)
+// EXPANDED INSTINCTS - 8 Questions (3 center + 5 realm)
 // ============================================================
 
 // Stage 1: 3 center-determination questions.

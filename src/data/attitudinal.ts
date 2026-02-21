@@ -105,7 +105,7 @@ const ASPECT_POSITION_FLAVORS: Record<
     3: {
       summary: "Uncertain will. Struggles with direction, easily shaken.",
       gameplayHint:
-        "Willpower abilities are volatile — high ceiling, low floor.",
+        "Willpower abilities are volatile - high ceiling, low floor.",
     },
     4: {
       summary: "Yielding will. Follows others' lead without friction.",
@@ -145,7 +145,7 @@ const ASPECT_POSITION_FLAVORS: Record<
       summary:
         "Guarded emotion. Sensitive and easily hurt, distrusts others' emotions.",
       gameplayHint:
-        "Spirit abilities are erratic — burst potential with drawbacks.",
+        "Spirit abilities are erratic - burst potential with drawbacks.",
     },
     4: {
       summary:
@@ -166,7 +166,7 @@ const ASPECT_POSITION_FLAVORS: Record<
     },
     3: {
       summary: "Anxious physicality. Uneasy with body and material world.",
-      gameplayHint: "Vitality abilities are unreliable — feast or famine.",
+      gameplayHint: "Vitality abilities are unreliable - feast or famine.",
     },
     4: {
       summary:

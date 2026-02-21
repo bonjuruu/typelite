@@ -19,7 +19,7 @@ function classNameMatchesAny(className: string, targetList: string[]): boolean {
 
 /**
  * Generate 2-4 prose insights about how active systems interact.
- * Pure function — no React imports.
+ * Pure function - no React imports.
  */
 export function generateSystemInsights(character: Character): string[] {
   const { activeSystems } = character;
@@ -62,7 +62,7 @@ export function generateSystemInsights(character: Character): string[] {
       if (centerSet.size === 3) {
         candidateList.push({
           priority: 9.5,
-          text: `Tritype ${tritypeNumberList.join("-")} covers all three centers (Gut, Heart, Head) — full emotional, instinctual, and intellectual access.`,
+          text: `Tritype ${tritypeNumberList.join("-")} covers all three centers (Gut, Heart, Head) - full emotional, instinctual, and intellectual access.`,
         });
       }
     }
@@ -74,7 +74,7 @@ export function generateSystemInsights(character: Character): string[] {
     if (heroScalesStat === highestStatEntry[0]) {
       candidateList.push({
         priority: 10,
-        text: `${STAT_LABELS[highestStatEntry[0]]} is your highest stat (${highestStatEntry[1]}), powers your ${heroAbility.cognitiveFunction}-Hero ${heroAbility.name}, and aligns with your ${character.element.club} club — a triple-layered convergence.`,
+        text: `${STAT_LABELS[highestStatEntry[0]]} is your highest stat (${highestStatEntry[1]}), powers your ${heroAbility.cognitiveFunction}-Hero ${heroAbility.name}, and aligns with your ${character.element.club} club - a triple-layered convergence.`,
       });
     }
   }
@@ -114,12 +114,12 @@ export function generateSystemInsights(character: Character): string[] {
     if (isAggressiveClass && isMethodicalHero) {
       candidateList.push({
         priority: 8,
-        text: `${character.archetype.className} with ${heroAbility.cognitiveFunction}-dominant kit — a disciplined chaos agent who channels aggression through precision.`,
+        text: `${character.archetype.className} with ${heroAbility.cognitiveFunction}-dominant kit - a disciplined chaos agent who channels aggression through precision.`,
       });
     } else if (isSupportClass && isAggressiveHero) {
       candidateList.push({
         priority: 8,
-        text: `${character.archetype.className} with ${heroAbility.cognitiveFunction}-Hero — a support archetype armed with an aggressive primary ability.`,
+        text: `${character.archetype.className} with ${heroAbility.cognitiveFunction}-Hero - a support archetype armed with an aggressive primary ability.`,
       });
     }
   }
@@ -129,7 +129,7 @@ export function generateSystemInsights(character: Character): string[] {
     if (inferiorAbility.scalingStat === lowestStatEntry[0]) {
       candidateList.push({
         priority: 7,
-        text: `${inferiorAbility.cognitiveFunction}-${SLOT_LABELS[inferiorAbility.slot]}'s comeback fires from ${STAT_LABELS[lowestStatEntry[0]]} at ${lowestStatEntry[1]} — thin base, big spikes.`,
+        text: `${inferiorAbility.cognitiveFunction}-${SLOT_LABELS[inferiorAbility.slot]}'s comeback fires from ${STAT_LABELS[lowestStatEntry[0]]} at ${lowestStatEntry[1]} - thin base, big spikes.`,
       });
     }
   }
@@ -149,7 +149,7 @@ export function generateSystemInsights(character: Character): string[] {
     ) {
       candidateList.push({
         priority: 6,
-        text: `${character.element.quadra} ${character.element.element} + ${character.archetype.className} = thematic alignment — your element and class reinforce the same combat identity.`,
+        text: `${character.element.quadra} ${character.element.element} + ${character.archetype.className} = thematic alignment - your element and class reinforce the same combat identity.`,
       });
     }
   }
@@ -165,7 +165,7 @@ export function generateSystemInsights(character: Character): string[] {
     if (isSingleTarget && hasSxFixation) {
       candidateList.push({
         priority: 5,
-        text: `sx Fixation + ${heroAbility.cognitiveFunction}-Hero single-target ability = boss fight specialist — damage ramps on sustained focus.`,
+        text: `sx Fixation + ${heroAbility.cognitiveFunction}-Hero single-target ability = boss fight specialist - damage ramps on sustained focus.`,
       });
     }
   }
@@ -199,7 +199,7 @@ export function generateSystemInsights(character: Character): string[] {
     ) {
       candidateList.push({
         priority: 4,
-        text: `SUR Frontline + ${character.archetype.className} = frontline intellectual — positioning says "charge" while the class says "plan."`,
+        text: `SUR Frontline + ${character.archetype.className} = frontline intellectual - positioning says "charge" while the class says "plan."`,
       });
     } else if (
       isStrategist &&
@@ -207,7 +207,7 @@ export function generateSystemInsights(character: Character): string[] {
     ) {
       candidateList.push({
         priority: 4,
-        text: `PUR Strategist + ${character.archetype.className} = tactical brawler — planning from the front line.`,
+        text: `PUR Strategist + ${character.archetype.className} = tactical brawler - planning from the front line.`,
       });
     } else if (
       isSupport &&
@@ -215,7 +215,7 @@ export function generateSystemInsights(character: Character): string[] {
     ) {
       candidateList.push({
         priority: 4,
-        text: `INT Support + ${character.archetype.className} = protective vanguard — aggression in service of the group.`,
+        text: `INT Support + ${character.archetype.className} = protective vanguard - aggression in service of the group.`,
       });
     }
   }
@@ -236,19 +236,19 @@ export function generateSystemInsights(character: Character): string[] {
     > = {
       Practical: {
         classList: ["Sentinel", "Warlord"],
-        text: `Practical Resourceful + ${character.archetype.className} = efficient and relentless — reduced cooldowns on an already durable kit.`,
+        text: `Practical Resourceful + ${character.archetype.className} = efficient and relentless - reduced cooldowns on an already durable kit.`,
       },
       Researcher: {
         classList: ["Sage", "Trickster"],
-        text: `Researcher Analytical Mind + ${character.archetype.className} = vulnerability stacking specialist — debuff, then punish.`,
+        text: `Researcher Analytical Mind + ${character.archetype.className} = vulnerability stacking specialist - debuff, then punish.`,
       },
       Social: {
         classList: ["Cleric", "Bard"],
-        text: `Social Grace + ${character.archetype.className} = amplified support — buffs and heals land harder.`,
+        text: `Social Grace + ${character.archetype.className} = amplified support - buffs and heals land harder.`,
       },
       Humanitarian: {
         classList: ["Druid", "Cleric"],
-        text: `Humanitarian Compassionate Aura + ${character.archetype.className} = passive sustain engine — the party heals just by standing near you.`,
+        text: `Humanitarian Compassionate Aura + ${character.archetype.className} = passive sustain engine - the party heals just by standing near you.`,
       },
     };
     const synergy = clubClassSynergyMap[character.element.club];

@@ -24,7 +24,7 @@ export function SocionicsSelector({
       placeholder="Select Socionics type..."
       optionList={SOCIONICS_TYPE_LIST.map((type) => ({
         value: type,
-        label: `${type} — ${getSocionicsType(type).name}`,
+        label: `${type} - ${getSocionicsType(type).name}`,
       }))}
     />
   );

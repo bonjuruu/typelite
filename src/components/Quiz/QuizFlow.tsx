@@ -62,7 +62,7 @@ export function QuizFlow({
         <div className="mb-8 space-y-4">
           <ModeCard
             title="Quick"
-            description="~45 questions across all enabled systems. Faster but less granular — some systems are simplified or derived from others."
+            description="~45 questions across all enabled systems. Faster but less granular - some systems are simplified or derived from others."
             questionCount={computeQuestionCount(enabledSystems, "quick")}
             selected={false}
             onClick={() => setQuizMode("quick")}
@@ -114,7 +114,7 @@ export function QuizFlow({
           <p className="text-base leading-relaxed text-gray-400">
             Answer {totalQuestionCount} questions across {enabledSystemCount}{" "}
             typology {enabledSystemCount === 1 ? "system" : "systems"} to reveal
-            your character's inner nature. There are no wrong answers — only
+            your character's inner nature. There are no wrong answers - only
             truths waiting to surface.
           </p>
         </div>
@@ -131,7 +131,7 @@ export function QuizFlow({
         {quizMode === "deep" && (
           <div className="mb-6 rounded-lg border border-indigo-900/40 bg-indigo-950/20 p-3 text-sm leading-relaxed text-indigo-200/70">
             The Extended quiz tests cognitive functions and information elements
-            directly, making it more thorough than the Quick quiz — but no
+            directly, making it more thorough than the Quick quiz - but no
             self-report quiz can replace professional assessment. For best
             results, answer honestly rather than aspirationally, or pick types
             manually in the Builder.

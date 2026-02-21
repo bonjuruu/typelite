@@ -10,7 +10,7 @@ import {
 } from "../shared.ts";
 
 // ============================================================
-// EXPANDED INSTINCTS — 2-Stage Funnel
+// EXPANDED INSTINCTS - 2-Stage Funnel
 // ============================================================
 
 /**
@@ -101,7 +101,7 @@ export function explainInstincts(
 
   const axisLeanSummary = [
     `${sortedCenterList[0].center} dominated (${sortedCenterList.map((c) => `${c.center} ${c.score}`).join(", ")}).`,
-    `Within ${center}: ${sortedRealmList[0].realm} scored ${sortedRealmList[0].score}, ${sortedRealmList[1]?.realm ?? "—"} scored ${sortedRealmList[1]?.score ?? 0}.`,
+    `Within ${center}: ${sortedRealmList[0].realm} scored ${sortedRealmList[0].score}, ${sortedRealmList[1]?.realm ?? "-"} scored ${sortedRealmList[1]?.score ?? 0}.`,
   ];
 
   const scoreDetail = [

@@ -1,7 +1,7 @@
 import type { QuizQuestion } from "../types.ts";
 
 // ============================================================
-// ATTITUDINAL PSYCHE — 6 Pairwise Comparison Questions
+// ATTITUDINAL PSYCHE - 6 Pairwise Comparison Questions
 // ============================================================
 // One question for each pair: V vs L, V vs E, V vs F, L vs E, L vs F, E vs F.
 // Chosen option gives +1 win to that aspect.
