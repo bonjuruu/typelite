@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "test": "vitest",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vite build && npx wrangler pages deploy dist --project-name typelite"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
