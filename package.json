@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "test": "vitest",
     "preview": "vite preview",
-    "deploy": "vite build && npx wrangler pages deploy dist --project-name typelite"
+    "deploy": "npx wrangler deploy"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
