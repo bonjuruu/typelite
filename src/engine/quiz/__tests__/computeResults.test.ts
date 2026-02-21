@@ -72,7 +72,7 @@ describe("computeQuizResults — quick kit", () => {
       answerMap,
       allSystemsEnabled(),
       baseQuestionList,
-      realmQuestionList,
+      [...realmQuestionList],
       quickScorerKit,
     );
 
@@ -103,7 +103,7 @@ describe("computeQuizResults — quick kit", () => {
       answerMap,
       allSystemsEnabled(),
       baseQuestionList,
-      realmQuestionList,
+      [...realmQuestionList],
       quickScorerKit,
     );
 
@@ -158,7 +158,7 @@ describe("computeQuizResults — deep kit", () => {
       answerMap,
       allSystemsEnabled(),
       baseQuestionList,
-      realmQuestionList,
+      [...realmQuestionList],
       deepScorerKit,
     );
 
@@ -276,7 +276,7 @@ describe("computeQuizResults — empty answerMap", () => {
       {},
       allSystemsEnabled(),
       baseQuestionList,
-      realmQuestionList,
+      [...realmQuestionList],
       quickScorerKit,
     );
 
