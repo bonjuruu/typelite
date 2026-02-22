@@ -36,3 +36,11 @@ export const dividerStyle: React.CSSProperties = {
   borderTop: `1px solid ${COLORS.bgCard}`,
   margin: "20px 0",
 };
+
+/** Per-slot left-border colors for ability cards. */
+export const SLOT_BORDER_COLORS: Record<string, string> = {
+  hero: "#d97706",
+  parent: "#2563eb",
+  child: "#9333ea",
+  inferior: "#4b5563",
+};

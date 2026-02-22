@@ -1,24 +1,17 @@
-import { useState, useCallback, useEffect, useRef } from "react";
-import type {
-  Character,
-  GeneratorInput,
-  ManualOverrides,
-  EnneagramNumber,
-  EnneagramInstinct,
-  InstinctRealm,
-} from "../engine/types/index.ts";
+import { useState, useCallback } from "react";
+import type { Character } from "../engine/types/index.ts";
 import { EMPTY_CHARACTER_EDITS } from "../engine/types/index.ts";
 import type { QuizResult } from "../data/quiz/types.ts";
 import { generateCharacter } from "../engine/generator.ts";
 import { generateName } from "../engine/nameGenerator.ts";
 import { serializeToUrl, deserializeFromUrl } from "../utils/urlSerializer/index.ts";
 import { AP_TYPE_LIST } from "../data/attitudinal.ts";
-import { ENNEAGRAM_INSTINCT_LIST } from "../data/enneagram/index.ts";
 import { MBTI_TYPE_LIST } from "../data/mbti/index.ts";
 import { SOCIONICS_TYPE_LIST } from "../data/socionics.ts";
-import type { BuilderSelections, EnabledSystems } from "../types/builder.ts";
 
 export type { BuilderSelections, EnabledSystems } from "../types/builder.ts";
+
+import type { BuilderSelections } from "../types/builder.ts";
 
 import {
   useBuilderSelections,
@@ -28,6 +21,12 @@ import {
   INITIAL_SELECTIONS,
 } from "./useBuilderSelections.ts";
 import { useCharacterEdits } from "./useCharacterEdits.ts";
+import { useUrlSync } from "./useUrlSync.ts";
+import {
+  buildGeneratorInput,
+  sanitizeEnabledSystems,
+  checkSelections,
+} from "./generatorHelpers.ts";
 
 // ============================================================
 // HOOK
@@ -220,33 +219,14 @@ export function useCharacterGenerator() {
   );
 
   // Sync edits to URL after state commits
-  const isInitialMount = useRef(true);
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    if (!rawCharacter) return;
-    const params = serializeToUrl(
-      enabledSystems,
-      selections,
-      overrides,
-      characterName || undefined,
-      characterEdits,
-    );
-    window.history.replaceState(
-      null,
-      "",
-      `${window.location.pathname}?${params.toString()}`,
-    );
-  }, [
-    characterEdits,
+  useUrlSync({
     enabledSystems,
     selections,
     overrides,
     characterName,
+    characterEdits,
     rawCharacter,
-  ]);
+  });
 
   const hasAllSelections = checkSelections(enabledSystems, selections);
 
@@ -274,134 +254,4 @@ export function useCharacterGenerator() {
     updateCharacterEdit,
     resetCharacterEdits,
   };
-}
-
-// ============================================================
-// HELPERS
-// ============================================================
-
-function buildGeneratorInput(
-  enabledSystems: EnabledSystems,
-  selections: BuilderSelections,
-  overrides: ManualOverrides,
-): GeneratorInput {
-  return {
-    attitudinal: enabledSystems.attitudinal ? selections.attitudinal : null,
-    enneagram:
-      enabledSystems.enneagram &&
-      selections.enneagramType &&
-      selections.enneagramWing &&
-      selections.enneagramInstinct
-        ? {
-            type: selections.enneagramType,
-            wing: selections.enneagramWing,
-            instinct: selections.enneagramInstinct,
-            ...(selections.instinctStackEnabled && selections.instinctSecond
-              ? {
-                  instinctStack: (() => {
-                    const third = ENNEAGRAM_INSTINCT_LIST.find(
-                      (i) =>
-                        i !== selections.enneagramInstinct &&
-                        i !== selections.instinctSecond,
-                    );
-                    if (!third)
-                      return [
-                        selections.enneagramInstinct,
-                        selections.instinctSecond,
-                        "sp",
-                      ] as [
-                        EnneagramInstinct,
-                        EnneagramInstinct,
-                        EnneagramInstinct,
-                      ];
-                    return [
-                      selections.enneagramInstinct,
-                      selections.instinctSecond,
-                      third,
-                    ] as [
-                      EnneagramInstinct,
-                      EnneagramInstinct,
-                      EnneagramInstinct,
-                    ];
-                  })(),
-                }
-              : {}),
-            ...(selections.tritypeEnabled &&
-            selections.tritypeSecondFix &&
-            selections.tritypeThirdFix
-              ? {
-                  tritype: [
-                    selections.enneagramType,
-                    selections.tritypeSecondFix,
-                    selections.tritypeThirdFix,
-                  ] as [EnneagramNumber, EnneagramNumber, EnneagramNumber],
-                  ...(selections.tritypeSecondFixWing &&
-                  selections.tritypeThirdFixWing
-                    ? {
-                        tritypeWings: [
-                          selections.tritypeSecondFixWing,
-                          selections.tritypeThirdFixWing,
-                        ] as [EnneagramNumber, EnneagramNumber],
-                      }
-                    : {}),
-                }
-              : {}),
-          }
-        : null,
-    mbti: enabledSystems.mbti ? selections.mbti : null,
-    socionics: enabledSystems.socionics ? selections.socionics : null,
-    instincts:
-      enabledSystems.instincts && selections.instinctRealm
-        ? {
-            realm: selections.instinctRealm,
-            ...(selections.instinctTritypeEnabled &&
-            selections.instinctSecondRealm &&
-            selections.instinctThirdRealm
-              ? {
-                  tritype: [
-                    selections.instinctRealm,
-                    selections.instinctSecondRealm,
-                    selections.instinctThirdRealm,
-                  ] as [InstinctRealm, InstinctRealm, InstinctRealm],
-                }
-              : {}),
-          }
-        : null,
-    overrides,
-  };
-}
-
-function sanitizeEnabledSystems(
-  enabled: EnabledSystems,
-  selections: BuilderSelections,
-): EnabledSystems {
-  return {
-    attitudinal: enabled.attitudinal && selections.attitudinal !== null,
-    enneagram:
-      enabled.enneagram &&
-      selections.enneagramType !== null &&
-      selections.enneagramWing !== null &&
-      selections.enneagramInstinct !== null,
-    mbti: enabled.mbti && selections.mbti !== null,
-    socionics: enabled.socionics && selections.socionics !== null,
-    instincts: enabled.instincts && selections.instinctRealm !== null,
-  };
-}
-
-function checkSelections(
-  enabled: EnabledSystems,
-  selections: BuilderSelections,
-): boolean {
-  if (enabled.attitudinal && !selections.attitudinal) return false;
-  if (
-    enabled.enneagram &&
-    (!selections.enneagramType ||
-      !selections.enneagramWing ||
-      !selections.enneagramInstinct)
-  )
-    return false;
-  if (enabled.mbti && !selections.mbti) return false;
-  if (enabled.socionics && !selections.socionics) return false;
-  if (enabled.instincts && !selections.instinctRealm) return false;
-  return true;
 }

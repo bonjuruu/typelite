@@ -6,6 +6,7 @@ import { CharacterSheet } from "./components/CharacterSheet/CharacterSheet.tsx";
 import { ComparisonView } from "./components/Comparison/ComparisonView.tsx";
 import { QuizFlow } from "./components/Quiz/QuizFlow.tsx";
 import { AboutModal } from "./components/common/AboutModal.tsx";
+import { Footer } from "./components/common/Footer.tsx";
 import { AboutPage } from "./components/About/AboutPage.tsx";
 import type { QuizResult } from "./data/quiz/types.ts";
 
@@ -58,7 +59,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <div className="flex min-h-screen flex-col bg-gray-950 text-gray-100">
       <header className="border-b border-gray-800 px-4 py-4 sm:px-6">
         <div className="mx-auto flex max-w-5xl items-center justify-between">
           <h1 className="text-2xl font-bold tracking-tight">
@@ -100,11 +101,11 @@ function App() {
       </header>
 
       {mode === "about" ? (
-        <main className="mx-auto max-w-3xl p-4 sm:p-6">
+        <main className="mx-auto max-w-3xl flex-1 p-4 sm:p-6">
           <AboutPage onOpenSystemDetails={() => setShowAbout(true)} />
         </main>
       ) : mode === "quiz" ? (
-        <main className="mx-auto max-w-3xl p-4 sm:p-6">
+        <main className="mx-auto max-w-3xl flex-1 p-4 sm:p-6">
           <QuizFlow
             enabledSystems={enabledSystems}
             onComplete={handleQuizComplete}
@@ -112,7 +113,7 @@ function App() {
           />
         </main>
       ) : (
-        <main className="mx-auto max-w-5xl space-y-6 p-4 sm:p-6">
+        <main className="mx-auto max-w-5xl flex-1 space-y-6 p-4 sm:p-6">
           {!character && (
             <WelcomePanel
               onStartQuiz={() => setMode("quiz")}
@@ -187,6 +188,7 @@ function App() {
         </main>
       )}
 
+      <Footer />
       <AboutModal open={showAbout} onClose={() => setShowAbout(false)} />
     </div>
   );
@@ -200,15 +202,15 @@ const SYSTEM_PREVIEW_LIST = [
   {
     name: "Attitudinal Psyche",
     domain: "Stats",
-    desc: "Ranks 4 cognitive aspects to set your base stat spread",
+    desc: "Ranks 4 aspects to set your base stat spread",
   },
   {
     name: "Enneagram",
     domain: "Class",
-    desc: "9 core motivations become class archetypes with wings and growth lines",
+    desc: "9 core egos become class archetypes with wings and growth lines",
   },
   {
-    name: "MBTI (Beebe)",
+    name: "Jungian Type",
     domain: "Abilities",
     desc: "4-function cognitive stack produces 4 unique abilities",
   },
@@ -220,7 +222,7 @@ const SYSTEM_PREVIEW_LIST = [
   {
     name: "Expanded Instincts",
     domain: "Combat",
-    desc: "9 realms with 3 triad systems shape combat behavior",
+    desc: "9 instincts that expands the enneagram instincts shape combat behavior",
   },
 ] as const;
 
@@ -237,11 +239,11 @@ function WelcomePanel({
         <h2 className="text-lg font-bold text-gray-100">What is this?</h2>
         <p className="mt-2 text-sm leading-relaxed text-gray-400">
           Typelite generates roguelite-style game characters from{" "}
-          <em className="text-gray-300">real personality typology</em>. Five
-          systems - each measuring something genuinely different about how
-          people think and act - layer together to produce stats, a class,
-          abilities, an element, and combat behavior. Your real personality
-          creates a character that actually plays differently.
+          <em className="text-gray-300">typology systems</em>. The five systems
+          each measure something different about how people think and act. They
+          layer together to produce stats, a class, abilities, an element, and
+          combat behavior. Your real personality creates a character that
+          actually plays differently.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-gray-400">
           Don't know your types? The{" "}
@@ -272,9 +274,7 @@ function WelcomePanel({
               <span className="shrink-0 text-xs text-indigo-400">
                 &rarr; {system.domain}
               </span>
-              <span className="text-xs text-gray-600">
-                - {system.desc}
-              </span>
+              <span className="text-xs text-gray-600">- {system.desc}</span>
             </div>
           ))}
         </div>

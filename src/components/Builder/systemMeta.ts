@@ -43,11 +43,11 @@ export const SYSTEM_META_LIST: SystemMeta[] = [
   },
   {
     id: "mbti",
-    name: "MBTI",
+    name: "Jungian Type",
     description: "16 types via Beebe 4-function stack",
     domain: "Abilities",
     info: {
-      what: "MBTI types are built from 8 cognitive functions (Ti, Te, Fi, Fe, Si, Se, Ni, Ne) arranged in a 4-function stack using Beebe\u2019s model. Each slot - Hero, Parent, Child, Inferior - has a distinct role.",
+      what: "Jungian types are built from 8 cognitive functions (Ti, Te, Fi, Fe, Si, Se, Ni, Ne) arranged in a 4-function stack using Beebe\u2019s model. Each slot - Hero, Parent, Child, Inferior - has a distinct role.",
       mapping:
         "Each function\u2013slot combo produces a unique ability. Hero is your primary power, Parent is support/utility, Child is chaotic and high-variance, and Inferior is weak but has a comeback mechanic.",
       detail:
@@ -64,7 +64,7 @@ export const SYSTEM_META_LIST: SystemMeta[] = [
       mapping:
         "Your quadra determines your element: Alpha\u2192Light/Nature, Beta\u2192Fire/Shadow, Gamma\u2192Earth/Metal, Delta\u2192Wind/Water. Your club grants a passive trait that reflects your cognitive style.",
       detail:
-        "Socionics uses different notation than MBTI (e.g. IEI, SLE) and types don\u2019t map 1-to-1 between the systems. The quadra element colors your character\u2019s abilities and aesthetic.",
+        "Socionics uses different notation than Jungian types (e.g. IEI, SLE) and types don\u2019t map 1-to-1 between the systems. The quadra element colors your character\u2019s abilities and aesthetic.",
     },
   },
   {

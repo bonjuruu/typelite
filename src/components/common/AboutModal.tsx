@@ -70,12 +70,10 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
 
         <div className="mb-8 text-sm leading-relaxed text-gray-400">
           <p>
-            Typelite turns real personality typology into a roguelite character
-            builder. Five systems, each measuring something genuinely different
-            about how people think and act, map onto five distinct game domains.
-            The goal isn't just a character generator - it's a framework where
-            your real personality produces a character that{" "}
-            <em className="text-gray-300">actually plays differently</em>.
+            Typelite turns typology systems into a roguelite character builder.
+            Five systems each measuring a different area of psychology, mapped
+            into five game domains. It's a fun way to gamify yourself and see
+            how different type combinations interact.
           </p>
         </div>
 
@@ -83,44 +81,44 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
           <SystemEntry
             name="Attitudinal Psyche"
             arrow="Base Stats"
-            what="Ranks four cognitive aspects - Volition, Logic, Emotion, Physics - from strongest to weakest. Your 1st is where you're confident, 2nd is flexible, 3rd is a sore spot, 4th you don't really care about."
-            why="The four aspects map straight to four stat axes: V→Willpower, L→Intelligence, E→Spirit, F→Vitality. Position values (14/10/7/4) create real asymmetry - your character is shaped by where you're strong and where you defer, not just which box you checked."
+            what="Ranks four cognitive aspects (Volition, Logic, Emotion, Physics) from strongest to weakest. Your 1st is where you're confident, 2nd is flexible, 3rd is insecure, 4th is unbothered."
+            why="The four aspects map straight to four stat axes: V→Willpower, L→Intelligence, E→Spirit, F→Vitality. In AP, position reflects your attitude toward an aspect, not how strong you are at it. In Typelite, position directly sets your stat value. It's a simplification to make the game work."
           />
 
           <SystemEntry
             name="Enneagram"
             arrow="Class & Archetype"
             what="9 core motivations. Wings shade your type toward a neighbor, instinctual variants (sp/so/sx) change how the type shows up in practice, and growth/stress lines show where you go when things are good or bad."
-            why="Enneagram types already have strong identities - the knowledge-hoarding 5 becomes the Sage, the power-hungry 8 becomes the Berserker. Wings work as subclass modifiers, growth/stress lines become empowered/stressed states. The structure just maps to game mechanics on its own."
+            why="Each type is distinct enough to map to an archetype naturally (5 is the Sage, 8 is the Berserker, etc.). The wings, instincts, and growth/stress lines act as modifiers on top."
           />
 
           <SystemEntry
-            name="MBTI (Beebe Model)"
+            name="Jungian Type"
             arrow="Abilities"
-            what="Uses the Beebe 4-function stack model, not just the four-letter code. Each type has a Hero, Parent, Child, and Inferior function - same 8 functions, but the slot changes how they work."
-            why="Beebe's slot model is what makes this work. The same function plays completely differently depending on position: Ni as Hero (INFJ) is visionary pattern recognition, but Ni as Inferior (ESTP) fires as a sudden premonition under pressure. Four slots = four abilities, each matching the Beebe archetype - Hero is your main power, Inferior is your clutch comeback."
+            what="Based on Jung's cognitive function theory. Each type leads with different mental processes (perceiving and judging, each with introverted and extraverted forms) in a specific order. The 4 function stack model assigns archetypal roles to each position in the stack, which is what Typelite uses for abilities."
+            why="The same function plays completely differently depending on position: Ni as Hero (INFJ) is visionary pattern recognition, but Ni as Inferior (ESTP) fires as a sudden premonition under pressure. Four slots = four abilities. Hero is your main power, Inferior is your clutch comeback."
           />
 
           <SystemEntry
             name="Socionics"
             arrow="Element & Affinity"
-            what="Groups 16 types into 4 quadras (Alpha, Beta, Gamma, Delta), each sharing valued information elements. Also sorts types into clubs (Researcher, Social, Practical, Humanitarian) based on cognitive orientation."
-            why="Quadras have a natural elemental feel: Alpha's cooperative Ne/Si + Fe/Ti maps to Light and Nature, Beta's power-oriented Se/Ni + Fe/Ti maps to Fire and Shadow. Clubs add a passive trait. Socionics is separate from MBTI because the types don't map 1-to-1 - different notation, different function analysis, and the quadra/club layer covers ground MBTI doesn't."
+            what="Shares roots with Jungian type theory but focuses on how types relate to each other. Groups 16 types into 4 quadras that share valued functions, and clubs that share cognitive strengths (logic + intuition = Researcher, ethics + sensing = Social, etc.)."
+            why="Typelite uses quadras for element affinity since types in the same quadra share a natural vibe. Clubs determine a passive trait. It's separate from Jungian type because despite similar building blocks, socionics cares more about dynamics between types than what's going on inside one person."
           />
 
           <SystemEntry
             name="Expanded Instincts"
             arrow="Combat Behavior"
-            what="Rob Collopy's system from the Attitudinal Psyche community. 9 instinctual realms across 3 centers (Self-Survival, Interpersonal, Purpose), with 3 orthogonal triad systems that classify each realm's activation style, movement pattern, and energy source."
+            what="Expands the classic 3 instincts (sp/so/sx) into 9 realms across 3 centers (Self-Survival, Interpersonal, Purpose). Each realm has a different activation style, movement pattern, and energy source."
             why={
               <>
-                Picked this over classic enneagram sp/so/sx instincts.
-                Classic instincts give you 3 options and not much to work with
-                mechanically. Expanded Instincts gives you 9 realms, each with
-                a unique <em className="text-gray-300">combination</em> of
-                triads - different activation styles, positioning, and regen
-                sources, so combat actually varies between realms. Tritype (one
-                realm per center) adds another layer. It's also just a different
+                Picked this over classic enneagram sp/so/sx instincts. Classic
+                instincts give you 3 options and not much to work with
+                mechanically. Expanded Instincts gives you 9 realms, each with a
+                unique <em className="text-gray-300">combination</em> of triads.
+                Different activation styles, positioning, and regen sources, so
+                combat actually varies between realms. Tritype (one realm per
+                center) adds another layer. It's also just a different
                 philosophy: types run <em className="text-gray-300">toward</em>{" "}
                 aliveness instead of <em className="text-gray-300">away</em>{" "}
                 from fear, which is more fun for character building.
@@ -131,14 +129,15 @@ export function AboutModal({ open, onClose }: AboutModalProps) {
 
         <div className="mt-8 border-t border-gray-800 pt-6">
           <p className="text-xs leading-relaxed text-gray-600">
-            These five systems each measure something different - AP covers
-            cognitive priorities, Enneagram covers motivation, MBTI covers
-            information processing, Socionics covers social-cognitive
+            These five systems each measure something different. AP covers
+            cognitive priorities, Enneagram covers motivation, Jungian Type
+            covers information processing, Socionics covers social-cognitive
             orientation, and Expanded Instincts covers instinctual drives.
-            Stacking them gives characters more depth than any one system
-            could on its own.
+            Stacking them gives characters more depth than any one system could
+            on its own.
           </p>
         </div>
+
       </div>
     </dialog>
   );

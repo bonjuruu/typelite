@@ -57,9 +57,8 @@ export class ErrorBoundary extends Component<
             Something Went Wrong
           </h1>
           <p className="mb-6 text-sm leading-relaxed text-gray-400">
-            The character engine hit an unexpected error. Your selections
-            haven't been lost - try resetting, or reload the page if the issue
-            persists.
+            Something unexpected broke. Try resetting, or reload the page if
+            the issue persists.
           </p>
           {this.state.error && (
             <pre className="mb-6 max-h-24 overflow-auto rounded border border-gray-800 bg-gray-900 p-3 text-left text-xs text-gray-500">

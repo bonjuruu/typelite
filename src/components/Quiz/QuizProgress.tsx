@@ -7,7 +7,7 @@ import type { QuizSystemId } from "../../data/quiz/types.ts";
 const SYSTEM_SHORT_LABEL: Record<QuizSystemId, string> = {
   attitudinal: "AP",
   enneagram: "Enneagram",
-  mbti: "MBTI",
+  mbti: "Jungian Type",
   socionics: "Socionics",
   instincts: "Instincts",
 };

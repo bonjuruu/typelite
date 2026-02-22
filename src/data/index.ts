@@ -38,6 +38,9 @@ export {
   SOCIONICS_TYPE_LIST,
   getSocionicsType,
   getQuadraRationale,
+  getQuadraDescription,
+  getClubDescription,
+  CLUB_PASSIVES,
 } from "./socionics.ts";
 
 // Instincts
@@ -47,6 +50,8 @@ export {
   getRealmCenter,
   getInstinctRealm,
   getTriadDescription,
+  getTriadEPDescription,
+  TRIAD_CATEGORY_DESCRIPTIONS,
   INSTINCT_CENTER_LIST,
   REALMS_BY_CENTER,
 } from "./instincts/index.ts";

@@ -10,7 +10,7 @@ interface ResultCardProps {
   label: string;
   domain: string;
   value: string;
-  description: string;
+  description: React.ReactNode;
   explanation?: ScoreBreakdown;
   methodNote?: string;
   children?: React.ReactNode;
@@ -41,9 +41,9 @@ export function ResultCard({
         )}
       </div>
       <p className="text-lg font-bold text-gray-100">{value}</p>
-      <p className="mt-2 text-sm leading-relaxed text-gray-400">
+      <div className="mt-2 whitespace-pre-line text-sm leading-relaxed text-gray-400">
         {description}
-      </p>
+      </div>
       {children}
       {explanation && (
         <details className="mt-3">

@@ -49,7 +49,7 @@ function getMissingSystemList(
   const nameMap: Record<SystemId, string> = {
     attitudinal: "Attitudinal Psyche",
     enneagram: "Enneagram",
-    mbti: "MBTI",
+    mbti: "Jungian Type",
     socionics: "Socionics",
     instincts: "Instincts",
   };

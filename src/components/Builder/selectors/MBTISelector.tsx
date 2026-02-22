@@ -21,7 +21,7 @@ export function MBTISelector({
       onChange={(value) =>
         onUpdateSelection("mbti", (value as MBTIType) || null)
       }
-      placeholder="Select MBTI type..."
+      placeholder="Select Jungian type..."
       optionList={MBTI_TYPE_LIST.map((type) => ({ value: type, label: type }))}
     />
   );

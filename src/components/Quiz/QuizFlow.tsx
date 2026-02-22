@@ -59,17 +59,23 @@ export function QuizFlow({
           </p>
         </div>
 
+        <p className="mb-6 text-center text-xs text-gray-600">
+          This isn't meant to be an accurate typing tool. It's for fun, a way
+          to narrow down potential types, or great if you have a character idea
+          and want to see what types they'd likely be.
+        </p>
+
         <div className="mb-8 space-y-4">
           <ModeCard
             title="Quick"
-            description="~45 questions across all enabled systems. Faster but less granular - some systems are simplified or derived from others."
+            description="Covers all enabled systems. Faster but less granular, some systems are simplified or derived from others."
             questionCount={computeQuestionCount(enabledSystems, "quick")}
             selected={false}
             onClick={() => setQuizMode("quick")}
           />
           <ModeCard
             title="Extended"
-            description="~108 questions. Each system is tested independently with more questions per system. More thorough, more nuanced."
+            description="Each system is tested independently with more questions per system. More thorough, more nuanced."
             questionCount={computeQuestionCount(enabledSystems, "deep")}
             selected={false}
             onClick={() => setQuizMode("deep")}
@@ -121,8 +127,8 @@ export function QuizFlow({
 
         {quizMode === "quick" && (
           <div className="mb-6 rounded-lg border border-amber-900/40 bg-amber-950/20 p-3 text-sm leading-relaxed text-amber-200/70">
-            The Quick quiz tests MBTI via letter dichotomies (E/I, S/N, T/F,
-            J/P) and derives Socionics from the result. For
+            The Quick quiz tests Jungian type via letter dichotomies (E/I, S/N,
+            T/F, J/P) and derives Socionics from the result. For
             cognitive-function-level accuracy, use the Extended quiz or pick
             types manually in the Builder.
           </div>
@@ -143,7 +149,7 @@ export function QuizFlow({
             [
               ["attitudinal", "Attitudinal Psyche"],
               ["enneagram", "Enneagram"],
-              ["mbti", "MBTI"],
+              ["mbti", "Jungian Type"],
               ["socionics", "Socionics"],
               ["instincts", "Expanded Instincts"],
             ] as const

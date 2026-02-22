@@ -1,18 +1,15 @@
 import type { QuizResult, QuizMode } from "../../data/quiz/types.ts";
 import type { EnabledSystems } from "../../types/builder.ts";
-import {
-  getEnneagramType,
-  getInstinctLabel,
-  getInstinctFullName,
-  describeStack,
-  getSocionicsType,
-  getRealmName,
-  getInstinctRealm,
-  getFunctionStack,
-  getCognitiveFunctionName,
-} from "../../data/index.ts";
+import { getEnneagramType, getRealmName } from "../../data/index.ts";
 import { ResultCard } from "./ResultCard.tsx";
 import { CognitiveFunctionRanking } from "./CognitiveFunctionRanking.tsx";
+import {
+  describeAP,
+  describeEnneagram,
+  describeMBTI,
+  describeSocionics,
+  describeInstincts,
+} from "./resultDescriptions.tsx";
 
 // ============================================================
 // PROPS
@@ -66,7 +63,7 @@ export function QuizResults({
 
         {enabledSystems.mbti && result.mbti && (
           <ResultCard
-            label="MBTI"
+            label="Jungian Type"
             domain="Abilities"
             value={result.mbti}
             description={describeMBTI(result.mbti)}
@@ -92,7 +89,7 @@ export function QuizResults({
             description={describeSocionics(result.socionics)}
             explanation={result.explanationMap?.socionics}
             methodNote={
-              quizMode === "deep" ? "Independent" : "Derived from MBTI"
+              quizMode === "deep" ? "Independent" : "Derived from Jungian type"
             }
           />
         )}
@@ -145,58 +142,4 @@ function formatEnneagram(result: QuizResult): string {
     : "";
 
   return `${result.enneagramType}${wingStr}${instinctStr} - ${typeData.className}`;
-}
-
-// ============================================================
-// DESCRIPTION GENERATORS
-// ============================================================
-
-function describeAP(apType: string): string {
-  const stack = describeStack(
-    apType as import("../../engine/types/index.ts").APType,
-  );
-  const first = stack[0];
-  const fourth = stack[3];
-  return `Your ${first.aspect} leads - ${first.flavor.summary} Your weakest aspect is ${fourth.aspect}, sitting in 4th where you defer to others. This sets your base stats: ${first.stat} highest (${first.statValue}), ${fourth.stat} lowest (${fourth.statValue}).`;
-}
-
-function describeEnneagram(result: QuizResult): string {
-  if (!result.enneagramType) return "";
-  const typeData = getEnneagramType(result.enneagramType);
-  const wingPart = result.enneagramWing
-    ? ` The w${result.enneagramWing} wing shades you toward Type ${result.enneagramWing}'s qualities, blending 30% of its stat modifiers into your archetype.`
-    : "";
-  const instinctPart = result.enneagramInstinct
-    ? ` As ${getInstinctFullName(result.enneagramInstinct)} (${result.enneagramInstinct}), you gain the "${getInstinctLabel(result.enneagramInstinct)}" passive.`
-    : "";
-  return `${typeData.name} becomes your ${typeData.className} class. ${typeData.description}${wingPart}${instinctPart}`;
-}
-
-function describeMBTI(
-  mbtiType: import("../../engine/types/index.ts").MBTIType,
-): string {
-  const stack = getFunctionStack(mbtiType);
-  const heroName = getCognitiveFunctionName(stack[0]);
-  const inferiorName = getCognitiveFunctionName(stack[3]);
-  return `Your Hero function is ${heroName} (${stack[0]}) - your primary ability and strongest expression in combat. Your Inferior, ${inferiorName} (${stack[3]}), is normally weak but has a clutch comeback mechanic when you're under pressure. The full stack ${stack.join("-")} gives you four distinct abilities.`;
-}
-
-function describeSocionics(
-  socionicsType: import("../../engine/types/index.ts").SocionicsType,
-): string {
-  const typeData = getSocionicsType(socionicsType);
-  return `${typeData.name} places you in the ${typeData.quadra} quadra, granting the ${typeData.element} element. Your ${typeData.club} club gives a passive trait that reflects your cognitive style. Note: Socionics types don't map 1-to-1 with MBTI - they're a separate system with different notation.`;
-}
-
-function describeInstincts(
-  realm: import("../../engine/types/index.ts").InstinctRealm,
-): string {
-  const realmData = getInstinctRealm(realm);
-  const centerLabel =
-    realmData.center === "SUR"
-      ? "Self-Survival (Frontline)"
-      : realmData.center === "INT"
-        ? "Interpersonal (Support)"
-        : "Purpose (Strategist)";
-  return `${realmData.name} sits in the ${centerLabel} center, setting your combat orientation. Your triads - ${realmData.experiential} activation, ${realmData.movement} positioning, ${realmData.source} regen - shape how you fight moment to moment. This is separate from classic enneagram sp/so/sx instincts.`;
 }

@@ -43,7 +43,7 @@ export function buildTypologySection(source: TypologySource): string {
   }
 
   if (source.mbti) {
-    lineList.push(`MBTI: ${source.mbti}`);
+    lineList.push(`Jungian Type: ${source.mbti}`);
   }
 
   if (source.socionics) {

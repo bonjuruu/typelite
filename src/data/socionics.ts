@@ -192,6 +192,46 @@ export function getQuadraRationale(quadra: Quadra): string {
 }
 
 // ============================================================
+// QUADRA DESCRIPTIONS
+// ============================================================
+
+const QUADRA_DESCRIPTIONS: Record<Quadra, string> = {
+  Alpha:
+    "Values Ne/Si + Fe/Ti. Cooperative, exploratory, values comfort and shared understanding.",
+  Beta:
+    "Values Se/Ni + Fe/Ti. Hierarchical, intense, values willpower and decisive action.",
+  Gamma:
+    "Values Se/Ni + Te/Fi. Competitive, pragmatic, values results and personal conviction.",
+  Delta:
+    "Values Ne/Si + Te/Fi. Steady, craft-oriented, values practical skill and quiet authenticity.",
+};
+
+/** Get a concise description of what a quadra values. */
+export function getQuadraDescription(quadra: Quadra): string {
+  return QUADRA_DESCRIPTIONS[quadra];
+}
+
+// ============================================================
+// CLUB DESCRIPTIONS
+// ============================================================
+
+const CLUB_DESCRIPTIONS: Record<Club, string> = {
+  Researcher:
+    "Types that pair intuition with logic (NT). Oriented toward understanding systems and possibilities.",
+  Social:
+    "Types that pair intuition with ethics (NF). Oriented toward people, meaning, and emotional dynamics.",
+  Practical:
+    "Types that pair sensing with logic (ST). Oriented toward concrete results and efficient methods.",
+  Humanitarian:
+    "Types that pair sensing with ethics (SF). Oriented toward wellbeing, comfort, and relational harmony.",
+};
+
+/** Get a concise description of what a club grouping means. */
+export function getClubDescription(club: Club): string {
+  return CLUB_DESCRIPTIONS[club];
+}
+
+// ============================================================
 // PUBLIC API
 // ============================================================
 

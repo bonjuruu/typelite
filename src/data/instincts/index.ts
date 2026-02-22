@@ -5,7 +5,9 @@ export {
   EXPERIENTIAL_PASSIVES,
   MOVEMENT_PASSIVES,
   SOURCE_PASSIVES,
+  TRIAD_CATEGORY_DESCRIPTIONS,
   getTriadDescription,
+  getTriadEPDescription,
 } from "./types.ts";
 
 export {

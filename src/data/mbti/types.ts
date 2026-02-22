@@ -75,7 +75,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ti: {
     name: "Introverted Thinking",
     essence:
-      "Dissects systems into logical frameworks - finds the axiom, collapses the structure.",
+      "Internal standard of judgment, builds theoretical structures from within.",
     scalingStat: "intelligence",
     abilities: {
       hero: {
@@ -107,7 +107,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Te: {
     name: "Extraverted Thinking",
     essence:
-      "Organizes the external world toward measurable goals - efficiency is law.",
+      "Objective data, comprehensive formulas, criterion from outside the subject.",
     scalingStat: "intelligence",
     abilities: {
       hero: {
@@ -139,7 +139,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Fi: {
     name: "Introverted Feeling",
     essence:
-      "Guards a deeply personal value system - authenticity is non-negotiable.",
+      "Subjective feeling, inner images of deep personal value, still waters running deep.",
     scalingStat: "spirit",
     abilities: {
       hero: {
@@ -171,7 +171,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Fe: {
     name: "Extraverted Feeling",
     essence:
-      "Attunes to collective emotional climate - harmony is both weapon and shield.",
+      "Objective values, relational reality of the moment, socially valued/demanded.",
     scalingStat: "spirit",
     abilities: {
       hero: {
@@ -203,7 +203,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Si: {
     name: "Introverted Sensing",
     essence:
-      "Stores somatic and sensory memory - the body remembers everything.",
+      "Subjective reaction to stimulus takes precedence over the objective fact (not memory).",
     scalingStat: "vitality",
     abilities: {
       hero: {
@@ -234,7 +234,8 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   },
   Se: {
     name: "Extraverted Sensing",
-    essence: "Lives in the immediate physical moment - sensation is reality.",
+    essence:
+      "Concrete physical reality as it is right now, intensity of objective sensations.",
     scalingStat: "vitality",
     abilities: {
       hero: {
@@ -266,7 +267,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ni: {
     name: "Introverted Intuition",
     essence:
-      "Converges on singular visions of the future - sees the thread, follows it inevitably.",
+      "Inner objects of the unconscious, archetypal images, symbolic meaning behind events.",
     scalingStat: "willpower",
     abilities: {
       hero: {
@@ -298,7 +299,7 @@ export const COGNITIVE_FUNCTIONS: Record<CognitiveFunction, CognitiveFunctionDat
   Ne: {
     name: "Extraverted Intuition",
     essence:
-      "Explodes outward into divergent possibilities - every thread branches infinitely.",
+      "Object's possibilities, emerging potentials and novel configurations.",
     scalingStat: "willpower",
     abilities: {
       hero: {

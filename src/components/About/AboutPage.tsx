@@ -19,36 +19,37 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
 
       <div className="mt-8 space-y-6 text-sm leading-relaxed text-gray-400">
         <p>
-          I love typology. I think the systems are genuinely fascinating - the
-          way cognitive functions stack in MBTI, how enneagram wings and growth
-          lines create these layered portraits of motivation, how something like
-          Attitudinal Psyche can describe why two people with the same "type"
-          still feel completely different.
+          I've had an on and off interest in typology for about a decade. You
+          could say I love typology. The systems are genuinely fascinating to me
+          because they help me understand people in a way I couldn't before. All
+          these systems are a different layer of the human psyche and they've
+          somehow helped my personal relationships. Typology can be a really
+          useful tool when used correctly. I thought hey, it could also be
+          really helpful for character design so I built Typelite.
         </p>
 
         <p>
-          But most typology content is just... reading. Wikis, charts, forum
-          debates about whether you're INFJ or INFP. It's interesting, but it
-          never felt like something I could{" "}
-          <em className="text-gray-300">share</em> with people who aren't
-          already into it. Telling someone "I'm a 5w4 sp/so with Ni-hero"
-          doesn't land unless they already speak the language.
+          Most typology content focuses on one system at a time. Jungian type
+          quizzes, enneagram wikis, forum debates about whether you're INFJ or
+          INFP.
+          They're interesting on their own but they never really talk to each
+          other. I wanted to see what happens when you layer all five together
+          and gamify it so it's less abstract and actually fun to share.
         </p>
 
         <p>
-          So I wanted to build something fun. Something where you could show
-          someone your types and they'd actually get it - not because they
-          studied the theory, but because it turns into a character they can
-          look at and go "oh, that's you."
+          Typelite turns five typology systems into a roguelite character
+          builder. Your types become stats, a class, abilities, an element, and
+          combat behavior.
         </p>
 
-        <p>
-          Typelite takes five typology systems and turns them into a roguelite
-          character builder - your types become stats, a class, abilities, an
-          element, and combat behavior. It's not meant to be a serious
-          assessment tool. It's meant to be a fun way to see your types come to
-          life as something visual and shareable.
-        </p>
+        <div className="rounded-lg border border-yellow-900/40 bg-yellow-950/20 px-4 py-3 text-xs text-yellow-200/60">
+          Some definitions and descriptions are my own interpretations or
+          simplifications to make the game mechanics work. If you want to go
+          deeper, look into the original systems directly. And remember,
+          typology works best as a tool for understanding people, not a box to
+          put them in. Don't get too caught up in what's "correct."
+        </div>
 
         <div className="rounded-lg border border-gray-800 bg-gray-800/30 p-4">
           <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-gray-500">
@@ -64,8 +65,7 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
               &amp; Archetype
             </li>
             <li>
-              <span className="text-gray-300">MBTI (Beebe model)</span> &rarr;
-              Abilities
+              <span className="text-gray-300">Jungian Type</span> &rarr; Abilities
             </li>
             <li>
               <span className="text-gray-300">Socionics</span> &rarr; Element
@@ -84,10 +84,8 @@ export function AboutPage({ onOpenSystemDetails }: AboutPageProps) {
         </div>
 
         <p>
-          You can toggle any combination of systems on or off - use just the
-          ones you know, or turn them all on and see what comes out. The whole
-          point is to make typology something you can play with and share, not
-          just read about.
+          You can toggle any combination of systems on or off. Use just the ones
+          you know, or turn them all on and see what comes out.
         </p>
       </div>
 
