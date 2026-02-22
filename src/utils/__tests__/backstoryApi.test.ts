@@ -143,11 +143,11 @@ describe("buildTypologySection", () => {
     expect(result).toContain("tritype 5-1-3");
   });
 
-  it("includes MBTI line", () => {
+  it("includes Jungian type line", () => {
     const result = buildTypologySection(
       makeTypologySource({ mbti: "INTP" }),
     );
-    expect(result).toContain("MBTI: INTP");
+    expect(result).toContain("Jungian Type: INTP");
   });
 
   it("includes socionics line", () => {
@@ -252,6 +252,6 @@ describe("buildCharacterSummary", () => {
     const result = buildCharacterSummary(makeCharacter(), "Aldric");
     expect(result).toContain("TYPOLOGY INPUTS");
     expect(result).toContain("AP Type: VLEF");
-    expect(result).toContain("MBTI: INTP");
+    expect(result).toContain("Jungian Type: INTP");
   });
 });
